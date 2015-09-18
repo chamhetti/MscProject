@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="cacheController" scope="prototype" class="lk.ac.ucsc.oms.cache.impl.infinispan.InfiniSpanCacheController">
+        <constructor-arg index="0" value=""/>
+        <constructor-arg index="1" value=""/>
+        <property name="timeOut" value="120"/>
+    </bean>
+    <!--<bean id="cacheController" scope="prototype" class="lk.ac.ucsc.oms.cache.impl.ignite.IgniteCacheController">-->
+        <!--<constructor-arg index="0" value=""/>-->
+        <!--<constructor-arg index="1" value=""/>-->
+        <!--<property name="timeOut" value="120000"/>-->
+    <!--</bean>-->
+
+
+</beans>

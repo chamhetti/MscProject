@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--begin managers-->
+
+    <bean name="SymbolManager" id="SymbolManager"
+          class="lk.ac.ucsc.oms.symbol.implGeneral.facade.SymbolManagerFacade"
+          scope="singleton">
+        <property name="csSymbolCacheFacade" ref="csSymbolCache"/>
+        <property name="csSequenceGenerator"  ref="sequenceGenCSS"/>
+    </bean>
+
+    <bean id="symbolPriceDataManager" class="lk.ac.ucsc.oms.symbol.implGeneral.facade.SymbolPriceManagerFacade">
+        <property name="symbolPriceCacheFacade" ref="symbolPriceCacheFacade"/>
+        <property name="symbolPricePersisterHibernate" ref="symbolPricePersisterHibernate"/>
+    </bean>
+
+
+    <!--end managers-->
+
+    <!--begin cache facade-->
+
+    <bean id="csSymbolCache" name="csSymbolCache"
+          class="lk.ac.ucsc.oms.symbol.implGeneral.facade.cache.CSSymbolCacheFacade" scope="singleton">
+
+        <property name="cacheController" ref="csSymbolCacheControl"/>
+        <property name="symbolPersistor" ref="csSymbolHibernatePersistor"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+        <property name="sequenceGenerator" ref="sequenceGenCSS"/>
+    </bean>
+
+
+    <bean id="symbolPriceCacheFacade"
+          class="lk.ac.ucsc.oms.symbol.implGeneral.facade.cache.SymbolPriceCacheFacade">
+        <property name="cacheCon" ref="symbolPriceCacheControl"/>
+        <property name="cacheLoadedState" value="NOT_LOADED"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+    </bean>
+
+
+    <!--end cache facade-->
+
+    <!--begin cache controllers-->
+
+    <bean id="csSymbolCacheControl" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController" scope="singleton">
+        <constructor-arg index="0" ref="csSymbolHibernatePersistor"/>
+        <constructor-arg index="1" value="csSymbol"/>
+    </bean>
+
+
+    <bean id="symbolPriceCacheControl" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController" scope="singleton">
+        <constructor-arg index="0" ref="symbolPricePersisterHibernate"/>
+        <constructor-arg index="1" value="symbolPriceData"/>
+    </bean>
+
+
+    <!--end cache controllers-->
+
+    <!--begin persisters-->
+
+    <bean id="csSymbolHibernatePersistor"
+          class="lk.ac.ucsc.oms.symbol.implGeneral.persitantImpl.hibernate.activeSymbol.CSSymbolHibernatePersister"
+          scope="singleton">
+        <constructor-arg index="0" ref="realTime"/>
+        <constructor-arg index="1" ref="history"/>
+    </bean>
+
+
+    <bean id="symbolPricePersisterHibernate"
+          class="lk.ac.ucsc.oms.symbol.implGeneral.persitantImpl.hibernate.SymbolPricePersisterHibernate"
+          scope="singleton">
+        <constructor-arg index="0" ref="realTime"/>
+        <constructor-arg index="1" ref="history"/>
+    </bean>
+
+
+    <!--end persisters-->
+
+    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" scope="singleton">-->
+    <!--<property name="dataSource" ref="dataSource"/>-->
+    <!--<property name="packagesToScan" value="lk.ac.ucsc.oms.symbol.implGeneral.beans.*"/>-->
+    <!--<property name="configLocations" value="implGeneral/symbol_hibernate.cfg.xml"/>-->
+    <!--</bean>-->
+
+    <!--begin schedulers-->
+
+    <bean id="scheduleSymbolModule" class="lk.ac.ucsc.oms.symbol.implGeneral.shedule.SymbolSchedule"
+          scope="singleton">
+        <property name="schedulerName" value="symbol"/>
+        <property name="frequency" value="10"/>
+
+        <property name="symbolCaches">
+            <list>
+                <ref bean="csSymbolCacheControl"/>
+
+            </list>
+        </property>
+    </bean>
+
+
+    <bean id="scheduleSymbolPriceData" class="lk.ac.ucsc.oms.symbol.implGeneral.shedule.SymbolPriceDataSchedule"
+          scope="singleton">
+        <property name="schedulerName" value="symbolPriceData"/>
+        <property name="frequency" value="360"/>
+        <property name="cacheController" ref="symbolPriceCacheControl"/>
+    </bean>
+
+    <bean id="scheduleRefreshSymbolPriceData"
+          class="lk.ac.ucsc.oms.symbol.implGeneral.shedule.SymbolPriceRefreshingScheduler"
+          scope="singleton">
+        <property name="schedulerName" value="symbolPriceDataRefresh"/>
+        <property name="frequency" value="15"/>
+        <property name="symbolPriceManagerFacade" ref="symbolPriceDataManager"/>
+    </bean>
+
+    <!--todo removed due to heavy load-->
+    <!--<bean id="symbolMarginInfoRefreshSchedule" class="lk.ac.ucsc.oms.symbol.implGeneral.shedule.SymbolMarginInfoRefreshSchedule"-->
+    <!--scope="singleton">-->
+    <!--<property name="schedulerName" value="symbolMarginInfoRefresh"/>-->
+    <!--<property name="frequency" value="60"/>-->
+    <!--<property name="symbolMarginInfoCacheFacade" ref="symbolMarginInfoCache"/>-->
+    <!--</bean>-->
+
+    <!--end schedulers-->
+
+
+    <bean id="symbolValidator" class="lk.ac.ucsc.oms.symbol.implGeneral.facade.SymbolValidatorFacade">
+        <property name="symbolManager" ref="SymbolManager"/>
+    </bean>
+
+    <bean id="realTime" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" scope="singleton">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="lk.ac.ucsc.oms.symbol.implGeneral.beans.*"/>
+        <property name="configLocations" value="implGeneral/symbol_hibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="history" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" scope="singleton">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="lk.ac.ucsc.oms.symbol.implGeneral.beans.*"/>
+        <property name="configLocations" value="implGeneral/symbol_hibernate_history.cfg.xml"/>
+    </bean>
+
+    <bean id="dataSource"
+          factory-bean="SystemConfigurationFactory"
+          factory-method="getDatasource"/>
+
+    <!--<bean id="dataSource"-->
+          <!--factory-bean="SystemConfigurationFactory"-->
+          <!--factory-method="getBasicDataSource"/>-->
+
+    <bean id="SystemConfigurationFactory"
+          class="lk.ac.ucsc.oms.system_configuration.api.SystemConfigurationFactory"
+          factory-method="getInstance"/>
+    <bean id="sysLevelParaManager"
+          factory-bean="SystemConfigurationFactory"
+          factory-method="getSysLevelParamManager">
+    </bean>
+    <bean id="sequenceGenCSS" class="lk.ac.ucsc.oms.sequence_generator.api.SequenceGeneratorFactory"
+          factory-method="getInstance">
+        <constructor-arg index="0" value="CS_SYMBOL_ID"/>
+    </bean>
+
+
+
+</beans>

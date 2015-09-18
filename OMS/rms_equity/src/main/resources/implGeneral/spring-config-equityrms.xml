@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="equityRiskManager" class="lk.ac.ucsc.oms.rms_equity.implGeneral.facade.EquityRiskManagerMFS">
+        <property name="buyRiskManager" ref="buyRiskManager"/>
+        <property name="sellRiskManager" ref="sellRiskManager"/>
+        
+    </bean>
+
+    <bean id="buyRiskManager" class="lk.ac.ucsc.oms.rms_equity.implGeneral.facade.helper.BuyRiskManager">
+        <property name="cashTradingManager" ref="cashTradingManager"/>             
+        <property name="equityRmsUtil" ref="equityRmsUtil"/>
+        <property name="orderManager" ref="orderManager"/>
+        <property name="cashManager" ref="cashManager"/>
+        <property name="accountManager" ref="accountManager"/>
+
+    </bean>
+
+    <bean id="sellRiskManager" class="lk.ac.ucsc.oms.rms_equity.implGeneral.facade.helper.SellRiskManager">
+        <property name="accountManager" ref="accountManager"/>
+        <property name="holdingManager" ref="holdingManager"/>
+        <property name="commonUtil" ref="commonUtil"/>
+        <property name="customerManager" ref="customerManager"/>
+        <property name="equityRmsUtil" ref="equityRmsUtil"/>
+        <property name="cashTradingManager" ref="cashTradingManager"/>
+        <property name="sellRiskManagerUtil" ref="sellRiskManagerUtil"/>
+        <property name="orderManager" ref="orderManager"/>
+        <property name="cashManager" ref="cashManager"/>
+    </bean>
+
+    <bean id="equityRmsUtil" class="lk.ac.ucsc.oms.rms_equity.implGeneral.facade.helper.util.EquityRmsUtil">
+        <property name="holdingManager" ref="holdingManager"/>
+        <property name="symbolManager" ref="symbolManager"/>
+        <property name="orderManager" ref="orderManager"/>
+        <property name="accountManager" ref="accountManager"/>
+        <property name="customerManager" ref="customerManager"/>
+    </bean>
+
+
+    <bean id="commonUtil" class="lk.ac.ucsc.oms.rms_equity.implGeneral.facade.helper.util.CommonUtil">
+        <property name="cashManager" ref="cashManager"/>
+    </bean>
+
+    <bean id="sellRiskManagerUtil"
+          class="lk.ac.ucsc.oms.rms_equity.implGeneral.facade.helper.util.SellRiskManagerUtil">
+    </bean>
+
+    <bean id="orderSearchManager"
+          factory-bean="orderFacadeFactory"
+          factory-method="getOrderSearchFacade"/>
+
+    <bean id="orderManager"
+          factory-bean="orderFacadeFactory"
+          factory-method="getOrderManagementFacadeInterface"/>
+
+    <bean id="holdingManager"
+          factory-bean="customerFactory"
+          factory-method="getHoldingManager"/>
+
+    <bean id="customerManager"
+          factory-bean="customerFactory"
+          factory-method="getCustomerManager"/>
+
+
+    <bean id="accountManager"
+          factory-bean="customerFactory"
+          factory-method="getAccountManager"/>
+
+    <bean id="cashManager"
+          factory-bean="customerFactory"
+          factory-method="getCashManager"/>
+
+    <bean id="cashTradingManager"
+          factory-bean="cashTradingFactory"
+          factory-method="getCashTradingManager"/>
+
+
+
+    <bean id="cashTradingFactory"
+          class="lk.ac.ucsc.oms.cash_trading.api.CashTradingFactory"
+          factory-method="getInstance"/>
+
+    <bean id="customerFactory"
+          class="lk.ac.ucsc.oms.customer.api.CustomerFactory"
+          factory-method="getInstance"/>
+
+
+
+    <bean id="exchangeManager"
+          factory-bean="exchangeFactory"
+          factory-method="getExchangeManager"/>
+
+
+
+    <bean id="exchangeFactory"
+          class="lk.ac.ucsc.oms.exchanges.api.ExchangeFactory"
+          factory-method="getInstance"/>
+
+    <bean id="symbolManager"
+          factory-bean="symbolFactory"
+          factory-method="getSymbolManager"/>
+
+    <bean id="symbolPriceManager"
+          factory-bean="symbolFactory"
+          factory-method="getSymbolPriceDataManager"/>
+
+    <bean id="symbolFactory"
+          class="lk.ac.ucsc.oms.symbol.api.SymbolFacadeFactory"
+          factory-method="getInstance"/>
+
+    <bean id="orderFacadeFactory"
+          class="lk.ac.ucsc.oms.orderMgt.api.OrderManagementFactory"
+          factory-method="getInstance"/>
+
+    <bean id="systemConfigFactory"
+          class="lk.ac.ucsc.oms.system_configuration.api.SystemConfigurationFactory"
+          factory-method="getInstance"/>
+
+    <bean id="sysConfigFactory"
+          class="lk.ac.ucsc.oms.system_configuration.api.SystemConfigurationFactory"
+          factory-method="getInstance"/>
+
+
+</beans>

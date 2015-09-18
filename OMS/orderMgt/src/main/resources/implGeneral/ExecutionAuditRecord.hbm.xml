@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="lk.ac.ucsc.oms.orderMgt.implGeneral.bean.ExecutionAuditRecordBean"
+           table="omm_execution_audit">
+        <composite-id>
+            <key-property name="day" column="DAY" length="50"/>
+            <key-property name="exchange" column="EXCHANGE" length="50"/>
+            <key-property name="messageID" column="MESSAGE_ID" length="200"/>
+            <key-property name="side" column="SIDE" length="10"/>
+            <key-property name="execBrokerID" column="EXEC_BROKER_ID" length="10"/>
+        </composite-id>
+        <property name="fixMessage" type="java.lang.String">
+            <column name="FIX_MESSAGE" length="2000"/>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

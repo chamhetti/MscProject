@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="lk.ac.ucsc.oms.orderMgt.implGeneral.bean.ExecutionBean" table="omm_order_execution">
+        <id name="executionKey" type="java.lang.String" unsaved-value="0">
+            <column name="EXECUTION_KEY" length="255"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="executionId" type="java.lang.String">
+            <column name="EXEC_ID" length="150"/>
+        </property>
+        <property name="clOrdID" type="java.lang.String">
+            <column name="ClOrd_ID" length="50"/>
+        </property>
+        <property name="ordQty" type="java.lang.Double">
+            <column name="ORDER_QTY" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="lastShare" type="java.lang.Double">
+            <column name="Last_Share" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="lastPx" type="java.lang.Double">
+            <column name="Last_Px" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="avgPrice" type="java.lang.Double">
+            <column name="AVERAGE_PRICE" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="transactionTime" type="java.lang.String">
+            <column name="Transaction_Time" length="100"/>
+        </property>
+        <property name="orderStatus" type="java.lang.String">
+            <column name="Status" length="10"/>
+        </property>
+        <property name="leaveQty" type="java.lang.Double">
+            <column name="Leaves_Qty" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="cumQty" type="java.lang.Double">
+            <column name="Cum_Qty" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="ordID" type="java.lang.String">
+            <column name="OrdID" length="150"/>
+        </property>
+        <property name="orderNo" type="java.lang.String">
+            <column name="OrderNo" length="150"/>
+        </property>
+
+        <property name="commission" type="double">
+            <column name="COMMISSION"/>
+        </property>
+
+        <property name="dateTime" type="java.util.Date">
+            <column name="DATE_TIME"/>
+        </property>
+
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+        <!-- Disable the second-level cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+        <property name="jdbc.batch_size">20</property>
+        <property name="hibernate.order_inserts">true</property>
+        <property name="hibernate.order_updates">true</property>
+        <property name="hibernate.connection.autocommit">false</property>
+        <!--<property name="hibernate.search.default.directory_provider">filesystem</property>-->
+        <!--<property name="hibernate.search.default.indexBase">target</property>-->
+        <!--<property name="hibernate.search.default.exclusive_index_use">false</property>-->
+        <property name="hibernate.search.lucene_version">LUCENE_CURRENT</property>
+        <property name="hbm2ddl.auto">update</property>
+
+        <!-- Names the annotated entity class -->
+        <!-- <mapping class="org.hibernate.tutorial.annotations.Event"/>-->
+        <mapping resource="implGeneral/ErrorOrderBean.hbm.xml"/>
+
+    </session-factory>
+
+</hibernate-configuration>

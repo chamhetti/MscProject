@@ -1,0 +1,291 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="lk.ac.ucsc.oms.exchanges.implGeneral.beans.ExchangeBean" table="emm_exchange_hs">
+
+        <id name="primaryKeyObject" type="java.lang.Long" unsaved-value="0">
+            <column name="KEY_COL"/>
+            <generator class="sequence">
+                <param name="sequence">EMM_EXCH_HS_SEQ</param>
+            </generator>
+        </id>
+        <property name="exchangeId" type="java.lang.Long">
+            <column name="EXCHANGE_ID" not-null="true" length="10"/>
+        </property>
+
+        <property name="lastChanged" type="timestamp">
+            <column name="TIMESTAMP" not-null="true"/>
+        </property>
+
+        <map name="subMarkets" cascade="all" lazy="false">
+            <!--<key column="EXCHANGE_CODE" foreign-key="EXCHANGE_CODE" property-ref="exchangeCode"/>-->
+            <key column="KEY_COL"/>
+            <index column="MARKET_CODE" type="java.lang.String" length="50"/>
+            <one-to-many class="lk.ac.ucsc.oms.exchanges.implGeneral.beans.SubMarketBean"/>
+        </map>
+
+        <map name="channelWiseExchangeCodes" cascade="all" table="emm_channel_codes_hs" lazy="false">
+            <key column="EXCHANGE_ID" foreign-key="KEY_COL"/>
+            <index column="CHANNEL" type="integer" length="10" />
+            <element column="CHANNEL_CODE" type="string" length="20"/>
+        </map>
+
+        <property name="exchangeCode" not-null="true" column="EXCHANGE_CODE" type="java.lang.String" length="50"/>
+        <property name="description" column="DESCRIPTION" type="java.lang.String" length="255"/>
+        <property name="statusCode" type="int">
+            <column name="STATUS" length="2" default="0"/>
+        </property>
+        <property name="directlyConnect" type="int">
+            <column name="DIRECTLY_CONNECT" length="2" default="0"/>
+        </property>
+        <property name="createdBy" type="java.lang.String">
+            <column name="CREATED_BY" length="50"/>
+        </property>
+        <property name="createdDate" type="java.util.Date">
+            <column name="CREATED_DATE"/>
+        </property>
+        <property name="lastUpdatedBy" type="java.lang.String">
+            <column name="LAST_UPDATED_BY" length="50"/>
+        </property>
+        <property name="lastUpdatedDate" type="java.util.Date">
+            <column name="LAST_UPDATED_DATE"/>
+        </property>
+        <property name="exchangeCodeReal" type="java.lang.String">
+            <column name="EXCHANGE_CODE_REAL" length="50"/>
+        </property>
+        <property name="exDestination" type="java.lang.String">
+            <column name="EX_DESTINATION" length="50"/>
+        </property>
+        <property name="defaultCurrency" type="java.lang.String">
+            <column name="CURRENCY" length="50"/>
+        </property>
+        <property name="defaultExecutionBroker" type="java.lang.String">
+            <column name="DEFAULT_EXEC_BROKER" length="50"/>
+        </property>
+        <property name="defaultCommGroup" type="long">
+            <column name="DEFAULT_COMM_GROUP" length="10" default="0"/>
+        </property>
+        <property name="OrderedFixTags" type="java.lang.String">
+            <column name="ORDER_FIX_TAGS" length="500"/>
+        </property>
+        <property name="priceFactor" type="java.lang.Double">
+            <column name="PRICE_FACTOR" sql-type="NUMERIC(21,5)" default="1"/>
+        </property>
+        <property name="fixVersion" type="java.lang.String">
+            <column name="FIX_VERSION" length="20"/>
+        </property>
+        <property name="orderNotAllowDuration" type="int">
+            <column name="ORDER_NOT_ALLOW_DUR" length="10" default="0"/>
+        </property>
+        <property name="marketCloseOrderTriggerTime" type="java.lang.String">
+            <column name="MKT_CLOSE_TRIG_TIME" length="10"/>
+        </property>
+    </class>
+
+
+    <class name="lk.ac.ucsc.oms.exchanges.implGeneral.beans.OrderRoutingInfoBean"
+           table="emm_ordroute_info_hs">
+        <id name="primaryKeyObject" type="java.lang.Integer" unsaved-value="0">
+            <column name="KEY_COL"/>
+            <generator class="sequence">
+                <param name="sequence">EMM_ORDER_RT_HS_SEQ</param>
+            </generator>
+        </id>
+        <property name="subMarketId" type="int">
+            <column name="SUBMARKET_ID"/>
+        </property>
+
+        <!--  <one-to-one name="subMarketBean" class="lk.ac.ucsc.oms.exchanges.implGeneral.beans.SubMarketBean"
+                      constrained="true"></one-to-one>-->
+
+        <property name="buyTplus" type="int">
+            <column name="BUY_TPLUS" length="10" default="0"/>
+        </property>
+        <property name="sellTplus" type="int">
+            <column name="SELL_TPLUS" length="10" default="0"/>
+        </property>
+        <property name="minOrderValue" type="double">
+            <column name="MIN_ORDER_VALUE" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="lotSize" type="int">
+            <column name="LOT_SIZE" length="10" default="1"/>
+        </property>
+        <property name="quantityUnitSize" type="int">
+            <column name="QTY_UNIT_SIZE" length="10" default="1"/>
+        </property>
+        <property name="priceMultifactor" type="double">
+            <column name="PRICE_MULTI_FACTOR" sql-type="NUMERIC(21,5)" default="1"/>
+        </property>
+        <property name="commissionCalType" type="int">
+            <column name="COMM_CAL_TYPE" length="10" default="1"/>
+        </property>
+        <property name="minDiscloseQty" type="int">
+            <column name="MIN_DISCLOSED_QTY" length="10" default="1"/>
+        </property>
+        <property name="priceMinMaxValidateAllow" type="int">
+            <column name="PRICE_MINMAX_VAL_ALLOW" length="2" default="1"/>
+        </property>
+        <property name="priceDisplayFormat" type="java.lang.String">
+            <column name="PRICE_DIS_FORMAT" length="50"/>
+        </property>
+        <property name="allowTifs" type="java.lang.String">
+            <column name="ALLOW_TIF_TYPES" length="50"/>
+        </property>
+        <property name="allowOrdTypes" type="java.lang.String">
+            <column name="ALLOW_ORDER_TYPES" length="50"/>
+        </property>
+        <property name="allowOrdSides" type="java.lang.String">
+            <column name="ALLOW_ORDER_SIDES" length="50"/>
+        </property>
+        <property name="maxOrderValue" type="double">
+            <column name="MAX_ORDER_VALUE" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="dayTradingLiquidateTime" type="java.lang.String">
+            <column name="DAY_TRADING_LIQUIDATE_TIME" length="50"/>
+        </property>
+        <property name="squareOffOrderType" type="java.lang.Integer">
+            <column name="SQUARE_OFF_ORDER_TYPE" length="2" default="0"/>
+        </property>
+        <property name="limitOrderPriceType" type="java.lang.Integer">
+            <column name="LIMIT_ORDER_PRICE_TYPE" length="2" default="0"/>
+        </property>
+        <property name="lastChanged" type="timestamp">
+            <column name="LAST_CHANGED" not-null="true"/>
+        </property>
+    </class>
+
+
+    <class name="lk.ac.ucsc.oms.exchanges.implGeneral.beans.SubMarketBean" table="emm_submarket_hs">
+        <id name="primaryKeyObject" type="int" unsaved-value="0">
+            <column name="KEY_COL_SUB_MARKET"/>
+            <generator class="sequence">
+                <param name="sequence">EMM_SUBMARKET_HS_SEQ</param>
+            </generator>
+        </id>
+        <property name="subMarketId" type="int">
+            <column name="SUBMARKET_ID" length="10"/>
+        </property>
+        <one-to-one name="orderRoutingInfo" class="lk.ac.ucsc.oms.exchanges.implGeneral.beans.OrderRoutingInfoBean"
+                    cascade="all" foreign-key="SUBMARKET_ID"/>
+        <!-- <one-to-one name="orderRoutingInfo"
+                     class="lk.ac.ucsc.oms.exchanges.implGeneral.beans.OrderRoutingInfoBean" cascade="all"/>-->
+
+        <property name="marketCode" type="java.lang.String">
+            <column name="MARKET_CODE" length="50"/>
+        </property>
+        <property name="marketStatus" column="MARKET_STATUS" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.exchanges.api.beans.MarketStatus</param>
+            </type>
+        </property>
+        <property name="connectStatus" column="CONNECT_STATUS" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.exchanges.api.beans.MarketConnectStatus</param>
+            </type>
+        </property>
+        <property name="preOpenTime" type="java.lang.String">
+            <column name="PRE_OPEN_TIME" length="50"/>
+        </property>
+        <property name="preCloseTime" type="java.lang.String">
+            <column name="PRE_CLOSE_TIME" length="50"/>
+        </property>
+        <property name="openTime" type="java.lang.String">
+            <column name="OPEN_TIME" length="50"/>
+        </property>
+        <property name="closeTime" type="java.lang.String">
+            <column name="CLOSE_TIME" length="50"/>
+        </property>
+        <property name="exchangeId" type="java.lang.String">
+            <column name="EXCHANGE_ID" length="50"/>
+        </property>
+        <property name="lastPreOpenedDate" type="java.util.Date">
+            <column name="LAST_PREOPNE_DATE"/>
+        </property>
+        <property name="lastEODDate" type="java.util.Date">
+            <column name="LAST_EOD_DATE"/>
+        </property>
+        <property name="preOpenRun" type="int">
+            <column name="PRE_OPEN_RUN" length="2" default="0"/>
+        </property>
+        <property name="eodRan" type="int">
+            <column name="EOD_RUN" length="2" default="0"/>
+        </property>
+        <property name="manualSuspend" type="int">
+            <column name="IS_MANUAL_SUSPEND" length="2" default="0"/>
+        </property>
+        <property name="statusReqAllowed" type="int">
+            <column name="STATUS_REQ_ALLOW" length="2" default="1"/>
+        </property>
+        <property name="lastStatusReqDate" type="java.util.Date">
+            <column name="LAST_STATUS_REQ_DATE"/>
+        </property>
+        <property name="forcefullPreOpen" type="int">
+            <column name="FORCEFULL_PREOPEN" length="2" default="0"/>
+        </property>
+        <property name="eodInProgress" type="int">
+            <column name="EOD_IN_PROGRESS" length="2" default="0"/>
+        </property>
+        <map name="ssbMarketInfo" cascade="all" lazy="false" >
+            <key column="KEY_COL_SUB_MARKET"/>
+            <index column="BROKER_CODE" type="java.lang.String" length="50"/>
+            <one-to-many class="lk.ac.ucsc.oms.exchanges.implGeneral.beans.SSBMarketInfoBean"/>
+        </map>
+        <property name="lastChanged" type="timestamp">
+            <column name="LAST_CHANGED" not-null="true"/>
+        </property>
+    </class>
+    <class name="lk.ac.ucsc.oms.exchanges.implGeneral.beans.SSBMarketInfoBean" table="emm_ssb_mkt_info_hs">
+        <id name="primaryKeyObject" type="int">
+            <column name="KEY_COL_SSB_MKT_ID" length="10"/>
+            <generator class="sequence">
+                <param name="sequence">EMM_SSB_SEQ_HS</param>
+            </generator>
+        </id>
+
+        <property name="brokerCode" type="java.lang.String">
+            <column name="BROKER_CODE" length="50"/>
+        </property>
+
+        <property name="exchange" type="java.lang.String">
+            <column name="EXCHANGE" length="50"/>
+        </property>
+
+        <property name="marketCode" type="java.lang.String">
+            <column name="MARKET_CODE" length="50"/>
+        </property>
+
+        <property name="marketStatus" column="MARKET_STATUS" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.exchanges.api.beans.MarketStatus</param>
+            </type>
+        </property>
+        <property name="connectStatus" column="CONNECT_STATUS" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.exchanges.api.beans.MarketConnectStatus</param>
+            </type>
+        </property>
+        <property name="lastPreOpenedDate" type="java.util.Date">
+            <column name="LAST_PREOPNE_DATE"/>
+        </property>
+        <property name="lastEODDate" type="java.util.Date">
+            <column name="LAST_EOD_DATE"/>
+        </property>
+        <property name="manualSuspend" type="int">
+            <column name="IS_MANUAL_SUSPEND" length="2" default="0"/>
+        </property>
+        <property name="statusReqAllowed" type="int">
+            <column name="STATUS_REQ_ALLOW" length="2" default="1"/>
+        </property>
+        <property name="lastStatusReqDate" type="java.util.Date">
+            <column name="LAST_STATUS_REQ_DATE"/>
+        </property>
+        <property name="forcefullPreOpen" type="int">
+            <column name="FORCEFULL_PREOPEN" length="2" default="0"/>
+        </property>
+    </class>
+</hibernate-mapping>
+
+
+

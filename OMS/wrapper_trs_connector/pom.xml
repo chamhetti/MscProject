@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>lk.ac.ucsc</groupId>
+        <artifactId>oms</artifactId>
+        <version>1.0.000</version>
+    </parent>
+    <groupId>lk.ac.ucsc.oms</groupId>
+    <artifactId>wrapper_trs_connector</artifactId>
+    <packaging>ejb</packaging>
+
+    <name>wrapper_trs_connector</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>trs_connector</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>trs_writer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.as</groupId>
+            <artifactId>jboss-as-jms-client-bom</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>boot_strapper</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.jboss.ejb3</groupId>-->
+            <!--<artifactId>jboss-ejb3-ext-api</artifactId>-->
+        <!--</dependency>-->
+
+    </dependencies>
+</project>

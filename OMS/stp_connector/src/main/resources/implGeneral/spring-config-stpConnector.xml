@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="stpConnector" class="lk.ac.ucsc.oms.stp_connector.implGeneral.STPConnectorImpl">
+        <constructor-arg index="0" ref="exchangeServiceImpl"/>
+        <constructor-arg index="1" ref="execReportProcessor"/>
+        <constructor-arg index="2" ref="marketStatusResProcessor"/>
+        <constructor-arg index="3" ref="fixStatusResProcessor"/>
+        <constructor-arg index="4" ref="fixFacade"/>
+        <constructor-arg index="5" ref="orderManager"/>
+        <constructor-arg index="6" ref="sysLevelParaManager"/>
+        <constructor-arg index="7" ref="executionAuditRecordManager"/>
+    </bean>
+
+    <bean id="execReportProcessor"
+          factory-bean="sTPConnectorFactory"
+          factory-method="getExecReportProcessor"/>
+    <bean id="marketStatusResProcessor"
+          factory-bean="sTPConnectorFactory"
+          factory-method="getMarketStatusResProcessor"/>
+    <bean id="fixStatusResProcessor"
+          factory-bean="sTPConnectorFactory"
+          factory-method="getFixConnectionStatusProcessor"/>
+
+    <bean id="orderManager"
+          factory-bean="orderFacadeFactory"
+          factory-method="getOrderManagementFacadeInterface"/>
+    <bean id="executionAuditRecordManager"
+          factory-bean="orderFacadeFactory"
+          factory-method="getExecutionAuditRecordManager"/>
+
+    <bean id="sTPConnectorFactory" class="lk.ac.ucsc.oms.stp_connector.api.STPConnectorFactory"
+          factory-method="getInstance"/>
+
+
+    <bean id="exchangeServiceImpl" class="lk.ac.ucsc.oms.stp_connector.implGeneral.ExchangeServiceImpl">
+        <constructor-arg index="0" ref="fixConnectionFacade"/>
+        <constructor-arg index="1" ref="exchangeManager"/>
+        <constructor-arg index="2" ref="fixFacade"/>
+        <constructor-arg index="3" ref="accountManager"/>
+        <constructor-arg index="4" ref="sysLevelParaManager"/>
+        <constructor-arg index="5" ref="messageSender"/>
+    </bean>
+
+    <bean id="fixConnectionFacade" factory-bean="fixConnectionFactory"
+          factory-method="getFIXConnectionFacade"/>
+
+    <bean id="exchangeManager" factory-bean="exchangeFactory" factory-method="getExchangeManager"/>
+
+    <bean id="exchangeFactory" class="lk.ac.ucsc.oms.exchanges.api.ExchangeFactory"
+          factory-method="getInstance"/>
+
+    <bean id="fixFacade" factory-bean="fixFacadeFactory" factory-method="getFixFacade"/>
+
+    <bean id="fixFacadeFactory" class="lk.ac.ucsc.oms.fix.api.FIXFacadeFactory" factory-method="getInstance"/>
+
+    <bean id="fixConnectionFactory" class="lk.ac.ucsc.oms.fixConnection.api.FIXConnectionFactory"
+          factory-method="getInstance"/>
+
+    <bean id="accountManager" factory-bean="customerFactory" factory-method="getAccountManager"/>
+
+    <bean id="customerFactory" class="lk.ac.ucsc.oms.customer.api.CustomerFactory" factory-method="getInstance"/>
+
+
+
+    <bean id="sysLevelParaManager" factory-bean="sysConfigFactory" factory-method="getSysLevelParamManager"/>
+
+    <bean id="sysConfigFactory" class="lk.ac.ucsc.oms.system_configuration.api.SystemConfigurationFactory"
+          factory-method="getInstance"/>
+
+
+
+    <bean id="orderFacadeFactory" class="lk.ac.ucsc.oms.orderMgt.api.OrderManagementFactory"
+          factory-method="getInstance"/>
+
+    <bean id="messageSender" factory-bean="middlewareSenderFactory" factory-method="getMessageSender"/>
+
+    <bean id="middlewareSenderFactory" class="lk.ac.ucsc.oms.common_utility.api.MiddlewareSenderFactory"
+          factory-method="getInstance">
+    </bean>
+
+
+</beans>

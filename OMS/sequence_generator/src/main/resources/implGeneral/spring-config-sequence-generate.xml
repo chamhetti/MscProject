@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="seqGenCacheFacade"
+          class="lk.ac.ucsc.oms.sequence_generator.implGeneral.facade.cache.SequenceGeneratorCacheFacade">
+        <property name="cacheController" ref="seqGenCacheControl"/>
+    </bean>
+
+    <bean id="seqGenCacheControl" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController" scope="singleton">
+        <constructor-arg index="0" ref="seqGenDummyPersister"/>
+        <constructor-arg index="1" value="sequenceGenerator"/>
+    </bean>
+
+    <bean id="seqGenDummyPersister"
+          class="lk.ac.ucsc.oms.sequence_generator.implGeneral.persistantImpl.hibernate.SequenceGeneratorPersister"/>
+
+    <bean id="SIMPLE_ID" class="lk.ac.ucsc.oms.sequence_generator.implGeneral.logics.SimpleIDGenerator">
+        <property name="cacheFacade" ref="seqGenCacheFacade"/>
+        <property name="name" value="SimpleIDGenerator"/>
+
+    </bean>
+    <bean id="ORDER_ID" class="lk.ac.ucsc.oms.sequence_generator.implGeneral.logics.OrderIDGenerator">
+        <property name="cacheFacade" ref="seqGenCacheFacade"/>
+        <property name="name" value="OrderIDGenerator"/>
+    </bean>
+
+    <bean id="EXCHANGE_ID" class="lk.ac.ucsc.oms.sequence_generator.implGeneral.logics.ExchangeIdGenerator">
+        <property name="cacheFacade" ref="seqGenCacheFacade"/>
+        <property name="name" value="ExchangeIdGenerator"/>
+    </bean>
+    <bean id="EXCHANGE_SUB_MARKET_ID" class="lk.ac.ucsc.oms.sequence_generator.implGeneral.logics.ExchangeSubMarketIdGenerator">
+        <property name="cacheFacade" ref="seqGenCacheFacade"/>
+        <property name="name" value="ExchangeSubMarketIdGenerator"/>
+    </bean>
+
+    <bean id="CUSTOMER_ID" class="lk.ac.ucsc.oms.sequence_generator.implGeneral.logics.CustomerIdGenerator">
+        <property name="cacheFacade" ref="seqGenCacheFacade"/>
+        <property name="name" value="CustomerIdGenerator"/>
+    </bean>
+    <bean id="ACCOUNT_ID" class="lk.ac.ucsc.oms.sequence_generator.implGeneral.logics.AccountIdGenerator">
+        <property name="cacheFacade" ref="seqGenCacheFacade"/>
+        <property name="name" value="AccountIdGenerator"/>
+    </bean>
+    <bean id="CASH_ACCOUNT_ID"
+          class="lk.ac.ucsc.oms.sequence_generator.implGeneral.logics.CashAccountIDGenerator">
+        <property name="cacheFacade" ref="seqGenCacheFacade"/>
+        <property name="name" value="CashAccountIDGenerator"/>
+    </bean>
+    <bean id="CASH_LOG_ID" class="lk.ac.ucsc.oms.sequence_generator.implGeneral.logics.CashLogIDGenerator">
+        <property name="cacheFacade" ref="seqGenCacheFacade"/>
+        <property name="name" value="CashLogIDGenerator"/>
+    </bean>
+
+    <bean id="CS_SYMBOL_ID"
+          class="lk.ac.ucsc.oms.sequence_generator.implGeneral.logics.CSSymbolIdGenerator">
+        <property name="cacheFacade" ref="seqGenCacheFacade"/>
+        <property name="name" value="CSSymbolIdGenerator"/>
+    </bean>
+
+    
+
+
+</beans>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="customerManager"
+          factory-bean="customerFactory"
+          factory-method="getCustomerManager"/>
+
+    <bean id="accountManager"
+          factory-bean="customerFactory"
+          factory-method="getAccountManager"/>
+
+    <bean id="customerLoginManager"
+          factory-bean="customerFactory"
+          factory-method="getCustomerLoginManager"/>
+
+    <bean id="cashManager"
+          factory-bean="customerFactory"
+          factory-method="getCashManager"/>
+
+
+    <bean id="customerFactory"
+          class="lk.ac.ucsc.oms.customer.api.CustomerFactory"
+          factory-method="getInstance"/>
+
+    <bean id="orderFactory"
+          class="lk.ac.ucsc.oms.orderMgt.api.OrderManagementFactory"
+          factory-method="getInstance"/>
+
+    <bean id="exchangeFactory"
+          class="lk.ac.ucsc.oms.exchanges.api.ExchangeFactory"
+          factory-method="getInstance"/>
+
+    <bean id="symbolFactory"
+          class="lk.ac.ucsc.oms.symbol.api.SymbolFacadeFactory"
+          factory-method="getInstance"/>
+
+    <bean id="riskMangerFactory"
+          class="lk.ac.ucsc.oms.rms_equity.api.EquityRiskManagerFactory "
+          factory-method="getInstance"/>
+
+
+    <!--  <bean id="sellSideBroker" factory-bean="sellSideConnectorFactory" factory-method="getEmptySellSideBroker"/>-->
+
+
+    <bean id="fixConnectionFacade" factory-bean="fixConnectionFactory"
+          factory-method="getFIXConnectionFacade"/>
+
+    <bean id="fixConnectionFactory" class="lk.ac.ucsc.oms.fixConnection.api.FIXConnectionFactory"
+          factory-method="getInstance"/>
+
+    <bean id="stpConnectionFactory" class="lk.ac.ucsc.oms.stp_connector.api.STPConnectorFactory"
+          factory-method="getInstance"/>
+
+    <bean id="stpConnector"
+          factory-bean="stpConnectionFactory"
+          factory-method="getSTPConnector"/>
+
+    <bean id="fixFacadeFactory" class="lk.ac.ucsc.oms.fix.api.FIXFacadeFactory"
+          factory-method="getInstance"/>
+
+
+    <bean id="trsConnector"
+          factory-bean="trsConnectorFactory"
+          factory-method="getTrsConnector"/>
+
+    <bean id="trsConnectorFactory"
+          class="lk.ac.ucsc.oms.trs_connector.api.TrsConnectorFactory"
+          factory-method="getInstance"/>
+
+
+    <bean id="systemConfigFactory"
+          class="lk.ac.ucsc.oms.system_configuration.api.SystemConfigurationFactory"
+          factory-method="getInstance"/>
+
+
+    <bean id="trsWriter"
+          class="lk.ac.ucsc.oms.trs_writer.implGeneral.TrsWriterFacadeImpl">
+        <property name="tradeResponseHelper" ref="tradeResponseHelper"/>
+        <property name="inquiryResponseHelper" ref="inquiryResponseHelper"/>
+        <property name="messageSender" ref="messageSender"/>
+    </bean>
+
+    <bean id="tradeResponseHelper"
+          class="lk.ac.ucsc.oms.trs_writer.implGeneral.helpers.TradeResponseHelper">
+        <property name="messageProtocolFacade" ref="messageProtocolFacade"/>
+    </bean>
+
+    <bean id="messageProtocolFacade" factory-bean="messageProtocolFactory"
+          factory-method="getMessageProtocolFacade"/>
+
+    <bean id="inquiryResponseHelper"
+          class="lk.ac.ucsc.oms.trs_writer.implGeneral.helpers.InquiryResponseHelper">
+        <property name="messageProtocolFacade" ref="messageProtocolFacade"/>
+    </bean>
+
+    <bean id="messageProtocolFactory"
+          class="lk.ac.ucsc.oms.messaging_protocol_json.api.MessageProtocolFacadeFactory"
+          factory-method="getInstance"/>
+
+
+    <bean id="exchangeManager"
+          factory-bean="exchangeFactory"
+          factory-method="getExchangeManager"/>
+
+
+    <bean id="symbolPriceManager"
+          factory-bean="symbolFactory"
+          factory-method="getSymbolPriceDataManager"/>
+
+
+    <bean id="messageSender" factory-bean="middlewareSenderFactory" factory-method="getMessageSender"/>
+
+    <bean id="middlewareSenderFactory" class="lk.ac.ucsc.oms.common_utility.api.MiddlewareSenderFactory"
+          factory-method="getInstance">
+    </bean>
+
+    <bean id="sysParaManager"
+          factory-bean="systemConfigFactory"
+          factory-method="getSysLevelParamManager"/>
+
+    <bean id="fixFacade"
+          factory-bean="fixFacadeFactory"
+          factory-method="getFixFacade"/>
+
+
+</beans>

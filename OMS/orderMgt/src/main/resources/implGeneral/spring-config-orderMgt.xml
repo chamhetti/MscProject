@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="orderManagerFacade" class="lk.ac.ucsc.oms.orderMgt.implGeneral.facade.OrderManagerFacade">
+        <property name="orderCache" ref="orderCache"/>
+        <property name="executionCache" ref="executionCache"/>
+        <property name="sequenceGen" ref="sequenceGen"/>
+        <property name="moduleCode" value="OMM"/>
+
+    </bean>
+
+
+    <bean id="orderSearchFacade" class="lk.ac.ucsc.oms.orderMgt.implGeneral.facade.OrderSearchFacade">
+        <property name="executionCache" ref="executionCache"/>
+        <property name="orderCache" ref="orderCache"/>
+    </bean>
+
+    <bean id="orderHistorySearchFacade"
+          class="lk.ac.ucsc.oms.orderMgt.implGeneral.facade.OrderHistorySearchFacade">
+        <property name="orderCacheFacade" ref="orderCache"/>
+    </bean>
+
+    <bean id="orderCache" class="lk.ac.ucsc.oms.orderMgt.implGeneral.facade.cache.OrderCacheFacade">
+        <property name="orderCacheController" ref="orderCacheControl"/>
+        <property name="orderKeyCacheController" ref="orderKeyCacheControl"/>
+        <property name="orderPersister" ref="orderPersister"/>
+        <property name="orderHistoryPersister" ref="historyPersister"/>
+        <property name="orderCacheLoadedState" value="PARTIALITY_LOADED"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+        <property name="sequenceGenerator" ref="sequenceGenerator"/>
+    </bean>
+
+    <bean id="executionCache" class="lk.ac.ucsc.oms.orderMgt.implGeneral.facade.cache.ExecutionCacheFacade">
+        <property name="exeCacheController" ref="exeCacheControl"/>
+        <property name="executionPersister" ref="executionPersister"/>
+        <property name="executionCacheLoadedState" value="PARTIALITY_LOADED"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+    </bean>
+
+    <bean id="executionAuditManagerFacade"
+          class="lk.ac.ucsc.oms.orderMgt.implGeneral.facade.ExecutionAuditRecordManagerFacade">
+        <property name="cacheFacade" ref="executionAuditRecordCache"/>
+    </bean>
+
+    <bean id="executionAuditRecordCache"
+          class="lk.ac.ucsc.oms.orderMgt.implGeneral.facade.cache.ExecutionAuditCacheFacade">
+        <property name="exeAuditRecordCacheController" ref="exeAuditRecordCacheControl"/>
+        <property name="executionCacheLoadedState" value="NOT_LOADED"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+        <property name="executionAuditRecordPersister" ref="executionAuditRecordPersister"/>
+    </bean>
+
+
+
+  
+    <bean id="orderPersister"
+          class="lk.ac.ucsc.oms.orderMgt.implGeneral.persistantImpl.hibernate.OrderHibernatePersister">
+        <constructor-arg index="0" ref="realTime"/>
+        <constructor-arg index="1" ref="history"/>
+        <property name="orderSearchHQLGenerator" ref="queryGenerator"/>
+        <property name="searchSessionFactory" ref="searchSessionFactory"/>
+        <property name="symbolPriceManager" ref="symbolPriceManager"/>
+        <property name="errorOrderPersister" ref="errorOrderPersister"/>
+    </bean>
+
+    <bean id="errorOrderPersister"
+          class="lk.ac.ucsc.oms.orderMgt.implGeneral.persistantImpl.hibernate.ErrorOrderPersister">
+        <constructor-arg index="0" ref="errorBeanSessionFactory"/>
+    </bean>
+    <bean id="queryGenerator"
+          class="lk.ac.ucsc.oms.orderMgt.implGeneral.persistantImpl.hibernate.utility.OrderSearchHQLGenerator"/>
+
+    <bean id="executionPersister"
+          class="lk.ac.ucsc.oms.orderMgt.implGeneral.persistantImpl.hibernate.ExecutionHibernatePersister">
+        <constructor-arg index="0" ref="realTime"/>
+    </bean>
+
+    <bean id="executionAuditRecordPersister"
+          class="lk.ac.ucsc.oms.orderMgt.implGeneral.persistantImpl.hibernate.ExecutionAuditRecordHibernatePersister">
+        <constructor-arg index="0" ref="realTime"/>
+    </bean>
+
+    <bean id="orderKeyPersister"
+          class="lk.ac.ucsc.oms.orderMgt.implGeneral.persistantImpl.hibernate.OrderKeyHibernatePersister">
+        <constructor-arg index="0" ref="realTime"/>
+        <constructor-arg index="1" ref="history"/>
+    </bean>
+
+    <bean id="orderCacheControl" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController">
+        <constructor-arg index="0" ref="orderPersister"/>
+        <constructor-arg index="1" value="orderMgt_order"/>
+    </bean>
+
+    <bean id="exeCacheControl" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController">
+        <constructor-arg index="0" ref="executionPersister"/>
+        <constructor-arg index="1" value="orderMgt_execution"/>
+    </bean>
+    <bean id="orderKeyCacheControl" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController">
+        <constructor-arg index="0" ref="orderKeyPersister"/>
+        <constructor-arg index="1" value="orderMgt_key"/>
+    </bean>
+
+    <bean id="exeAuditRecordCacheControl" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController">
+        <constructor-arg index="0" ref="executionAuditRecordPersister"/>
+        <constructor-arg index="1" value="orderMgt_audit"/>
+    </bean>
+    <bean id="historyPersister"
+          class="lk.ac.ucsc.oms.orderMgt.implGeneral.persistantImpl.hibernate.OrderHistoryHibernatePersister">
+        <constructor-arg index="0" ref="history"/>
+    </bean>
+
+    <bean id="realTime" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="lk.ac.ucsc.oms.orderMgt.implGeneral.bean"/>
+        <property name="configLocations" value="implGeneral/ordermgtHibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="history" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="lk.ac.ucsc.oms.orderMgt.implGeneral.bean"/>
+        <property name="configLocations" value="implGeneral/history-ordermgtHibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="searchSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan"
+                  value="lk.ac.ucsc.oms.orderMgt.implGeneral.bean,lk.ac.ucsc.oms.customer.implGeneral.beans,lk.ac.ucsc.oms.symbol.implGeneral.beans"/>
+        <property name="configLocations" value="implGeneral/order-search-hibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="errorBeanSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan"
+                  value="lk.ac.ucsc.oms.orderMgt.implGeneral.bean,lk.ac.ucsc.oms.customer.implGeneral.beans,lk.ac.ucsc.oms.symbol.implGeneral.beans"/>
+        <property name="configLocations" value="implGeneral/errorOrderHibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="dataSource"
+          factory-bean="SystemConfigurationFactory"
+          factory-method="getDatasource"/>
+
+    <!--<bean id="dataSource"-->
+          <!--factory-bean="SystemConfigurationFactory"-->
+          <!--factory-method="getBasicDataSource"/>-->
+
+    <bean id="sysLevelParaManager" factory-bean="SystemConfigurationFactory" factory-method="getSysLevelParamManager"/>
+
+    <bean id="SystemConfigurationFactory"
+          class="lk.ac.ucsc.oms.system_configuration.api.SystemConfigurationFactory"
+          factory-method="getInstance"/>
+
+    <bean id="symbolPriceManager"
+          factory-bean="symbolFacadeFactory"
+          factory-method="getSymbolPriceDataManager"/>
+
+    <bean id="symbolFacadeFactory"
+          class="lk.ac.ucsc.oms.symbol.api.SymbolFacadeFactory"
+          factory-method="getInstance"/>
+
+    <bean id="orderExecutionSchedule"
+          class="lk.ac.ucsc.oms.orderMgt.implGeneral.schedules.OrderExecutionSchedule">
+        <property name="frequency" value="20"/>
+        <property name="schedulerName" value="orderExecutionSchedule"/>
+        <property name="cacheController" ref="exeCacheControl"/>
+    </bean>
+
+    <bean id="orderSchedule"
+          class="lk.ac.ucsc.oms.orderMgt.implGeneral.schedules.OrderSchedule">
+        <property name="frequency" value="25"/>
+        <property name="schedulerName" value="orderSchedule"/>
+        <property name="cacheController" ref="orderCacheControl"/>
+        <property name="orderHibernatePersister" ref="orderPersister"/>
+    </bean>
+
+    <bean id="sequenceGen"
+          class="lk.ac.ucsc.oms.sequence_generator.api.SequenceGeneratorFactory"
+          factory-method="getInstance">
+        <constructor-arg index="0" value="ORDER_ID"/>
+    </bean>
+
+    <bean id="sequenceGenerator" class="lk.ac.ucsc.oms.sequence_generator.api.SequenceGeneratorFactory"
+          factory-method="getInstance">
+        <constructor-arg value="ORDER_ID"/>
+    </bean>
+
+
+</beans>

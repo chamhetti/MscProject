@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="fixFacade" class="lk.ac.ucsc.oms.fix.impl.facade.FIXFacade">
+        <property name="msgParserBean" ref="messageParser"/>
+        <property name="fixApiMessageBean" ref="genFixMessageBean"/>
+        <property name="moduleCode" value="FMM"/>
+    </bean>
+
+    <bean id="messageParser" class="lk.ac.ucsc.oms.fix.impl.parserLogic.MessageParser">
+        <property name="fixOrderBean" ref="fixOrder"/>
+        <property name="dataSeparator" ref="dataSeparator"/>
+        <property name="orderMapper" ref="ordermapper"/>
+    </bean>
+
+    <bean id="fixOrder" class="lk.ac.ucsc.oms.fix.impl.parserLogic.FIXOrder">
+        <property name="dateFormatter" ref="dateFormatterLong"/>
+        <property name="shortDateFormat" ref="dateFormatShort"/>
+    </bean>
+
+    <bean id="genFixMessageBean" class="lk.ac.ucsc.oms.fix.impl.exchangeLogic.FIXMessage">
+        <property name="shortDateFormat" ref="dateFormatShort"/>
+        <property name="longDateFormat" ref="dateFormatterLong"/>
+    </bean>
+
+    <bean id="ordermapper" class="lk.ac.ucsc.oms.fix.impl.parserLogic.OrderMapper">
+        <property name="accountManager" ref="accountManager"/>
+        <property name="customerManager" ref="customerManager"/>
+        <property name="symbolManager" ref="symbolManager"/>
+        <property name="exchangeManager" ref="exchangeManager"/>
+        <property name="orderSearchFacade" ref="orderSearchFacade"/>
+    </bean>
+
+    <bean id="dateFormatterLong" class="java.text.SimpleDateFormat">
+        <constructor-arg index="0" value="yyyyMMdd-HH:mm:ss"/>
+    </bean>
+
+    <bean id="dateFormatShort" class="java.text.SimpleDateFormat">
+        <constructor-arg index="0" value="yyyyMMdd"/>
+    </bean>
+
+    <bean id="dataSeparator" class="lk.ac.ucsc.oms.fix.impl.util.DataSeparator">
+        <constructor-arg index="0" value="="/>
+    </bean>
+
+
+    <bean id="accountManager"
+          factory-bean="customerFactory"
+          factory-method="getAccountManager"/>
+
+    <bean id="customerManager"
+          factory-bean="customerFactory"
+          factory-method="getCustomerManager"/>
+
+    <bean id="symbolManager"
+          factory-bean="symbolFactory"
+          factory-method="getSymbolManager"/>
+
+    <bean id="exchangeManager"
+          factory-bean="exchangeFactory"
+          factory-method="getExchangeManager"/>
+
+    <bean id="orderSearchFacade"
+          factory-bean="orderFacadeFactory"
+          factory-method="getOrderSearchFacade"/>
+
+
+
+
+    <bean id="customerFactory"
+          class="lk.ac.ucsc.oms.customer.api.CustomerFactory"
+          factory-method="getInstance"/>
+
+    <bean id="symbolFactory"
+          class="lk.ac.ucsc.oms.symbol.api.SymbolFacadeFactory"
+          factory-method="getInstance"/>
+
+    <bean id="exchangeFactory"
+          class="lk.ac.ucsc.oms.exchanges.api.ExchangeFactory"
+          factory-method="getInstance"/>
+
+
+    <bean id="orderFacadeFactory"
+          class="lk.ac.ucsc.oms.orderMgt.api.OrderManagementFactory"
+          factory-method="getInstance"/>
+
+    <bean id="dataSource"
+          factory-bean="SystemConfigurationFactory"
+          factory-method="getDatasource"/>
+
+    <bean id="SystemConfigurationFactory"
+          class="lk.ac.ucsc.oms.system_configuration.api.SystemConfigurationFactory"
+          factory-method="getInstance"/>
+    <bean id="sysLevelParaManager"
+          factory-bean="systemConfigurationFactory"
+          factory-method="getSysLevelParamManager"/>
+    <bean id="systemConfigurationFactory"
+          class="lk.ac.ucsc.oms.system_configuration.api.SystemConfigurationFactory"
+          factory-method="getInstance"/>
+</beans>

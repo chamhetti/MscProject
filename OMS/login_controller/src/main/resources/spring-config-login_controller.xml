@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="customerManager"
+          factory-bean="customerFactory"
+          factory-method="getCustomerManager"/>
+
+    <bean id="accountManager"
+          factory-bean="customerFactory"
+          factory-method="getAccountManager"/>
+
+    <bean id="customerLoginManager"
+          factory-bean="customerFactory"
+          factory-method="getCustomerLoginManager"/>
+
+    <bean id="cashManager"
+          factory-bean="customerFactory"
+          factory-method="getCashManager"/>
+
+    <bean id="customerFactory"
+          class="lk.ac.ucsc.oms.customer.api.CustomerFactory"
+          factory-method="getInstance"/>
+
+
+    <bean id="trsConnector"
+          class="lk.ac.ucsc.oms.trs_connector.api.TrsConnectorFactory"
+          factory-bean="trsConnectorFactory"
+          factory-method="getTrsConnector"/>
+
+
+    <bean id="sysLevelParaManager"
+          class="lk.ac.ucsc.oms.system_configuration.api.SysLevelParaManager"
+          factory-bean="systemConfigurationFactory"
+          factory-method="getSysLevelParamManager"/>
+
+    <bean id="systemConfigurationFactory"
+          class="lk.ac.ucsc.oms.system_configuration.api.SystemConfigurationFactory"
+          factory-method="getInstance"/>
+
+    <bean id="trsConnectorFactory"
+          class="lk.ac.ucsc.oms.trs_connector.api.TrsConnectorFactory"
+          factory-method="getInstance"/>
+
+
+</beans>

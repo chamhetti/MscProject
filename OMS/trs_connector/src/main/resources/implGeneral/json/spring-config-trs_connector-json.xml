@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <bean id="trsConnector" class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.TrsConnectorJsonImpl">
+        <property name="messageProtocolFacade" ref="jsonFacade"/>
+        <property name="authMessageHandler" ref="authMessageHandler"/>
+        <property name="inquiryMessageHandler" ref="inquiryMessageHandler"/>
+        <property name="tradingInquiryMessageHandler" ref="tradingInquiryMessageHandler"/>
+        <property name="customerInquiryMessageHandler" ref="customerInquiryMessageHandler"/>
+        <property name="tradeMessageHandler" ref="tradeMessageHandler"/>
+    </bean>
+
+    <bean id="jsonFacade" class="lk.ac.ucsc.oms.messaging_protocol_json.api.MessageProtocolFacade"
+          factory-bean="messageProtocolFacadeFactoryJson" factory-method="getMessageProtocolFacade">
+    </bean>
+
+    <bean id="messageProtocolFacadeFactoryJson"
+          class="lk.ac.ucsc.oms.messaging_protocol_json.api.MessageProtocolFacadeFactory">
+    </bean>
+
+    <!--> bean definitions for message handlers <-->
+    <bean id="authMessageHandler"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.AuthMessageHandler">
+        <property name="authenticationHandlerHelper" ref="authenticationHandlerHelper"/>
+    </bean>
+
+    <bean id="authenticationHandlerHelper"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.helpers.AuthenticationHandlerHelper"/>
+
+    <bean id="marketStatusHandler"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.helpers.MarketStatusHandlerHelper">
+    </bean>
+
+    <bean id="fixOrderHandler"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.fix.FixOrderHandler"/>
+
+
+
+    <bean id="inquiryMessageHandler"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.InquiryMessageHandler">
+        <property name="inquiryHandlerHelper" ref="inquiryHandlerHelper"/>
+    </bean>
+
+    <bean id="inquiryHandlerHelper"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.helpers.InquiryHandlerHelper"/>
+
+    <bean id="tradingInquiryMessageHandler"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.TradingInquiryMessageHandler">
+        <property name="tradingInquiryHandlerHelper" ref="tradingInquiryHandlerHelper"/>
+    </bean>
+
+    <bean id="tradingInquiryHandlerHelper"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.helpers.TradingInquiryHandlerHelper"/>
+
+    <bean id="customerInquiryMessageHandler"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.CustomerInquiryMessageHandler">
+        <property name="customerInquiryHandlerHelper" ref="customerInquiryHandlerHelper"/>
+    </bean>
+
+    <bean id="customerInquiryHandlerHelper"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.helpers.CustomerInquiryHandlerHelper"/>
+
+    <bean id="tradeMessageHandler"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.TradeMessageHandler">
+        <property name="tradingHandlerHelper" ref="tradingHandlerHelper"/>
+    </bean>
+
+    <bean id="tradingHandlerHelper"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.helpers.TradingHandlerHelper"/>
+
+    <util:map id="authenticationBeansPopulatorMap" key-type="java.lang.Integer"
+              value-type="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.populators.AuthenticationBeansPopulator">
+        <entry key="1" value-ref="authPopulatorV1"/>
+
+    </util:map>
+
+    <bean id="authPopulatorV1"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.populators.ver1.AuthenticationBeansPopulatorImpl">
+        <property name="messageProtocolFacade" ref="jsonFacade"/>
+    </bean>
+
+    <util:map id="tradingInquiryBeansPopulatorMap" key-type="java.lang.Integer"
+              value-type="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.populators.TradingInquiryBeansPopulator">
+        <entry key="1" value-ref="tradInqPopulatorV1"/>
+    </util:map>
+
+    <bean id="tradInqPopulatorV1"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.populators.ver1.TradingInquiryBeansPopulatorImpl"/>
+
+
+    <util:map id="normalOrderBeansPopulatorMap" key-type="java.lang.Integer"
+              value-type="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.populators.NormalOrderBeansPopulator">
+        <entry key="1" value-ref="normalOrdPopulatorV1"/>
+    </util:map>
+
+    <bean id="normalOrdPopulatorV1"
+          class="lk.ac.ucsc.oms.trs_connector.implGeneral.json.handlers.populators.ver1.NormalOrderBeansPopulatorImpl"/>
+
+
+
+
+
+
+
+</beans>

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--for production: do not modify in the trunk  -->
+    <bean id="dataSource" class="org.springframework.remoting.rmi.JndiRmiProxyFactoryBean">
+        <property name="jndiName" value="java:/jdbc/omsdb"/>
+        <property name="serviceInterface" value="javax.sql.DataSource"/>
+    </bean>
+
+    <!--for tests-->
+    <!--<bean id="basicDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">-->
+    <!--<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>-->
+    <!--<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE"/>-->
+    <!--<property name="username" value="OMS"/>-->
+    <!--<property name="password" value="password"/>-->
+    <!--</bean>-->
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" scope="singleton">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="lk.ac.ucsc.oms.system_configuration.implGeneral.bean.*"/>
+        <property name="configLocations" value="implGeneral/sysConfigHibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="sysLevelParamManager"
+          class="lk.ac.ucsc.oms.system_configuration.implGeneral.facade.SysLevelParamManagerFacade">
+        <property name="sysLevelParamCacheFacade" ref="sysLevelParamCache"/>
+    </bean>
+
+    <bean id="sysLevelParamCache"
+          class="lk.ac.ucsc.oms.system_configuration.implGeneral.facade.cache.SysLevelParamCacheFacade">
+        <property name="cacheController" ref="sysParamCacheControler"/>
+        <property name="cacheLoadedState" value="PARTIALITY_LOADED"/>
+        <property name="sysLevelParamPersisterHibernate" ref="sysParamHibernatePersister"/>
+    </bean>
+
+    <bean id="sysParamCacheControler" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController" scope="singleton">
+        <constructor-arg index="0" ref="sysParamHibernatePersister"/>
+        <constructor-arg index="1" value="sysParam"/>
+    </bean>
+
+    <bean id="sysParamHibernatePersister"
+          class="lk.ac.ucsc.oms.system_configuration.implGeneral.persitantImpl.hibernate.SysLevelParamPersisterHibernate">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="sysParamScheduler"
+          class="lk.ac.ucsc.oms.system_configuration.implGeneral.scheduler.SysParamScheduler">
+        <property name="frequency" value="300"/>
+        <property name="schedulerName" value="sysParamScheduler"/>
+        <property name="cacheController" ref="sysParamCacheControler"/>
+    </bean>
+</beans>

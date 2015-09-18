@@ -1,0 +1,37 @@
+<config xmlns="urn:org:jgroups"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:org:jgroups http://jgroups.org/schema/JGroups-3.4.xsd">
+
+    <TCP bind_addr="127.0.0.1" bind_port="7800"/>
+    <TCPPING timeout="3000"
+             initial_hosts="${jgroups.tcpping.initial_hosts:127.0.0.2[7800]}"
+             port_range="0"
+             num_initial_members="0"/>
+
+    <!--<TCP bind_addr="10.1.20.42" bind_port="7800"/>-->
+    <!--<TCPPING timeout="3000"-->
+             <!--initial_hosts="${jgroups.tcpping.initial_hosts:10.1.20.73[7800]}"-->
+             <!--port_range="0"-->
+             <!--num_initial_members="1"/>-->
+    <MERGE2/>
+    <FD_SOCK/>
+    <FD/>
+    <VERIFY_SUSPECT timeout="1500"/>
+    <pbcast.NAKACK use_mcast_xmit="false"
+                   retransmit_timeout="300,600,1200,2400,4800"
+                   discard_delivered_msgs="true"/>
+    <pbcast.STABLE stability_delay="1000"
+                   desired_avg_gossip="50000"
+                   max_bytes="400000"/>
+    <pbcast.GMS print_local_addr="true"
+                join_timeout="3000"
+                view_bundling="true"/>
+    <UFC/>
+    <MFC/>
+    <FRAG2/>
+    <RSVP timeout="60000"
+          resend_interval="500"
+          ack_on_delivery="true"/>
+
+
+</config>

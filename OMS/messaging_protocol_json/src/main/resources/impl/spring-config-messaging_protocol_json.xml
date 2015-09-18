@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="messageProtocolFacade"
+          class="lk.ac.ucsc.oms.messaging_protocol_json.impl.MessageProtocolFacadeImpl">
+        <property name="jsonParser" ref="jsonParser"/>
+        <property name="requestMap" ref="reqMap"/>
+    </bean>
+
+    <bean id="jsonParser" class="com.google.gson.Gson"/>
+
+    <util:map id="reqMap" value-type="java.lang.String">
+
+        <!--GROUP_TRADING Request Mapping-->
+        <!--normal order request-->
+        <entry key="1-1"
+               value="trading.OrderRequestEnvelope"/>
+        <!--offline order request-->
+        <entry key="1-2"
+               value="trading.OfflineOrderRequestEnvelope"/>
+        <!--conditional order request-->
+        <entry key="1-3"
+               value="trading.ConditionalOrderRequestEnvelope"/>
+        <!--slice order request-->
+        <entry key="1-4"
+               value="trading.SliceOrderRequestEnvelope"/>
+        <!--amend order-->
+        <entry key="1-7"
+               value="trading.OrderAmendRequestEnvelope"/>
+        <entry key="1-8"
+               value="trading.OfflineOrderAmendRequestEnvelope"/>
+        <!--amend conditional order -->
+        <entry key="1-9"
+               value="trading.ConditionalOrderAmendRequestEnvelope"/>
+        <!--amend slice order-->
+        <entry key="1-10"
+               value="trading.SliceOrderAmendRequestEnvelope"/>
+        <!--order cancel request-->
+        <entry key="1-12"
+               value="trading.OrderCancelRequestEnvelope"/>
+        <entry key="1-13"
+               value="trading.OfflineOrderCancelRequestEnvelope"/>
+        <entry key="1-14"
+               value="trading.ConditionalOrderCancelRequestEnvelope"/>
+        <entry key="1-15"
+               value="trading.SliceOrderCancelRequestEnvelope"/>
+        <entry key="1-19"
+               value="trading.ReverseOrderRequestEnvelope"/>
+        <entry key="1-20"
+               value="trading.ExpireOrderRequestEnvelope"/>
+        <entry key="1-21"
+               value="trading.ManualOrderRequestEnvelope"/>
+        <entry key="1-22"
+               value="trading.ApproveRejectOrderRequestEnvelope"/>
+
+        <entry key="1-18"
+               value="trading.MarkForDeliveryRequestEnvelope"/>
+        <entry key="1-118"
+               value="trading.MarkForDeliveryResponseEnvelope"/>
+
+        <!--Desk Order Related-->
+        <entry key="1-5"
+               value="trading.DeskRequestEnvelope"/>
+        <entry key="1-11"
+               value="trading.DeskAmendRequestEnvelope"/>
+        <entry key="1-16"
+               value="trading.DeskCancelRequestEnvelope"/>
+        <entry key="1-23"
+               value="trading.DeskAcceptRequestEnvelope"/>
+        <entry key="1-24"
+               value="trading.DeskRejectRequestEnvelope"/>
+        <entry key="1-25"
+               value="trading.DeskAcceptAmendRequestEnvelope"/>
+        <entry key="1-26"
+               value="trading.DeskRejectAmendRequestEnvelope"/>
+        <entry key="1-28"
+               value="trading.DeskAcceptCancelRequestEnvelope"/>
+        <entry key="1-29"
+               value="trading.DeskRejectCancelRequestEnvelope"/>
+        <entry key="1-30"
+               value="trading.DeskCancelAllChildRequestEnvelope"/>
+        <entry key="1-31"
+               value="trading.DeskSwitchAutoReleaseRequestEnvelope"/>
+        <entry key="1-32"
+               value="trading.DeskExpireRequestEnvelope"/>
+        <entry key="1-33"
+               value="trading.DeskAttachChildOrderRequestEnvelope"/>
+        <entry key="1-35"
+               value="trading.DeskFillInCompleteRequestEnvelope"/>
+        <entry key="1-105"
+               value="trading.DeskResponseEnvelope"/>
+
+        <!--FOL related-->
+        <entry key="1-6"
+               value="trading.FOLRequestEnvelope"/>
+        <entry key="1-17"
+               value="trading.FOLCancelRequestEnvelope"/>
+        <entry key="1-106"
+               value="trading.FOLResponseEnvelope"/>
+
+
+        <!--IOM related-->
+        <entry key="1-40"
+               value="trading.InternalMatchingRequestEnvelope"/>
+        <entry key="1-140"
+               value="trading.InternalMatchingResponseEnvelope"/>
+        <entry key="1-41"
+               value="trading.ReleaseParkedOrderRequestEnvelope"/>
+
+        <!--Basket related-->
+        <entry key="1-42"
+               value="trading.BasketOrderRequestEnvelope"/>
+        <entry key="1-142"
+               value="trading.BasketOrderResponseEnvelope"/>
+
+        <!--MultiNIN related-->
+        <entry key="1-43"
+               value="trading.MultiNinNewRequestEnvelope"/>
+        <entry key="1-44"
+               value="trading.MultiNinAmendRequestEnvelope"/>
+        <entry key="1-45"
+               value="trading.MultiNinCancelRequestEnvelope"/>
+        <entry key="1-46"
+               value="trading.MultiNinExpireRequestEnvelope"/>
+        <entry key="1-47"
+               value="trading.MultiNinCancelAllChildsOfMasterRequestEnvelope"/>
+        <entry key="1-48"
+               value="trading.MultiNinCancelBreakDownOrderRequestEnvelope"/>
+
+        <entry key="1-50"
+               value="trading.XtOrderExecutionRequestEnvelope"/>
+
+        <entry key="1-51"
+               value="trading.AlterOrderStatusRequestEnvelope"/>
+
+        <!--approve reject call centre order request-->
+        <entry key="1-52"
+               value="trading.CancelRejectCallCenOrdRequestEnvelope"/>
+
+        <entry key="1-143"
+               value="trading.MultiNinMasterOrderResponseEnvelope"/>
+        <entry key="1-144"
+               value="trading.MultiNinOrderResponseEnvelope"/>
+
+
+        <entry key="1-151"
+               value="trading.AlterOrderStatusResponseEnvelope"/>
+
+        <entry key="1-152"
+               value="trading.CancelRejectCallCenOrdResponseEnvelope"/>
+
+        <entry key="1-101"
+               value="trading.OrderResponseEnvelope"/>
+        <entry key="1-103"
+               value="trading.ConditionalOrderResponseEnvelope"/>
+
+
+        <!--GROUP_TRADING_INQUIRY Request Mapping-->
+        <entry key="2-1"
+               value="inquiry.OrderSearchRequestEnvelope"/>
+        <entry key="2-101"
+               value="inquiry.OrderSearchResponseEnvelope"/>
+
+        <entry key="2-2"
+               value="inquiry.OrderDetailsRequestEnvelope"/>
+        <entry key="2-102"
+               value="inquiry.OrderDetailsResponseEnvelope"/>
+
+        <entry key="2-3"
+               value="inquiry.OrderListRequestEnvelope"/>
+        <entry key="2-103"
+               value="inquiry.OrderListResponseEnvelope"/>
+
+        <entry key="2-4"
+               value="inquiry.ExecutionHistoryRequestEnvelope"/>
+        <entry key="2-104"
+               value="inquiry.ExecutionHistoryResponseEnvelope"/>
+
+        <entry key="2-5"
+               value="inquiry.OrderCommissionRequestEnvelope"/>
+        <entry key="2-105"
+               value="inquiry.OrderCommissionResponseEnvelope"/>
+
+        <entry key="2-6"
+               value="inquiry.OrderSearchDTRequestEnvelope"/>
+        <entry key="2-106"
+               value="inquiry.OrderSearchDTResponseEnvelope"/>
+
+        <entry key="2-7"
+               value="inquiry.MarkForDeliverySuggestRequestEnvelope"/>
+        <entry key="2-107"
+               value="inquiry.MarkForDeliverySuggestResponseEnvelope"/>
+
+        <entry key="2-8"
+               value="inquiry.DeskOrderDepthRequestEnvelope"/>
+        <entry key="2-108"
+               value="inquiry.DeskOrderDepthResponseEnvelope"/>
+
+        <entry key="2-9"
+               value="inquiry.IntradayPositionMonitorRequestEnvelope"/>
+        <entry key="2-109"
+               value="inquiry.IntradayPositionMonitorResponseEnvelope"/>
+
+        <entry key="2-10"
+               value="inquiry.BasketRequestEnvelope"/>
+        <entry key="2-110"
+               value="inquiry.BasketResponseEnvelope"/>
+
+        <entry key="2-11"
+               value="inquiry.OrderSearchMultipleCategoryRequestEnvelope"/>
+        <entry key="2-111"
+               value="inquiry.OrderSearchMultipleCategoryResponseEnvelope"/>
+
+        <entry key="2-12"
+               value="inquiry.OrderListMultipleCategoryRequestEnvelope"/>
+        <entry key="2-112"
+               value="inquiry.OrderListMultipleCategoryResponseEnvelope"/>
+
+        <entry key="2-13"
+               value="inquiry.DstReportRequestEnvelope"/>
+        <entry key="2-113"
+               value="inquiry.DstReportResponseEnvelope"/>
+        <entry key="2-14"
+               value="inquiry.OrderQuantityCalculateRequestEnvelope"/>
+        <entry key="2-114"
+               value="inquiry.OrderQuantityCalculateResponseEnvelope"/>
+
+        <!--GROUP_INQUIRY Request Mapping-->
+        <entry key="3-1"
+               value="inquiry.BuyingPowerRequestEnvelope"/>
+        <entry key="3-101"
+               value="inquiry.BuyingPowerResponseEnvelope"/>
+        <!--unsolicited acc-summary-->
+        <entry key="3-201"
+               value="inquiry.BuyingPowerResponseEnvelope"/>
+
+        <entry key="3-2"
+               value="inquiry.PortfolioDetailsRequestEnvelope"/>
+        <entry key="3-102"
+               value="inquiry.PortfolioDetailsResponseEnvelope"/>
+
+        <entry key="3-3"
+               value="inquiry.BankDetailsRequestEnvelope"/>
+
+        <entry key="3-103"
+               value="inquiry.BankDetailsResponseEnvelope"/>
+
+        <entry key="3-4"
+               value="inquiry.DestinationBankRequestEnvelope"/>
+        <entry key="3-104"
+               value="inquiry.DestinationBankResponseEnvelope"/>
+
+        <entry key="3-5"
+               value="inquiry.MarginableSymbolRequestEnvelope"/>
+        <entry key="3-105"
+               value="inquiry.MarginableSymbolResponseEnvelope"/>
+
+        <entry key="3-6"
+               value="inquiry.CashStatementRequestEnvelope"/>
+        <entry key="3-106"
+               value="inquiry.CashStatementResponseEnvelope"/>
+
+        <entry key="3-7"
+               value="inquiry.HoldingStatementRequestEnvelope"/>
+        <entry key="3-107"
+               value="inquiry.HoldingStatementResponseEnvelope"/>
+
+        <entry key="3-8"
+               value="inquiry.MasterDataRequestEnvelope"/>
+        <entry key="3-108"
+               value="inquiry.MasterDataResponseEnvelope"/>
+
+        <entry key="3-9"
+               value="inquiry.ExchangeLevelConfigRequestEnvelope"/>
+        <entry key="3-109"
+               value="inquiry.ExchangeLevelConfigResponseEnvelope"/>
+
+        <entry key="3-10"
+               value="inquiry.MarginableBuyingPowerRequestEnvelope"/>
+        <entry key="3-110"
+               value="inquiry.MarginableBuyingPowerResponseEnvelope"/>
+
+
+        <entry key="3-12"
+               value="inquiry.SubscriptionDataRequestEnvelope"/>
+        <entry key="3-112"
+               value="inquiry.SubscriptionDataResponseEnvelope"/>
+
+        <entry key="3-13"
+               value="inquiry.RuleListRequestEnvelope"/>
+        <entry key="3-113"
+               value="inquiry.RuleListResponseEnvelope"/>
+
+        <entry key="3-14"
+               value="inquiry.AuthPersonListRequestEnvelope"/>
+        <entry key="3-114"
+               value="inquiry.AuthPersonListResponseEnvelope"/>
+
+        <entry key="3-15"
+               value="inquiry.UserEntitlementRequestEnvelope"/>
+        <entry key="3-115"
+               value="inquiry.UserEntitlementResponseEnvelope"/>
+
+        <entry key="3-16"
+               value="inquiry.TradeConnectionSummaryRequestEnvelope"/>
+        <entry key="3-116"
+               value="inquiry.TradeConnectionSummaryResponseEnvelope"/>
+
+        <entry key="3-17"
+               value="inquiry.PortfolioRenameRequestEnvelope"/>
+        <entry key="3-117"
+               value="inquiry.PortfolioRenameResponseEnvelope"/>
+
+        <entry key="3-17"
+               value="inquiry.PortfolioRenameRequestEnvelope"/>
+        <entry key="3-117"
+               value="inquiry.PortfolioRenameResponseEnvelope"/>
+
+        <entry key="3-18"
+               value="inquiry.PendingAlertRequestEnvelope"/>
+        <entry key="3-118"
+               value="inquiry.AlertResponseListEnvelope"/>
+
+        <entry key="3-19"
+               value="inquiry.MultiNinInstitutionRequestEnvelope"/>
+        <entry key="3-119"
+               value="inquiry.MultiNinInstitutionResponseEnvelope"/>
+
+        <!--GROUP_FINANCE_AND_HOLDING Request Mapping-->
+        <entry key="4-1"
+               value="financeAndHoldings.DepositRequestEnvelope"/>
+        <entry key="4-101"
+               value="financeAndHoldings.DepositResponseEnvelope"/>
+        <entry key="4-2"
+               value="financeAndHoldings.WithdrawalRequestEnvelope"/>
+        <entry key="4-102"
+               value="financeAndHoldings.WithdrawalResponseEnvelope"/>
+        <entry key="4-3"
+               value="financeAndHoldings.DepositWithdrawalRequestEnvelope"/>
+        <entry key="4-103"
+               value="financeAndHoldings.DepositWithdrawalCancelResponseEnvelope"/>
+        <entry key="4-4"
+               value="financeAndHoldings.CashTransferRequestEnvelope"/>
+        <entry key="4-104"
+               value="financeAndHoldings.CashTransferResponseEnvelope"/>
+        <entry key="4-5"
+               value="financeAndHoldings.ExchangeRateRequestEnvelope"/>
+        <entry key="4-105"
+               value="financeAndHoldings.ExchangeRateResponseEnvelope"/>
+        <entry key="4-6"
+               value="financeAndHoldings.DepositWithdrawalListRequestEnvelope"/>
+        <entry key="4-106"
+               value="financeAndHoldings.DepositWithdrawalListResponseEnvelope"/>
+
+        <entry key="4-7"
+               value="financeAndHoldings.MurabahahMarginFacilityRequestEnvelope"/>
+        <entry key="4-107"
+               value="financeAndHoldings.MurabahahMarginFacilityResponseEnvelope"/>
+
+        <entry key="4-8"
+               value="financeAndHoldings.RolloverRequestEnvelope"/>
+        <entry key="4-108"
+               value="financeAndHoldings.RolloverResponseEnvelope"/>
+
+        <entry key="4-9"
+               value="financeAndHoldings.RolloverActivationRequestEnvelope"/>
+        <entry key="4-109"
+               value="financeAndHoldings.RolloverActivationResponseEnvelope"/>
+
+        <entry key="4-10"
+               value="financeAndHoldings.PendingCashTransactionRequestEnvelope"/>
+        <entry key="4-110"
+               value="financeAndHoldings.PendingCashTransactionResponseEnvelope"/>
+
+        <entry key="4-48"
+               value="financeAndHoldings.MarginFacilityAdministrationRequestEnvelope"/>
+        <entry key="4-148"
+               value="financeAndHoldings.MarginFacilityAdministrationResponseEnvelope"/>
+
+
+        <!--GROUP_AUTHENTICATION Request Mapping-->
+        <entry key="5-1"
+               value="authentication.AuthenticationNormalRequestEnvelope"/>
+        <entry key="5-101"
+               value="authentication.AuthenticationNormalResponseEnvelope"/>
+        <entry key="5-2"
+               value="authentication.AuthenticationLevelTwoRequestEnvelope"/>
+        <entry key="5-102"
+               value="authentication.AuthenticationLevelTwoResponseEnvelope"/>
+        <entry key="5-3"
+               value="authentication.ChangePasswordRequestEnvelope"/>
+        <entry key="5-103"
+               value="authentication.ChangePasswordResponseEnvelope"/>
+        <entry key="5-4"
+               value="authentication.LogoutRequestEnvelope"/>
+        <entry key="5-104"
+               value="authentication.LogoutResponseEnvelope"/>
+        <entry key="5-5"
+               value="authentication.PinValidationRequestEnvelope"/>
+        <entry key="5-105"
+               value="authentication.PinValidationResponseEnvelope"/>
+        <entry key="5-6"
+               value="authentication.PriceAuthenticationRequestEnvelope"/>
+        <entry key="5-106"
+               value="authentication.PriceAuthenticationResponseEnvelope"/>
+        <entry key="5-7"
+               value="authentication.PasswordComplexityConfigRequestEnvelope"/>
+        <entry key="5-107"
+               value="authentication.PasswordComplexityConfigResponseEnvelope"/>
+
+        <!--GROUP_SYSTEM Request Mapping-->
+        <entry key="6-1"
+               value="system.PulseRequestEnvelope"/>
+        <entry key="6-101"
+               value="system.PulseResponseEnvelope"/>
+        <entry key="6-19"
+               value="system.CombinedRequestEnvelope"/>
+        <entry key="6-119"
+               value="system.CombinedResponseEnvelope"/>
+        <entry key="6-20"
+               value="system.CombinedRequestEnvelope"/>
+        <entry key="6-120"
+               value="system.CombinedResponseEnvelope"/>
+        <entry key="6-21"
+               value="system.ConfigurationInformationRequestEnvelope"/>
+        <entry key="6-121"
+               value="system.ConfigurationInformationResponseEnvelope"/>
+
+        <!--GROUP_CUSTOMER_INQUIRY Request Mapping-->
+        <entry key="10-1"
+               value="inquiry.CustomerDetailRequestEnvelope"/>
+        <entry key="10-101"
+               value="inquiry.CustomerDetailResponseEnvelope"/>
+
+        <entry key="10-2"
+               value="inquiry.CustomerSearchRequestEnvelope"/>
+        <entry key="10-102"
+               value="inquiry.CustomerSearchResponseEnvelope"/>
+
+        <entry key="10-3"
+               value="inquiry.CustomerAccountDetailRequestEnvelope"/>
+        <entry key="10-103"
+               value="inquiry.CustomerAccountDetailResponseEnvelope"/>
+
+        <entry key="10-5"
+               value="inquiry.CustomerListByUserRequestEnvelope"/>
+        <entry key="10-105"
+               value="inquiry.CustomerListByUserResponseEnvelope"/>
+
+        <entry key="10-6"
+               value="inquiry.CustomerSearchNewRequestEnvelope"/>
+        <entry key="10-106"
+               value="inquiry.CustomerSearchNewResponseEnvelope"/>
+
+        <entry key="10-7"
+               value="inquiry.ReportUrlRequestEnvelope"/>
+        <entry key="10-107"
+               value="inquiry.ReportUrlResponseEnvelope"/>
+
+        <entry key="10-8"
+               value="inquiry.MarginNotificationRequestEnvelope"/>
+        <entry key="10-108"
+               value="inquiry.MarginNotificationResponseEnvelope"/>
+
+        <entry key="10-9"
+               value="inquiry.CachedCustomerListRequestEnvelope"/>
+        <entry key="10-109"
+               value="inquiry.CachedCustomerListResponseEnvelope"/>
+
+        <!-- GROUP_SUBSCRIPTION_SERVICES Request Mapping -->
+
+        <entry key="11-10"
+               value="administration.SubscriptionPackageListRequestEnvelope"/>
+        <entry key="11-110"
+               value="administration.SubscriptionPackageListResponseEnvelope"/>
+
+        <entry key="11-23"
+               value="administration.SubscriptionRequestEnvelope"/>
+        <entry key="11-123"
+               value="administration.SubscriptionResponseEnvelope"/>
+
+        <entry key="11-9"
+               value="administration.SubscriptionUpgradeRequestEnvelope"/>
+        <entry key="11-109"
+               value="administration.SubscriptionUpgradeResponseEnvelope"/>
+
+        <!-- GROUP_OMS_ADMIN_SERVICES Request Mapping -->
+        <entry key="14-60"
+               value="administration.PendingMessageRequestEnvelope"/>
+        <entry key="14-160"
+               value="administration.PendingMessageResponseEnvelope"/>
+
+        <!-- GROUP_CUSTOMER_ADMIN_SERVICES Request Mapping -->
+
+        <entry key="15-1"
+               value="administration.CustomerAdminServiceRequestEnvelope"/>
+        <entry key="15-101"
+               value="administration.CustomerAdminServiceResponseEnvelope"/>
+
+        <entry key="15-11"
+               value="administration.IOMUpgradeRequestEnvelope"/>
+        <entry key="15-111"
+               value="administration.IOMUpgradeResponseEnvelope"/>
+        <entry key="15-12"
+               value="administration.SendNotificationRequestEnvelope"/>
+        <entry key="15-112"
+               value="administration.SendNotificationResponseEnvelope"/>
+
+        <!-- GROUP_SYSTEM Request Mapping -->
+
+        <entry key="6-2"
+               value="system.FeedLevelNotificationRequestEnvelope"/>
+        <entry key="6-102"
+               value="system.OMSSystemMessageResponseEnvelope"/>
+
+    </util:map>
+
+
+</beans>

@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>lk.ac.ucsc</groupId>
+        <artifactId>oms</artifactId>
+        <version>1.0.000</version>
+    </parent>
+    <groupId>lk.ac.ucsc.oms</groupId>
+    <artifactId>cash_trading</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Cash Trading Module</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>orderMgt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>customer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>common_utility</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
+    </dependencies>
+</project>

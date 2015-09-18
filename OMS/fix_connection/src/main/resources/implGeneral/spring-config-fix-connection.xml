@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="fixFacade" class="lk.ac.ucsc.oms.fixConnection.implGeneral.facade.FIXConnectionFacadeImpl">
+        <!--<constructor-arg ref="fs"/>-->
+        <property name="cacheFacade" ref="fixConCache"/>
+        <property name="moduleCode" value="FIX_CON"/>
+    </bean>
+
+    <bean id="fixConnectionSchedule"
+          class="lk.ac.ucsc.oms.fixConnection.implGeneral.schedule.FIXConnectionSchedule">
+        <property name="schedulerName" value="FIX_CON"/>
+        <property name="frequency" value="1200"/>
+        <property name="cacheController" ref="cacheControl"/>
+    </bean>
+
+    <bean id="fixConCache"
+          class="lk.ac.ucsc.oms.fixConnection.implGeneral.facade.cache.FIXConnectionCacheFacade">
+        <property name="cacheController" ref="cacheControl"/>
+        <property name="cacheLoadedState" value="FULLY_LOADED"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+
+    </bean>
+
+    <bean id="cacheControl" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController">
+        <constructor-arg index="0" ref="persistor"/>
+        <constructor-arg index="1" value="FIX_CONN"/>
+    </bean>
+
+    <bean id="persistor"
+          class="lk.ac.ucsc.oms.fixConnection.implGeneral.persistantImpl.hibernate.FIXConnectionHibernatePersister">
+        <constructor-arg index="0" ref="realTime"/>
+        <constructor-arg index="1" ref="history"/>
+    </bean>
+
+    <bean id="realTime" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="lk.ac.ucsc.oms.fixConnection.implGeneral"/>
+        <property name="configLocations" value="implGeneral/fixcon_hibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="history" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="lk.ac.ucsc.oms.fixConnection.implGeneral"/>
+        <property name="configLocations" value="implGeneral/fixcon_history-hibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="sysLevelParaManager"
+          factory-bean="SystemConfigurationFactory"
+          factory-method="getSysLevelParamManager"/>
+
+    <bean id="dataSource"
+          factory-bean="SystemConfigurationFactory"
+          factory-method="getDatasource"/>
+
+    <bean id="SystemConfigurationFactory"
+          class="lk.ac.ucsc.oms.system_configuration.api.SystemConfigurationFactory"
+          factory-method="getInstance"/>
+
+
+</beans>

@@ -1,0 +1,434 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="lk.ac.ucsc.oms.customer.implGeneral.beans.customer.CustomerBean"
+           table="cusmm_customer_hs">
+        <id name="primaryKeyObject" type="java.lang.Long" unsaved-value="0">
+            <column name="KEY_COL"/>
+            <generator class="sequence">
+                <param name="sequence">CUSMM_HS_SEQ</param>
+            </generator>
+        </id>
+
+        <property name="customerId" type="java.lang.Long">
+            <column name="CUSTOMER_ID" length="10"/>
+        </property>
+
+        <property name="customerNumber" type="java.lang.String">
+            <column name="CUSTOMER_NUMBER" not-null="true" length="50"/>
+        </property>
+        <property name="status" column="STATUS" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.RecordStatus</param>
+            </type>
+        </property>
+        <property name="accountType" column="ACCOUNT_TYPE" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.customer.api.beans.AccountType</param>
+            </type>
+        </property>
+        <property name="institutionCode" type="java.lang.String">
+            <column name="INSTITUTION_CODE" length="50"/>
+        </property>
+        <property name="parentCusNumber" type="java.lang.String">
+            <column name="PARENT_CUSTOMER_NUMBER" length="50"/>
+        </property>
+
+        <property name="preparedLanguage" type="java.lang.String">
+            <column name="PREPERED_LANGUAGE" length="50"/>
+        </property>
+
+        <property name="currency" type="java.lang.String">
+            <column name="CURRENCY" length="50"/>
+        </property>
+
+        <one-to-one name="personalProfile"
+                    class="lk.ac.ucsc.oms.customer.implGeneral.beans.customer.PersonalProfileBean"
+                    cascade="all" lazy="false"/>
+        <one-to-one name="loginProfile"
+                    class="lk.ac.ucsc.oms.customer.implGeneral.beans.customer.LoginProfileBean"
+                    cascade="all" lazy="false"/>
+
+
+        <property name="lastChanged" type="java.util.Date">
+            <column name="LAST_CHANGED"/>
+        </property>
+
+    </class>
+
+    <class name="lk.ac.ucsc.oms.customer.implGeneral.beans.customer.PersonalProfileBean"
+           table="cusmm_personalprofile_hs">
+        <id name="primaryKeyObject" type="java.lang.Long" unsaved-value="0">
+            <column name="KEY_COL"/>
+            <generator class="sequence">
+                <param name="sequence">CUSMM_PER_PROF_HS_SEQ</param>
+            </generator>
+        </id>
+
+        <property name="customerId" type="java.lang.Long">
+            <column name="CUSTOMER_ID" length="10"/>
+        </property>
+
+        <property name="title" type="java.lang.String">
+            <column name="TITLE" length="20"/>
+        </property>
+        <property name="firstName" type="java.lang.String">
+            <column name="FIRST_NAME" length="100"/>
+        </property>
+        <property name="lastName" type="java.lang.String">
+            <column name="LAST_NAME" length="100"/>
+        </property>
+        <property name="gender" column="GENDER" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.customer.api.beans.Gender</param>
+            </type>
+        </property>
+        <property name="nationality" type="java.lang.String">
+            <column name="NATIONALITY" length="50"/>
+        </property>
+        <property name="officeTele" type="java.lang.String">
+            <column name="OFFICE_TELE" length="20"/>
+        </property>
+        <property name="mobile" type="java.lang.String">
+            <column name="MOBILE" length="20"/>
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="EMAL" length="100"/>
+        </property>
+    </class>
+
+    <class name="lk.ac.ucsc.oms.customer.implGeneral.beans.customer.LoginProfileBean"
+           table="cusmm_loginprofile_hs">
+        <id name="primaryKeyObject" type="java.lang.Long" unsaved-value="0">
+            <column name="KEY_COL"/>
+            <generator class="sequence">
+                <param name="sequence">CUSMM_LOGIN_PROF_HS_SEQ</param>
+            </generator>
+        </id>
+
+
+        <property name="customerId" type="java.lang.Long">
+            <column name="CUSTOMER_ID" length="10"/>
+        </property>
+
+        <property name="loginName" type="java.lang.String">
+            <column name="LOGIN_NAME" length="150"/>
+        </property>
+        <property name="loginAlias" type="java.lang.String">
+            <column name="LOGIN_ALIAS" length="100"/>
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" length="255"/>
+        </property>
+        <property name="tradingPassword" type="java.lang.String">
+            <column name="TRADING_PASSWORD" length="255"/>
+        </property>
+        <property name="status" column="STATUS" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.customer.api.beans.LoginProfileStatus</param>
+            </type>
+        </property>
+        <property name="failedAttemptCount" type="java.lang.Integer">
+            <column name="FAILED_ATTEMPT" length="10" default="0"/>
+        </property>
+        <property name="passwordExpDate" type="java.util.Date">
+            <column name="PASSWORD_EXP_DATE"/>
+        </property>
+        <property name="firstTime" column="IS_FIRTST_TIME" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.PropertyEnable</param>
+            </type>
+        </property>
+        <property name="lastLoginDate" type="java.util.Date">
+            <column name="LAST_LOGIN_TIME"/>
+        </property>
+
+        <property name="lastChanged" type="java.util.Date">
+            <column name="LAST_CHANGED"/>
+        </property>
+    </class>
+
+
+
+    <class name="lk.ac.ucsc.oms.customer.implGeneral.beans.account.AccountBean"
+           table="cusmm_account_hs">
+        <id name="primaryKeyObject" type="java.lang.Long" unsaved-value="0">
+            <column name="KEY_COL"/>
+            <generator class="sequence">
+                <param name="sequence">CUSMM_ACCOUNT_HS_SEQ</param>
+            </generator>
+        </id>
+
+        <property name="accId" type="java.lang.Long">
+            <column name="ACCOUNT_ID" length="10"/>
+        </property>
+
+        <property name="accountNumber" type="java.lang.String">
+            <column name="ACCOUNT_NUMBER" not-null="true" length="50"/>
+        </property>
+        <property name="customerNumber" type="java.lang.String">
+            <column name="CUSTOMER_NUMBER" length="50"/>
+        </property>
+        <property name="accountName" type="java.lang.String">
+            <column name="ACCOUNT_NAME" length="100"/>
+        </property>
+        <property name="parentAccNumber" type="java.lang.String">
+            <column name="PARENT_ACC_NUMBER" default="0" length="50"/>
+        </property>
+        <property name="cashAccNumber" type="java.lang.String">
+            <column name="CASH_ACC_NUMBER" length="50"/>
+        </property>
+        <property name="pendingOrderValue" type="java.lang.Double">
+            <column name="PENDING_ORDER_VALUES" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="status" column="STATUS">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.RecordStatus</param>
+            </type>
+        </property>
+        <map name="exchangeAccountsList" cascade="all" lazy="false">
+            <key column="ACCOUNT_NUMBER" foreign-key="ACCOUNT_NUMBER" property-ref="accountNumber"/>
+            <index column="EXCHANGE_CODE" type="java.lang.String"/>
+            <one-to-many class="lk.ac.ucsc.oms.customer.implGeneral.beans.account.ExchangeAccountBean"/>
+        </map>
+        <!--    <one-to-one name="securityAccount"
+                        class="lk.ac.ucsc.oms.customer.implGeneral.beans.account.SecurityAccountBean"
+                        cascade="all"/>-->
+
+        <one-to-one name="orderRoutingConfig"
+                    class="lk.ac.ucsc.oms.customer.implGeneral.beans.account.OrderRoutingConfigBean"
+                    cascade="all"/>
+
+        <property name="lastChanged" type="java.util.Date">
+            <column name="LAST_CHANGED"/>
+        </property>
+
+        <property name="instituteCode" type="java.lang.String">
+            <column name="INSTITUTION_CODE" length="50"/>
+        </property>
+    </class>
+
+    <class name="lk.ac.ucsc.oms.customer.implGeneral.beans.account.ExchangeAccountBean"
+           table="cusmm_exchangeaccount_hs">
+        <id name="primaryKeyObject" type="java.lang.Integer" unsaved-value="0">
+            <column name="KEY_COL_EXCHANGEACCOUNT"/>
+            <generator class="sequence">
+                <param name="sequence">CUSMM_EX_ACCOUNT_HS_SEQ</param>
+            </generator>
+        </id>
+
+        <!--<property name="exchangeAccId" type="java.lang.Long">-->
+        <!--<column name="EXCHANGE_ACC_ID" not-null="true" />-->
+        <!--</property>-->
+
+        <property name="exchangeCode" type="java.lang.String">
+            <column name="EXCHANGE_CODE" length="50"/>
+        </property>
+        <property name="accountType" type="java.lang.Integer">
+            <column name="ACCOUNT_TYPE" length="10" default="0"/>
+        </property>
+        <property name="exchangeAccNumber" type="java.lang.String">
+            <column name="EXCHANGE_ACC_NUMBER" length="50"/>
+        </property>
+        <property name="tradingEnable" column="TRADING_ENABLE" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.PropertyEnable</param>
+            </type>
+        </property>
+        <property name="status" column="STATUS" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.RecordStatus</param>
+            </type>
+        </property>
+        <property name="execBrokerCode" type="java.lang.String">
+            <column name="EXECUTION_BROKER_ID" length="50"/>
+        </property>
+        <property name="accountNumber" type="java.lang.String">
+            <column name="ACCOUNT_NUMBER" length="50"/>
+        </property>
+
+        <property name="shariaComplient" column="SHARIA_COMPLIENT" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.PropertyEnable</param>
+            </type>
+        </property>
+        <property name="backOfficeId" type="java.lang.Long">
+            <column name="BACK_OFFICE_ID" default="0"/>
+        </property>
+        <property name="externalRefNo" type="java.lang.String">
+            <column name="EXTERNAL_REF_NO" length="20"/>
+        </property>
+    </class>
+
+
+    <class name="lk.ac.ucsc.oms.customer.implGeneral.beans.account.OrderRoutingConfigBean"
+           table="cusmm_ord_rtng_confg_hs">
+        <id name="primaryKeyObject" type="java.lang.Integer" unsaved-value="0">
+            <column name="KEY_COL_ORDER_ROUTING_CONFIG"/>
+            <generator class="sequence">
+                <param name="sequence">CUSMM_ORD_ROUT_CONF_HS_SEQ</param>
+            </generator>
+        </id>
+
+        <property name="accId" type="java.lang.Long">
+            <column name="ACCOUNT_ID" length="10"/>
+        </property>
+
+        <property name="allowConditionalOrder" column="ALLOW_COND_ORDER" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.PropertyEnable</param>
+            </type>
+        </property>
+        <property name="allowBracketOrder" column="ALLOW_BRACKET_ORDER" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.PropertyEnable</param>
+            </type>
+        </property>
+        <property name="allowAlgoOrder" column="ALLOW_ALGO_ORDER" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.PropertyEnable</param>
+            </type>
+        </property>
+        <property name="shariaComplient" column="SHARIA_COMPLIENT" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.PropertyEnable</param>
+            </type>
+        </property>
+        <property name="restrictedSymbol" type="java.lang.String">
+            <column name="RESTRICTED_SYMBOL" length="255"/>
+        </property>
+        <property name="lastChanged" type="java.util.Date">
+            <column name="LAST_CHANGED"/>
+        </property>
+    </class>
+
+
+
+    <class name="lk.ac.ucsc.oms.customer.implGeneral.beans.cash.CashAccountBean"
+           table="cusmm_cashaccount_hs">
+        <id name="primaryKeyObject" type="java.lang.Long" unsaved-value="0">
+            <column name="KEY_COL"/>
+            <generator class="sequence">
+                <param name="sequence">CUSMM_CASH_ACCOUNT_HS_SEQ</param>
+            </generator>
+        </id>
+
+
+        <property name="cashAccId" type="java.lang.Long">
+            <column name="CASH_ACC_ID" length="10"/>
+        </property>
+
+        <property name="cashAccNumber" type="java.lang.String">
+            <column name="CASH_ACC_NUMBER" not-null="true" length="50"/>
+        </property>
+        <property name="currency" type="java.lang.String">
+            <column name="CURRENCY" length="50"/>
+        </property>
+        <property name="balance" type="java.lang.Double">
+            <column name="BALANCE" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="blockAmt" type="java.lang.Double">
+            <column name="BLOCK_AMT" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="odLimit" type="java.lang.Double">
+            <column name="OD_LIMIT" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="status" column="STATUS" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.RecordStatus</param>
+            </type>
+        </property>
+        <property name="secondaryODLimit" type="java.lang.Double">
+            <column name="SECONDARY_OD_LIMIT" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="dailyODLimit" type="java.lang.Double">
+            <column name="DAILY_OD_LIMIT" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+
+        <property name="marginDue" type="java.lang.Double">
+            <column name="MARGIN_DUE" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="marginBlock" type="java.lang.Double">
+            <column name="MARGIN_BLOCK" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="customerNumber" type="java.lang.String">
+            <column name="CUSTOMER_NUMBER" not-null="true" length="50"/>
+        </property>
+        <property name="pendingDeposit" type="java.lang.Double">
+            <column name="PENDING_DEPOSIT" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="pendingSettle" type="java.lang.Double">
+            <column name="PENDING_SETTLE" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="primaryOdExpireDate" type="java.util.Date">
+            <column name="PRIMARY_OD_EXPIRE_DATE"/>
+        </property>
+        <property name="secondaryOdExpireDate" type="java.util.Date">
+            <column name="SECONDARY_OD_EXPIRE_DATE"/>
+        </property>
+        <property name="dailyOdEnable" column="DAILY_OD_ENABLE" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.PropertyEnable</param>
+            </type>
+        </property>
+    </class>
+
+
+    <class name="lk.ac.ucsc.oms.customer.implGeneral.beans.holding.HoldingRecordBean"
+           table="cusmm_holding_hs">
+        <id name="primaryKeyObject" type="java.lang.String" unsaved-value="0">
+            <column name="KEY_COL"/>
+            <generator class="assigned"/>
+            <!--<generator class="identity"/>-->
+        </id>
+        <property name="accountNumberTemp" type="java.lang.String">
+            <column name="ACCOUNT_NUMBER" default="0"/>
+        </property>
+
+        <property name="netHolding" type="java.lang.Double">
+            <column name="NET_HOLDING" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="avgCost" type="java.lang.Double">
+            <column name="AVG_COST" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="sellPending" type="java.lang.Double">
+            <column name="SELL_PENDING" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="pledgeQty" type="java.lang.Double">
+            <column name="PLEDGE_QTY" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="buyPending" type="java.lang.Double">
+            <column name="BUY_PENDING" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="avgPrice" type="java.lang.Double">
+            <column name="AVG_PRICE" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="priceRatio" type="java.lang.Double">
+            <column name="PRICE_RATIO" sql-type="NUMERIC(21,5)" default="1"/>
+        </property>
+        <property name="netDayHolding" type="java.lang.Double">
+            <column name="NET_DAY_HOLDING" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="pendingHolding" type="java.lang.Double">
+            <column name="PENDING_HOLDING" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="instrumentType" type="java.lang.Integer">
+            <column name="INSTRUMENT_TYPE" length="10" default="0"/>
+        </property>
+        <property name="daySellPending" type="java.lang.Double">
+            <column name="DAY_SELL_PENDING" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="dayHoldingAvgPrice" type="java.lang.Double">
+            <column name="DAY_HOLDING_AVERAGE_PRICE" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="lastChanged" type="java.util.Date">
+            <column name="LAST_CHANGED"/>
+        </property>
+    </class>
+
+</hibernate-mapping>
+
+
+

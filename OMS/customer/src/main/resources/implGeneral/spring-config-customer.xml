@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--CustomerManager Config-->
+
+    <bean name="customerManager" id="customerManager"
+          class="lk.ac.ucsc.oms.customer.implGeneral.facade.CustomerManagerFacade">
+        <property name="customerCacheFacade" ref="customerCache"/>
+        <property name="sequenceGenerator" ref="sequenceGenCustomer"/>
+    </bean>
+
+    <bean id="customerCache" class="lk.ac.ucsc.oms.customer.implGeneral.facade.cache.CustomerCacheFacade">
+        <property name="cacheController" ref="customerCacheControl"/>
+        <property name="cacheLoadedState" value="PARTIALITY_LOADED"/>
+        <property name="customerPersister" ref="customerPersister"/>
+        <property name="loginPersister" ref="loginPersister"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+        <property name="sequenceGenerator" ref="sequenceGenCustomer"/>
+    </bean>
+
+ 
+
+    <bean id="customerCacheControl" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController" scope="singleton">
+        <constructor-arg index="0" ref="customerPersister"/>
+        <constructor-arg index="1" value="customer"/>
+    </bean>
+
+    <bean id="customerPersister"
+          class="lk.ac.ucsc.oms.customer.implGeneral.persistantImpl.hibernate.CustomerPersisterHibernate"
+          scope="singleton">
+        <constructor-arg index="0" ref="realTime"/>
+        <constructor-arg index="1" ref="history"/>
+        <property name="searchSessionFactory" ref="searchSessionFactory"/>
+    </bean>
+
+    <bean id="customerScheduler" class="lk.ac.ucsc.oms.customer.implGeneral.schedule.CustomerSchedule">
+        <property name="schedulerName" value="CustomerScheduler"/>
+        <property name="frequency" value="60"/>
+        <property name="cacheController" ref="customerCacheControl"/>
+    </bean>
+
+    <!--CashManager Config-->
+
+    <bean id="cashManager" class="lk.ac.ucsc.oms.customer.implGeneral.facade.CashManagerFacade">
+        <property name="cashCacheFacade" ref="cashCache"/>
+        <property name="cashLogCacheFacade" ref="cashLogCache"/>
+        <property name="sequenceGeneratorCash" ref="sequenceGenCash"/>
+        <property name="sequenceGeneratorCashLog" ref="sequenceGenCashLog"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+    </bean>
+
+    <bean id="cashCache" class="lk.ac.ucsc.oms.customer.implGeneral.facade.cache.CashCacheFacade">
+        <property name="cacheController" ref="cashCacheControler"/>
+        <property name="cacheLoadedState" value="PARTIALITY_LOADED"/>
+        <property name="cashAccountPersister" ref="cashHibernatePersister"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+        <property name="sequenceGenerator" ref="sequenceGenCash"/>
+    </bean>
+
+    <bean id="cashCacheControler" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController" scope="singleton">
+        <constructor-arg index="0" ref="cashHibernatePersister"/>
+        <constructor-arg index="1" value="cash"/>
+    </bean>
+
+    <bean id="cashHibernatePersister"
+          class="lk.ac.ucsc.oms.customer.implGeneral.persistantImpl.hibernate.CashAccountPersisterHibernate">
+        <constructor-arg index="0" ref="realTime"/>
+        <constructor-arg index="1" ref="history"/>
+    </bean>
+
+    <bean id="cashLogCache" class="lk.ac.ucsc.oms.customer.implGeneral.facade.cache.CashLogCacheFacade">
+        <property name="cacheController" ref="cashLogCacheControler"/>
+        <property name="cashLogPersister" ref="cashLogHibernatePersister"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+        <property name="sequenceGenerator" ref="sequenceGenCashLog"/>
+    </bean>
+
+    <bean id="cashLogCacheControler" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController" scope="singleton">
+        <constructor-arg index="0" ref="cashLogHibernatePersister"/>
+        <constructor-arg index="1" value="cashLog"/>
+    </bean>
+
+    <bean id="cashLogHibernatePersister"
+          class="lk.ac.ucsc.oms.customer.implGeneral.persistantImpl.hibernate.CashLogPersisterHibernate">
+        <constructor-arg name="sessionFactory" ref="realTime"/>
+        <property name="cashLogQueryGenerator" ref="cashLogQueryGenerator"/>
+    </bean>
+
+    <bean id="cashLogQueryGenerator"
+          class="lk.ac.ucsc.oms.customer.implGeneral.persistantImpl.hibernate.utility.CashLogQueryGenerator"/>
+
+    <bean id="cashScheduler" class="lk.ac.ucsc.oms.customer.implGeneral.schedule.CashSchedule">
+        <property name="schedulerName" value="CashScheduler"/>
+        <property name="frequency" value="30"/>
+        <property name="cacheController" ref="cashCacheControler"/>
+    </bean>
+
+    <bean id="cashLogScheduler" class="lk.ac.ucsc.oms.customer.implGeneral.schedule.CashLogSchedule">
+        <property name="schedulerName" value="CashLogScheduler"/>
+        <property name="frequency" value="30"/>
+        <property name="cacheController" ref="cashLogCacheControler"/>
+    </bean>
+
+    <!--HoldingManager Config-->
+
+    <bean id="holdingManager" class="lk.ac.ucsc.oms.customer.implGeneral.facade.HoldingManagerFacade">
+        <property name="holdingCacheFacade" ref="holdingCache"/>
+        <property name="holdingLogCacheFacade" ref="holdingLogCache"/>
+    </bean>
+
+
+    <bean id="holdingCache" class="lk.ac.ucsc.oms.customer.implGeneral.facade.cache.HoldingCacheFacade">
+        <property name="cacheController" ref="holdingCacheControler"/>
+        <property name="holdingPersister" ref="holdingHibernatePersister"/>
+        <property name="cacheLoadedState" value="PARTIALITY_LOADED"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+    </bean>
+
+
+
+    <bean id="holdingCacheControler" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController" scope="singleton">
+        <constructor-arg index="0" ref="holdingHibernatePersister"/>
+        <constructor-arg index="1" value="holding"/>
+    </bean>
+
+
+    <bean id="holdingHibernatePersister"
+          class="lk.ac.ucsc.oms.customer.implGeneral.persistantImpl.hibernate.HoldingPersisterHibernate">
+        <constructor-arg index="0" ref="realTime"/>
+        <constructor-arg index="1" ref="history"/>
+    </bean>
+
+
+
+    <bean id="holdingLogCache" class="lk.ac.ucsc.oms.customer.implGeneral.facade.cache.HoldingLogCacheFacade">
+        <property name="cacheController" ref="holdingLogCacheControler"/>
+        <property name="holdingLogPersister" ref="holdingLogHibernatePersister"/>
+        <property name="cacheLoadedState" value="NOT_LOADED"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+
+    </bean>
+
+
+
+
+
+
+    <bean id="holdingLogCacheControler" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController" scope="singleton">
+        <constructor-arg index="0" ref="holdingLogHibernatePersister"/>
+        <constructor-arg index="1" value="holdingLog"/>
+    </bean>
+
+
+
+    <bean id="holdingLogHibernatePersister"
+          class="lk.ac.ucsc.oms.customer.implGeneral.persistantImpl.hibernate.HoldingLogPersisterHibernate">
+        <constructor-arg name="sessionFactory" ref="realTime"/>
+    </bean>
+
+
+    <bean id="holdingScheduler" class="lk.ac.ucsc.oms.customer.implGeneral.schedule.HoldingSchedule">
+        <property name="schedulerName" value="HoldingScheduler"/>
+        <property name="frequency" value="30"/>
+        <property name="cacheController" ref="holdingCacheControler"/>
+    </bean>
+
+    <bean id="holdingLogScheduler" class="lk.ac.ucsc.oms.customer.implGeneral.schedule.HoldingLogSchedule">
+        <property name="schedulerName" value="HoldingLogScheduler"/>
+        <property name="frequency" value="20"/>
+        <property name="cacheController" ref="holdingLogCacheControler"/>
+    </bean>
+
+
+
+    <!--CustomerLoginManager Config-->
+
+    <bean id="cusLoginManager" class="lk.ac.ucsc.oms.customer.implGeneral.facade.CustomerLoginManagerFacade">
+        <property name="allowedFailedAttempt" value="5"/>
+        <property name="customerManagerFacade" ref="customerManager"/>
+        <property name="loginHistoryCacheFacade" ref="loginHistoryCache"/>
+    </bean>
+
+    <bean id="loginHistoryCache"
+          class="lk.ac.ucsc.oms.customer.implGeneral.facade.cache.LoginHistoryCacheFacade">
+        <property name="cacheController" ref="loginHistoryCacheControl"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+    </bean>
+
+    <bean id="loginHistoryCacheControl" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController" scope="singleton">
+        <constructor-arg index="0" ref="loginHisHibernatePersistor"/>
+        <constructor-arg index="1" value="loginHistory"/>
+    </bean>
+
+    <bean id="loginHisHibernatePersistor"
+          class="lk.ac.ucsc.oms.customer.implGeneral.persistantImpl.hibernate.LoginHistoryPersisterHibernate">
+        <constructor-arg name="sessionFactory" ref="realTime"/>
+    </bean>
+
+    <bean id="loginPersister"
+          class="lk.ac.ucsc.oms.customer.implGeneral.persistantImpl.hibernate.LoginPersisterHibernate">
+        <constructor-arg name="sessionFactory" ref="realTime"/>
+    </bean>
+
+    <bean id="loginHistoryScheduler"
+          class="lk.ac.ucsc.oms.customer.implGeneral.schedule.LoginHistorySchedule">
+        <property name="schedulerName" value="loginHistoryScheduler"/>
+        <property name="frequency" value="300"/>
+        <property name="cacheController" ref="loginHistoryCacheControl"/>
+    </bean>
+
+
+
+    <!--AccountManager Config-->
+
+    <bean id="accountManager" class="lk.ac.ucsc.oms.customer.implGeneral.facade.AccountManagerFacade">
+        <property name="accountCacheFacade" ref="accountCache"/>
+        <property name="cashManager" ref="cashManager"/>
+        <property name="customerManager" ref="customerManager"/>
+        <property name="sequenceGenerator" ref="sequenceGenAccount"/>
+    </bean>
+
+    <bean id="accountCache" class="lk.ac.ucsc.oms.customer.implGeneral.facade.cache.AccountCacheFacade">
+        <property name="cacheController" ref="accountCacheControler"/>
+        <property name="cacheLoadedState" value="PARTIALITY_LOADED"/>
+        <property name="accountPersister" ref="accPesisterHibernate"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+        <property name="sequenceGenerator" ref="sequenceGenAccount"/>
+    </bean>
+
+    <bean id="accountCacheControler" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController" scope="singleton">
+        <constructor-arg index="0" ref="accPesisterHibernate"/>
+        <constructor-arg index="1" value="account"/>
+    </bean>
+
+    <bean id="accPesisterHibernate"
+          class="lk.ac.ucsc.oms.customer.implGeneral.persistantImpl.hibernate.AccountPersisterHibernate">
+        <constructor-arg index="0" ref="realTime"/>
+        <constructor-arg index="1" ref="history"/>
+    </bean>
+
+    <bean id="accountScheduler" class="lk.ac.ucsc.oms.customer.implGeneral.schedule.AccountSchedule">
+        <property name="schedulerName" value="cusAccountScheduler"/>
+        <property name="frequency" value="60"/>
+        <property name="cacheController" ref="accountCacheControler"/>
+    </bean>
+
+
+
+
+    <bean id="symbolManager"
+          factory-bean="SymbolFacadeFactory"
+          factory-method="getSymbolManager"/>
+
+    <bean id="symbolPriceManager"
+          factory-bean="SymbolFacadeFactory"
+          factory-method="getSymbolPriceDataManager"/>
+
+    <bean id="SymbolFacadeFactory"
+          class="lk.ac.ucsc.oms.symbol.api.SymbolFacadeFactory"
+          factory-method="getInstance"/>
+
+
+    <bean id="exchangeFactory"
+          class="lk.ac.ucsc.oms.exchanges.api.ExchangeFactory"
+          factory-method="getInstance"/>
+
+    <bean id="exchangeManager"
+          factory-bean="exchangeFactory"
+          factory-method="getExchangeManager"/>
+
+    <!--MarginNotificationManager Config-->
+
+    <!--<bean id="marginNotificationManager"-->
+          <!--class="lk.ac.ucsc.oms.customer.implGeneral.facade.MarginNotificationManagerFacade">-->
+        <!--<property name="marginNotificationCacheFacade" ref="marginNotificationCacheFacade"/>-->
+        <!--<property name="sequenceGenerator" ref="sequenceGenMarginNotification"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="marginNotificationCacheFacade"-->
+          <!--class="lk.ac.ucsc.oms.customer.implGeneral.facade.cache.MarginNotificationCacheFacade">-->
+        <!--<property name="cacheController" ref="marginNotificationCacheController"/>-->
+        <!--<property name="cacheLoadedState" value="PARTIALITY_LOADED"/>-->
+        <!--<property name="marginNotificationPersister" ref="marginNotificationPersisterHibernate"/>-->
+        <!--<property name="sysLevelParaManager" ref="sysLevelParaManager"/>-->
+        <!--<property name="sequenceGenerator" ref="sequenceGenMarginNotification"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="marginNotificationCacheController" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"-->
+          <!--factory-method="getCacheController" scope="singleton">-->
+        <!--<constructor-arg index="0" ref="marginNotificationPersisterHibernate"/>-->
+        <!--<constructor-arg index="1" value="margin_notification"/>-->
+    <!--</bean>-->
+
+
+
+
+    <!--CustomerValidator Config-->
+
+    <bean id="customerValidator" class="lk.ac.ucsc.oms.customer.implGeneral.facade.CustomerValidatorFacade">
+        <property name="accountManger" ref="accountManager"/>
+        <property name="cashManager" ref="cashManager"/>
+    </bean>
+
+    <!--Common Config for DataSource-->
+
+    <bean id="realTime" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="lk.ac.ucsc.oms.customer.implGeneral.beans"/>
+        <property name="configLocations" value="implGeneral/customer_hibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="history" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="lk.ac.ucsc.oms.customer.implGeneral.beans"/>
+        <property name="configLocations" value="implGeneral/customer_hibernate_history.cfg.xml"/>
+    </bean>
+
+    <bean id="searchSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan"
+                  value="lk.ac.ucsc.oms.customer.implGeneral.beans"/>
+        <property name="configLocations" value="implGeneral/customer_search_hibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="dataSource"
+          factory-bean="SystemConfigurationFactory"
+          factory-method="getDatasource"/>
+
+    <!--<bean id="dataSource"-->
+          <!--factory-bean="SystemConfigurationFactory"-->
+          <!--factory-method="getBasicDataSource"/>-->
+
+    <bean id="SystemConfigurationFactory"
+          class="lk.ac.ucsc.oms.system_configuration.api.SystemConfigurationFactory"
+          factory-method="getInstance"/>
+
+    <bean id="customSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan"
+                  value="lk.ac.ucsc.oms.customer.implGeneral.beans.holding"/>
+        <property name="configLocations" value="implGeneral/update-holdings-by-expirery-symbol-hibernate.cfg.xml"/>
+    </bean>
+
+
+
+    <bean id="sysLevelParaManager"
+          factory-bean="SystemConfigurationFactory"
+          factory-method="getSysLevelParamManager"/>
+
+    <bean id="sequenceGenAccount" class="lk.ac.ucsc.oms.sequence_generator.api.SequenceGeneratorFactory"
+          factory-method="getInstance">
+        <constructor-arg index="0" value="ACCOUNT_ID"/>
+    </bean>
+
+    <bean id="sequenceGenCash" class="lk.ac.ucsc.oms.sequence_generator.api.SequenceGeneratorFactory"
+          factory-method="getInstance">
+        <constructor-arg index="0" value="CASH_ACCOUNT_ID"/>
+    </bean>
+
+    <bean id="sequenceGenCashLog" class="lk.ac.ucsc.oms.sequence_generator.api.SequenceGeneratorFactory"
+          factory-method="getInstance">
+        <constructor-arg index="0" value="CASH_LOG_ID"/>
+    </bean>
+
+    <bean id="sequenceGenCustomer" class="lk.ac.ucsc.oms.sequence_generator.api.SequenceGeneratorFactory"
+          factory-method="getInstance">
+        <constructor-arg index="0" value="CUSTOMER_ID"/>
+    </bean>
+
+    <!--<bean id="sequenceGenMarginNotification"-->
+          <!--class="lk.ac.ucsc.oms.sequence_generator.api.SequenceGeneratorFactory"-->
+          <!--factory-method="getInstance">-->
+        <!--<constructor-arg index="0" value="MARGIN_NOTIFICATION_ID"/>-->
+    <!--</bean>-->
+
+
+</beans>

@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="lk.ac.ucsc.oms.fixConnection.implGeneral.beans.FIXConnectionBean"
+           table="fcm_fix_connection">
+        <id name="connectionID" type="string" unsaved-value="0">
+            <column name="CONNECTION_ID" length="10"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="description" type="string">
+            <column name="DESCRIPTION" length="100" not-null="true"/>
+        </property>
+        <property name="exchangeCode" type="java.lang.String">
+            <column name="EXCHANGE" length="50"/>
+        </property>
+        <property name="connectionStatus" column="CONNECTION_STATUS" length="20">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.fixConnection.api.ConnectionStatus</param>
+                <param name="type">12</param>
+            </type>
+        </property>
+
+        <property name="status" column="RECORD_STATUS" length="20">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.RecordStatus</param>
+                <param name="type">12</param>
+            </type>
+        </property>
+
+        <map name="fixTags" table="fcm_fix_tags" lazy="false">
+            <key column="CONNECTION_ID"/>
+            <index column="tag" type="integer" length="10"/>
+            <element column="value" type="string" length="50"/>
+        </map>
+
+        <map name="replaceFixTags" table="fcm_replace_fix_tags" lazy="false">
+            <key column="CONNECTION_ID"/>
+            <index column="tag" type="java.lang.Integer" length="10"/>
+            <element column="value" type="java.lang.Integer" length="10"/>
+        </map>
+
+        <map name="cancelRequestReplaceFixTags" table="fcm_cncl_rplce_fix_tgs" lazy="false">
+            <key column="CONNECTION_ID"/>
+            <index column="Exchange" type="java.lang.String" length="50"/>
+            <element column="ReplaceTags" type="java.lang.String" length="255"/>
+        </map>
+
+        <map name="amendRequestReplaceFixTags" table="fcm_amnd_rplc_fix_tgs" lazy="false">
+            <key column="CONNECTION_ID"/>
+            <index column="Exchange" type="java.lang.String" length="50"/>
+            <element column="ReplaceTags" type="java.lang.String" length="255"/>
+        </map>
+
+        <map name="exchangeReplaceFixTags" table="fcm_exchng_rplc_fix_tgs" lazy="false">
+            <key column="CONNECTION_ID"/>
+            <index column="Exchange" type="java.lang.String" length="50"/>
+            <element column="ReplaceTags" type="java.lang.String" length="255"/>
+        </map>
+        <map name="exchangeConnections" cascade="all" lazy="false">
+            <key column="CONNECTION_ID" />
+            <index column="EXCHANGE" type="java.lang.String" length="50"/>
+            <one-to-many class="lk.ac.ucsc.oms.fixConnection.implGeneral.beans.ExchangeConnectionBean"/>
+        </map>
+        <property name="sessionQualifier" type="string">
+            <column name="SESSION_QUALIFIER" length="50" not-null="true"/>
+        </property>
+        <property name="statusRequestAllow" type="java.lang.Integer">
+            <column name="STATUS_REQ_ALLOW" length="5" default="0"/>
+        </property>
+    </class>
+
+    <class name="lk.ac.ucsc.oms.fixConnection.implGeneral.beans.ExchangeConnectionBean"
+           table="fcm_exchange_connection">
+        <id name="exchangeConnectionID" type="java.lang.Integer" unsaved-value="0">
+            <column name="EXG_CONNECTION_ID"/>
+            <generator class="sequence">
+                <param name="sequence">FCM_EXC_CON_SEQ</param>
+            </generator>
+        </id>
+        <property name="exchange" type="java.lang.String">
+            <column name="EXCHANGE" length="50"/>
+        </property>
+        <property name="masterAccountNumber" type="java.lang.String">
+            <column name="MASTER_ACCOUNT_NUMBER" length="50"/>
+        </property>
+        <property name="masterAccountRoutingEnabled" column="MASTER_ACCOUNT_ROUTING_ENABLED" length="2">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.PropertyEnable</param>
+            </type>
+        </property>
+        <map name="exchangeCustomTags" table="fcm_exchng_cstm_tgs" lazy="false">
+            <key column="EXCHANGE_CONNECTION_ID"/>
+            <index column="tag" type="integer" length="10"/>
+            <element column="value" type="string" length="50"/>
+        </map>
+
+        <map name="orderedFixTags" table="fcm_fix_tag_order" lazy="false">
+            <key column="EXCHANGE_CONNECTION_ID"/>
+            <index column="Exchange" type="java.lang.String" length="50"/>
+            <element column="Tag_Order" type="java.lang.String" length="255"/>
+        </map>
+        <property name="sessionQualifier" type="java.lang.String">
+            <column name="SESSION_QUALIFIER" length="50"/>
+        </property>
+        <property name="allowToSendPendingStatus" type="java.lang.Integer">
+            <column name="ALLOW_PENDING_STATUS" length="2"/>
+        </property>
+    </class>
+</hibernate-mapping>
+
+
+

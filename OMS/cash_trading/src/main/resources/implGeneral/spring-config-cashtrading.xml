@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="cashTradingManager" class="lk.ac.ucsc.oms.cash_trading.implGeneral.facade.CashTradingManagerGeneral">
+        <property name="accountManager" ref="accountManager"/>
+        <property name="cashManager" ref="cashManager"/>
+        <property name="cashTradingUtil" ref="cashTradingUtility"/>
+    </bean>
+    <bean id="cashTradingUtility" class="lk.ac.ucsc.oms.cash_trading.implGeneral.facade.helper.CashTradingUtil">
+        <property name="cashManager" ref="cashManager"/>
+    </bean>
+
+    <bean id="cashManager"
+          factory-bean="customerFactory"
+          factory-method="getCashManager"/>
+
+    <bean id="accountManager"
+          factory-bean="customerFactory"
+          factory-method="getAccountManager"/>
+
+    <bean id="customerFactory"
+          class="lk.ac.ucsc.oms.customer.api.CustomerFactory"
+          factory-method="getInstance"/>
+
+</beans>

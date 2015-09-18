@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan xmlns="urn:infinispan:config:5.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="urn:infinispan:config:5.2 http://infinispan.org/schemas/infinispan-config-5.2.xsd">
+
+    <global>
+        <transport transportClass="org.infinispan.remoting.transport.jgroups.JGroupsTransport">
+            <properties>
+                <property name="configurationFile" value="jgroups-tcp-custom.xml"/>
+            </properties>
+        </transport>
+        <globalJmxStatistics enabled="false" allowDuplicateDomains="true">
+        </globalJmxStatistics>
+    </global>
+
+    <default>
+        <eviction strategy="NONE"/>
+        <transaction
+                transactionMode="NON_TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+        <!--<clustering mode="local">-->
+            <!--<async/>-->
+        <!--</clustering>-->
+        <clustering mode="repl">
+            <async/>
+        </clustering>
+
+        <indexing enabled="false" indexLocalOnly="true">
+            <properties>
+                <property name="hibernate.search.default.directory_provider" value="ram"/>
+                <property name="hibernate.search.lucene_version" value="LUCENE_CURRENT"/>
+                <property name="hibernate.search.default.exclusive_index_use" value="false"/>
+            </properties>
+        </indexing>
+    </default>
+
+    <namedCache name="csSymbol">
+        <eviction strategy="LIRS" maxEntries="2000"/>
+        <expiration maxIdle="3600000"/>
+
+    </namedCache>
+
+    <namedCache name="FIX_CONN">
+        <!-- no eviction/expiration needed for this as number of fix connections are not big -->
+
+        <clustering mode="repl" />
+    </namedCache>
+
+
+
+    <namedCache name="exchange">
+        <!--60 minutes max idle-->
+        <transaction
+                transactionMode="NON_TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.JBossTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+
+        <clustering mode="repl" />
+    </namedCache>
+
+
+
+    <namedCache name="ControlCache">
+        <!-- no eviction/expiration needed for this as number of entries are not big -->
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="TRS_SESSION">
+        <eviction strategy="FIFO" maxEntries="2000"/>
+        <expiration maxIdle="18000000"/>
+        <clustering mode="repl" />
+        <!--5 hours max idle -->
+
+    </namedCache>
+
+
+
+    <namedCache name="customer">
+        <eviction strategy="LIRS" maxEntries="1000"/>
+        <expiration maxIdle="3600000"/>
+
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="cash">
+        <eviction strategy="LIRS" maxEntries="2000"/>
+        <expiration maxIdle="3600000"/>
+        <transaction
+                transactionMode="TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+        <!--<deadlockDetection enabled="true" spinDuration="1000"/>-->
+        <indexing enabled="false"/>
+        <clustering mode="repl" />
+    </namedCache>
+    <namedCache name="orderMgt_audit">
+        <eviction strategy="LIRS" maxEntries="2000"/>
+        <expiration maxIdle="3600000"/>
+        <transaction
+                transactionMode="TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+        <!--<deadlockDetection enabled="true" spinDuration="1000"/>-->
+        <indexing enabled="false"/>
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="cash_history">
+        <transaction
+                transactionMode="TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+    </namedCache>
+
+    <namedCache name="cashLog">
+        <eviction strategy="LIRS" maxEntries="500"/>
+        <expiration maxIdle="3600000"/>
+        <transaction
+                transactionMode="TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="holding">
+        <eviction strategy="LIRS" maxEntries="10000"/>
+        <expiration maxIdle="3600000"/>
+        <transaction
+                transactionMode="TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="holding_history">
+        <transaction
+                transactionMode="TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="holdingLog">
+        <eviction strategy="LIRS" maxEntries="500"/>
+        <expiration maxIdle="3600000"/>
+        <transaction
+                transactionMode="TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="loginHistory">
+        <eviction strategy="LIRS" maxEntries="2000"/>
+        <expiration maxIdle="3600000"/>
+        <indexing enabled="true"/>
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="FixMM">
+        <indexing enabled="true"/>
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="account">
+        <eviction strategy="LIRS" maxEntries="4000"/>
+        <expiration maxIdle="3600000"/>
+        <indexing enabled="true"/>
+        <clustering mode="repl" />
+    </namedCache>
+
+
+    <namedCache name="rule">
+        <indexing enabled="true"/>
+        <clustering mode="repl" />
+    </namedCache>
+
+
+
+    <namedCache name="orderConfig">
+        <indexing enabled="true"/>
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="sysParam">
+        <indexing enabled="true"/>
+        <clustering mode="repl" />
+    </namedCache>
+    <namedCache name="sysParam_history">
+        <indexing enabled="true"/>
+        <clustering mode="repl" />
+    </namedCache>
+    <namedCache name="LNG">
+        <indexing enabled="true"/>
+    </namedCache>
+
+    <namedCache name="sellSideBroker">
+        <indexing enabled="true"/>
+    </namedCache>
+
+    <namedCache name="sellSideBrokerUser">
+        <indexing enabled="true"/>
+    </namedCache>
+
+    <namedCache name="commission">
+        <transaction
+                transactionMode="TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+        <indexing enabled="true"/>
+    </namedCache>
+
+    <namedCache name="Institution_institution">
+        <transaction
+                transactionMode="TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+        <indexing enabled="true"/>
+    </namedCache>
+
+    <namedCache name="Institution_institution_history">
+        <transaction
+                transactionMode="TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+        <indexing enabled="true"/>
+    </namedCache>
+
+    <namedCache name="LNG">
+        <indexing enabled="true"/>
+    </namedCache>
+
+    <namedCache name="orderMgt_order">
+        <eviction strategy="LIRS" maxEntries="5000"/>
+        <expiration maxIdle="3600000"/>
+        <transaction transactionMode="TRANSACTIONAL" lockingMode="OPTIMISTIC"
+                     transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                     syncRollbackPhase="false"
+                     syncCommitPhase="false"
+                     useEagerLocking="false"/>
+        <indexing enabled="false"/>
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="orderMgt_order_history">
+        <eviction strategy="LIRS" maxEntries="5000"/>
+        <expiration maxIdle="3600000"/>
+        <transaction transactionMode="TRANSACTIONAL" lockingMode="OPTIMISTIC"
+                     transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                     syncRollbackPhase="false"
+                     syncCommitPhase="false"
+                     useEagerLocking="false"/>
+        <indexing enabled="true"/>
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="orderMgt_execution">
+        <eviction strategy="LIRS" maxEntries="2000"/>
+        <expiration maxIdle="3600000"/>
+        <transaction
+                transactionMode="TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+        <indexing enabled="true"/>
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="orderMgt_key">
+        <transaction
+                transactionMode="TRANSACTIONAL"
+                lockingMode="OPTIMISTIC"
+                transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                syncRollbackPhase="false"
+                syncCommitPhase="false"
+                useEagerLocking="false"/>
+        <indexing enabled="false" indexLocalOnly="true">
+
+        </indexing>
+        <clustering mode="repl" />
+    </namedCache>
+
+    <namedCache name="sequenceGenerator">
+        <indexing enabled="false"/>
+        <clustering mode="repl" />
+    </namedCache>
+    <namedCache name="symbolPriceData">
+        <eviction strategy="LIRS" maxEntries="2000"/>
+        <expiration maxIdle="3600000"/>
+        <indexing enabled="true"/>
+    </namedCache>
+    <namedCache name="clientConfig">
+        <indexing enabled="true"/>
+    </namedCache>
+
+    <namedCache name="cronSchedulerConfig">
+        <indexing enabled="true"/>
+    </namedCache>
+
+</infinispan>

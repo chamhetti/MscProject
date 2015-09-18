@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="exchangeManager" id="exchangeManager"
+          class="lk.ac.ucsc.oms.exchanges.implGeneral.facade.ExchangeManagerFacade">
+        <property name="exchangeCacheFacade" ref="exchangeCache"/>
+        <property name="sequenceGenerator" ref="seqGenerator"/>
+        <property name="subMarketSeqGenerator" ref="subMarketSeqGenerator"/>
+
+    </bean>
+
+    <bean id="exchangeCache" class="lk.ac.ucsc.oms.exchanges.implGeneral.facade.cache.ExchangeCacheFacade">
+        <property name="cacheController" ref="exchangeCacheControl"/>
+        <property name="cacheLoadedState" value="FULLY_LOADED"/>
+        <property name="exchangePersister" ref="excHibernatePersister"/>
+        <property name="sequenceGenerator" ref="seqGenerator"/>
+        <property name="subMarketSequence" ref="subMarketSeqGenerator"/>
+        <property name="sysLevelParaManager" ref="sysLevelParaManager"/>
+    </bean>
+
+    <bean id="exchangeCacheControl" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController" scope="singleton">
+        <constructor-arg index="0" ref="excHibernatePersister"/>
+        <constructor-arg index="1" value="exchange"/>
+    </bean>
+    <bean id="excHibernatePersister"
+          class="lk.ac.ucsc.oms.exchanges.implGeneral.persistantImpl.hibernate.ExchangePersisterHibernate"
+          scope="singleton">
+        <constructor-arg index="0" ref="realTime"/>
+        <constructor-arg index="1" ref="history"/>
+    </bean>
+
+    <bean id="realTime" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" scope="singleton">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="lk.ac.ucsc.oms.exchanges.implGeneral.beans.*"/>
+        <property name="configLocations" value="implGeneral/exchangeHibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="history" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" scope="singleton">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="lk.ac.ucsc.oms.exchanges.implGeneral.beans.*"/>
+        <property name="configLocations" value="implGeneral/history_exchangeHibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="dataSource"
+          factory-bean="SystemConfigurationFactory"
+          factory-method="getDatasource"/>
+    <!--<bean id="dataSource"-->
+          <!--factory-bean="SystemConfigurationFactory"-->
+          <!--factory-method="getBasicDataSource"/>-->
+
+    <bean id="SystemConfigurationFactory"
+          class="lk.ac.ucsc.oms.system_configuration.api.SystemConfigurationFactory"
+          factory-method="getInstance"/>
+
+
+    <bean id="exchangeScheduler" class="lk.ac.ucsc.oms.exchanges.implGeneral.schedule.ExchangeSchedule">
+        <property name="schedulerName" value="ExchangeScheduler"/>
+        <property name="frequency" value="10"/>
+        <property name="cacheController" ref="exchangeCacheControl"/>
+    </bean>
+
+    <bean id="exchangeValidator" class="lk.ac.ucsc.oms.exchanges.implGeneral.facade.ExchangeValidatorImpl">
+        <constructor-arg index="0" ref="exchangeManager"/>
+    </bean>
+
+    <bean id="sysLevelParaManager"
+          factory-bean="SystemConfigurationFactory"
+          factory-method="getSysLevelParamManager"/>
+    <bean id="seqGenerator"
+          class="lk.ac.ucsc.oms.sequence_generator.api.SequenceGeneratorFactory"
+          factory-method="getInstance">
+        <constructor-arg value="EXCHANGE_ID"/>
+    </bean>
+
+
+    <bean id="subMarketSeqGenerator"
+          class="lk.ac.ucsc.oms.sequence_generator.api.SequenceGeneratorFactory"
+          factory-method="getInstance">
+        <constructor-arg value="EXCHANGE_SUB_MARKET_ID"/>
+    </bean>
+
+</beans>

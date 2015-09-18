@@ -1,0 +1,333 @@
+package lk.ac.ucsc.oms.messaging_protocol_json.api;
+
+
+public interface FieldConstants {
+
+    /**
+     * Message header field constants
+     */
+    String PROTOCOL_VERSION = "VER";
+    String MESSAGE_GROUP = "MSG_GRP";
+    String MESSAGE_TYPE = "MSG_TYP";
+    String CHANNEL_ID = "CHNL_ID";
+    String SESSION_ID = "SESN_ID";
+    String USER_ID = "USR_ID";      // id of the user putting the order
+    String RESPONSE_STATUS = "RES_STS";
+    String RESPONSE_REASON = "RES_REASN";
+    String ERROR_CODE = "ERR_CODE";
+    String CLIENT_REQUEST_ID = "CL_REQ_ID";
+    String UNIQUE_REQUEST_ID = "UNQ_REQ_ID";
+    String LANGUAGE_ID = "LANG_ID";
+    String CLIENT_IP = "CL_IP";
+    String CLIENT_VERSION = "CL_VER";
+
+
+    /**
+     * Authentication related field constants
+     */
+    String LOGIN_NAME = "LGN_NME";
+    String ENCRYPTION_TYPE = "EN_TYP";
+    String PASSWORD = "PWD";
+    String REQUEST_GENERATED_TIME = "RQ_GEN_TME";
+    String INSTITUTE_ID = "INST_ID";
+    String BROKER_CODE = "BRK_CODE";
+    String MASTER_ACCOUNT_NUMBER = "MAST_ACC_NUM";
+    String LOGOUT_STATUS = "LGOUT_STS";
+    String AUTHENTICATION_STATUS = "AUTH_STS";
+    String REJECT_REASON = "REJ_RESN";
+    String FAILED_ATTEMPTS = "FAIL_ATMPS";
+    String LOGIN_EXPIRY_DATE = "LGN_EXP_DTE";
+    String LAST_LOGIN_TIME = "LST_LGN_TME";
+    String BROKER_ID = "BRK_ID";
+    String CUSTOMER_NAME = "CUS_NME";
+    String DEALER_TYPE = "DLR_TYPE";
+    String SEARCH_MODE = "SRH_MODE";
+    String LOGIN_ALIAS = "LGN_ALS";
+
+
+    String SECURITY_ACCOUNT_NUMBER = "SEC_ACC_NUM";
+    String CASH_ACCOUNT_NUMBER = "CASH_ACC_NUM";
+    String DAY_MARGIN_EXPIRY_DATE = "D_MARG_EXP_DT";
+    String BOOK_KEEPER_ID = "BK_ID";
+
+
+    String SECURITY_EXCHANGE = "EXG";
+    String TRADING_ACCOUNT_NUMBER = "TRAD_ACC_NUM";
+    String TRADING_ENABLED_STATUS = "TRAD_ENAB_STS";
+    String TRADING_DISABLED_REASON = "TRAD_DISB_REASN";
+    String EXCHANGE_TRADING_ENABLED = "EXG_TRAD_ENAB";
+    String ORDER_STATUS = "ORD_STS";
+    String EXCHANGE = "EXG";
+    String DEALER_ID = "DLR_ID";
+    String CURRENCY = "CURR";
+    String ORDER_QUANTITY = "ORD_QTY";
+    String ORDER_TYPE = "ORD_TYP";
+    String PRICE = "PRICE";
+    String ORDER_SIDE = "ORD_SIDE";
+    String SYMBOL = "SYMBOL";
+    String TIME_IN_FORCE = "TIF";
+    String MINIMUM_QUANTITY = "MIN_QTY";
+    String MAXIMUM_FLOOR = "MAX_FLR";
+    String EXPIRE_TIME = "EXP_TIME";
+    String SECURITY_TYPE = "SEC_TYP";
+    String SIGNATURE = "SIG";
+    String DAY_ORDER = "DAY_ORD";
+    String FILTER_TEXT = "FIL_TXT";
+    String FILTER_ON = "FLT_ON";
+    String CLIENT_ORDER_ID = "CL_ORD_ID";
+    String BUYING_POWER_LIST = "BUY_PWR_LST";
+    String ORIGINAL_CLIENT_ORDER_ID = "ORG_CL_ORD_ID";
+    String CUSTOMER_ID = "CUS_ID";
+    String ORDER_LIST = "ORD_LST";
+    String ORDER_GROUP = "ORD_GRP";
+    String END_DATE = "END_DTE";
+    String MUBASHER_SECURITY_TYPE = "MUB_SEC_TYPE";
+    String FILTER_ON2 = "FLT_ON2";
+    String FILTER_TEXT2 = "FIL_TXT2";
+    String ORDER_CATEGORY = "ORD_CATGRY";
+    String ACCOUNT_TYPE = "ACC_TYP";
+    String BALANCE = "BALANCE";
+    String BLOCKED_AMOUNT = "BLK_AMT";
+    String OD_LIMIT = "OD_LMT";
+    String BUYING_POWER = "BUY_PWR";
+    String MARGIN_LIMIT = "MRG_LMT";
+    String DATE = "DATE";
+    String UNREALIZED_SALES = "UNREAL_SALES";
+    String CASH_FOR_WITHDRAWAL = "CASH_FOR_WITH";
+    String NET_SECURITY_VALUE = "NET_SEC_VAL";
+    String LAST_ACCOUNT_UPDATE_TIME = "LST_ACC_UPDATE_TIME";
+    String PORTFOLIO_TYPE = "PORT_TYP";
+    String DAY_CASH_MARGIN = "DAY_CASH_MAR";
+    String PENDING_DEPOSITS = "PEND_DEPT";
+    String PENDING_TRANSFERS = "PEND_TRANS";
+    String CASH_MARGIN = "CASH_MAR";
+    String PORTFOLIO_MARGIN = "PORT_MAR";
+    String PORTFOLIO_MARGIN_BLOCK = "PORT_MAR_BLK";
+
+    String IS_MARGIN = "IS_MAR";
+    String MARGIN_APPROVAL_STATUS = "MER_APP_STS";
+    String SEC_ACC_APPROVAL_STATUS = "SEC_ACC_APP_STS";
+    String INITIAL_MARGIN = "INI_MAR";
+    String DAY_INITIAL_MARGIN = "DY_INI_MAR";
+    String DAY_MARGIN_ENABLE_STATUS = "DY_MAR_ENA_STS";
+    String MARGIN_LIQUIDATION_STATUS = "MAR_LIQUI_STS";
+    String DAY_MARGIN_LIQUIDATION_STATUS = "DY_MAR_LIQUI_STS";
+    String EXTERNAL_REFERENCE_NUMBER = "EXT_REF_NO";
+    String PORTFOLIO_ACCOUNT_TYPE = "PORT_ACC_TYP";
+    String RAPV_WITH_BUY_PENDING = "RAPV_WITH_BUY_PEN";
+    String OVERNIGHT_MARGIN_ENABLE_STATUS = "ON_MAR_ENA_STS";
+    String MARGIN_TRADE_EXPIRY_DATE = "MAR_TDE_EXP_DATE";
+    String DAY_MARGIN_TRADE_EXPIRY_DATE = "DY_MAR_TDE_EXP_DATE";
+    String MAINTENANCE_CALL_LEVEL = "MAIN_CALL_LVL";
+    String SELL_OUT_LEVEL = "SELL_OUT_LVL";
+    String SEC_ACCOUNT_CLASSIFICATION = "SEC_ACC_CLASS";
+    String ACCOUNT_NET_WORTH = "ACC_NET_WTH";
+    String PORTFOLIO_VALUE = "PORT_VAL";
+    String PENDING_SETTLE = "PEN_SET";
+    String DAY_MARGIN_BLOCK = "DY_MAR_BLK";
+
+
+    String AVAILABLE_MARGIN = "AVAIL_MAR";
+    String CASH_MARGIN_BLOCK = "CASH_MAR_BLK";
+    String MARGIN_BLOCK = "MAR_BLK";
+    String MARGIN_DUE = "MAR_DUE";
+    String NON_MARGINABLE_CASH_BLOCK = "NON_MAR_CASH_BLK";
+    String OPENING_BALANCE = "OPEN_BAL";
+    String NET_POSITION = "NET_POSI";
+    String CASH_AMOUNT = "CASH_AMT";
+    String UNREALIZED_SUM = "UNREAL_SUM";
+    String STATUS_ID = "STATUS_ID";
+    String MARGIN_TRADING_STATUS = "MAR_TRAD_STS";
+    String INVESTMENT_ACCOUNT_BALANCE = "INVEST_ACC_BAL";
+    String BLOCKED_AMOUNT_FOR_BUY = "BLK_AMT_BUY";
+    String VALUATION = "VALUATION";
+    String BACK_OFFICE_PORTFOLIO_NUMBER = "BCK_OFF_PORT_NO";
+    String MARGIN_TRADING_MAX_MARGIN_AMOUNT = "MAX_MAR_AMT";
+    String MARGIN_TRADING_MAX_DAY_MARGIN_AMOUNT = "MAX_DAY_MAR_AMT";
+    String PAYABLE_AMOUNT = "PAY_AMT";
+
+    String CASH_DUE = "CASH_DUE";
+    String DAY_MARGIN_DUE = "DAY_MAR_DUE";
+    String RISK_ADJUSTED_PORTFOLIO_VALUE = "RAPV";
+    String RAPV_DAY = "RAPV_DAY";
+    String LIQUIDATION_AMOUNT = "LIQUID_AMT";
+    String TOP_UP_AMOUNT = "TOP_UP_AMT";
+    String OVER_NIGHT_MARGIN_BUYING_POWER = "OVR_NT_MAR_BUY_PWR";
+    String INTRA_DAY_MARGIN_BUYING_POWER = "INTRA_DAY_MAR_BUY_PWR";
+    String MARGIN_NOTIFY_LEVEL = "MAR_NOTI_LEVEL";
+    String RAPV_OF_PENDING_ORDERS = "RAPV_PEND_ODR";
+    String PENDING_MARGIN_FEE = "PEND_MAR_FEE";
+    String MARGIN_EXPIRY_DATE = "MAR_EXP_DATE";
+    String MARGIN_CATOGORY = "MAR_CAT";
+    String MARGIN_UTILIZED = "MAR_UTIL";
+    String TOTAL_MURABAHAH_AMOUNT = "TOTAL_MURA_MAR";
+    String PENDING_ORDER_VALUE = "PEND_ORD_VAL";
+    String COVERAGE = "COVERAGE";
+    String SHT_SELL_CASH_BAL = "SHT_SELL_CASH_BAL";
+    String SHT_SELL_BLK = "SHT_SELL_BLK";
+    String SHT_SELL_CASH_BLK = "SHT_SELL_CSH_BLK";
+    String SHT_SELL_MARG_BLK = "SHT_SELL_MRG_BLK";
+    String SHT_SELL_PND_BLK = "SHT_SELL_PND_BLK";
+
+    String SHT_SELL_ENBL = "SHT_SELL_ENBL";
+    String SHT_SELL_LMT = "SHT_SELL_LMT";
+    String SHT_POS_MKT_VAL = "SHT_POS_MKT_VAL";
+    String APPROVAL_STATUS_ID = "APP_STS_ID";
+    String INVESTOR_ACCOUNT = "INVEST_ACC";
+
+    String START_SEQUENCE = "START_SEQ";
+    String PAGING_TYPE = "PAG_TYPE";
+    String IS_NEXT_PAGE_AVAILABLE = "IS_NXT_PAG_AVAIL";
+    String PAGE_WIDTH = "PAG_WID";
+    String TOTAL_NO_OF_RECORDS = "TOTAL_NO_REC";
+
+
+    String SYMBOL_MARGINABLE_PERCENTAGE = "SYM_MAR_PER";
+    String SYMBOL_DAY_MARGINABLE_PERCENTAGE = "SYM_DAY_MAR_PER";
+    String SYMBOL_TRADE_MARGIN_FOR_BUY = "SYM_TDE_MAR_BUY";
+    String SYMBOL_MARGINABILITY = "SYM_MAR";
+    String QUANTITY = "QTY";
+    String INSTRUMENT_TYPE = "INSTRU_TYP";
+    String DESCRIPTION = "DESC";
+    String PORTFOLIO_NAME = "PORT_NAME";
+
+    String MUBASHER_ORDER_NUMBER = "MUB_ORD_NUM";
+    String AVERAGE_PRICE = "AVG_PRICE";
+    String COMMISSION = "COMSN";
+    String CUMULATIVE_QUANTITY = "CUM_QTY";
+    String EXECUTION_ID = "EXE_ID";
+    String TRANSACTION_TIME = "TRNS_TME";
+    String SETTLEMENT_TYPE = "STMNT_TPE";
+    String LAST_PRICE = "LT_PRICE";
+    String LAST_SHARES = "LT_SHARE";
+    String LEAVES_QUANTITY = "LV_QTY";
+    String ORDER_ID = "ORD_ID";
+    String TEXT = "TXT";
+    String NIN = "NIN";
+    String EXECUTION_BROKER_SID = "EXE_BRK_SID";
+    String EXECUTION_BROKER_ID = "EXE_BRK_ID";
+    String CREATED_DATE = "CRD_DTE";
+    String ORDER_VALUE = "ORD_VAL";
+    String CUMULATIVE_COMMISSION = "CUM_COMSN";
+    String NET_ORDER_VALUE = "NET_ORD_VAL";
+    String CUMULATIVE_ORDER_VALUE = "CUM_ORD_VAL";
+    String CUMULATIVE_ORDER_NET_VALUE = "CUM_ORD_NET_VAL";
+    String SETTLE_CURRENCY = "SETL_CUNCY";
+    String MARKET_CODE = "MKT_CODE";
+    String LAST_UPDATED_TIME = "LST_UPTD_TME";
+    String DESK_ORDER_REFERENCE = "DSK_ORD_REF";
+    String ALGO_ORDER_REFERENCE = "ALG_ORD_REF";
+    String FOL_ORDER_REFERENCE = "FOL_ORD_REF";
+    String ORIGINAL_DESK_ORDER_REFERENCE = "ORG_DSK_ORD_REF";
+    String MASTER_ORDER_REFERENCE = "MST_ORD_REF";
+    String CALL_CENTER_ORD_REF = "CLCEN_ORD_REF";
+
+    String ORDER_APPROVED_BY = "ORD_APP_BY";
+    String NET_SETTLE = "NET_STL";
+    String CUMULATIVE_ORDER_NET_SETTLE = "CUM_ORD_NET_STL";
+    String ORDER_SERVICE_TYPE = "ORD_SER_TYP";
+    String DEALER_NAME = "DLR_NME";
+
+    String EXECUTION_TRANSACTION_TYPE = "EXE_TRANS_TIME";
+    String ORDER_REJECT_REASON = "ORD_REJ_RESN";
+    String PUT_OR_CALL = "PUT_OR_CALL";
+    String STRIKE_PRICE = "STK_PRICE";
+    String ROUTING_ACCOUNT = "ROUT_ACC";
+    String FILLED_QUANTITY = "FILL_QTY";
+    String ISSUE_SETTLING_RATE = "ISSUE_SETT_RTE";
+    String ORDER_NET_VALUE = "ORD_NET_VAL";
+    String ORDER_AVERAGE_COST = "ORD_AVG_CST";
+    String INTERNAL_ORDER_STATUS = "INT_ORD_STS";
+    String CHILD_ORDER_LIST = "CHI_ORD_LST";
+    String IS_APPROVAL_REQURED = "IS_APP_REQ";
+    String REMOTE_ORDER_ID = "REM_ORD_ID";
+    String REMOTE_ORIGINAL_ORDER_ID = "REM_ORIG_ORD_ID";
+    String PRICE_WITH_COMMISSION = "PRICE_WITH_COMSN";
+    String TOTAL_ORDER_NET_VALUE = "TAL_ORD_NET_VAL";
+
+
+    String INTERNAL_MATCH_STATUS = "INT_MATCH_STS";
+    String ALGO_TYPE = "ALG_TYP";
+    String SLICE_ORDER_INTERVAL_TYPE = "SO_INT_TYP";
+    String SLICE_ORDER_BLOCK = "SO_BLK";
+    String SLICE_ORDER_INTERVAL = "SO_INTERVAL";
+    String START_DATE = "STR_DTE";
+    String EXPIRY_DATE = "EXP_DTE";
+    String STOP_PRICE = "ST_PRC";
+    String STOP_PRICE_TYPE = "ST_PRC_TYP";
+    String TRIGGER_TYPE = "TRG_TYP";
+    String TRIGGER_ACTION = "TRG_ACT";
+    String TRIGGER_PRICE = "TRG_PRC";
+    String TRIGGER_PRICE_TYPE = "TRG_PRC_TYP";
+    String TRIGGER_PRICE_DETECTION = "TRG_PRC_DTC";
+    String MAXIMUM_PRICE = "MAX_PRC";
+    /**
+     * Properties related to FOL
+     */
+    String FOL_ORDER_INTERVAL = "FOL_INT";
+    String FOL_ORDER_STRATEGY = "FOL_STR";
+
+    /**
+     * Properties related to Conditional Behavior
+     */
+
+    String CONDITION_TYPE = "CON_TYP";
+
+    String OPERATOR = "OPERATOR";
+    String CONDITION_VALUE = "CON_VAL";
+
+
+    /**
+     * Properties related to Desk Order logic
+     */
+    String DESK_ORDER_TYPE = "DSK_TYP";
+    String DESK_ORDER_AUTO_RELEASE = "DSK_AUTO_REL";
+    String DESK_ORDER_TOTAL_CHILD_QTY = "DSK_CUM_CHILD_QTY";
+
+    /**
+     * Properties related to MultiNIN Order logic
+     */
+    String MULTININ_MASTER_REF = "MNO_MST_REF";
+    String MULTININ_BREAKDOWN_REF = "MNO_BRK_REF";
+    String MULTININ_MASTER_NO = "MNO_MST_ORD_NO";
+    String MULTININ_BATCH_NO = "MNO_BAT_NO";
+
+    /**
+     * Properties related to subscription data response
+     */
+    String EXCHANGE_ACCOUNT_LIST = "EXG_ACC_LST";
+    String EXCHANGE_ACCOUNT_TYPE = "EXG_ACC_TYP";
+    String CUSTODIAN = "CUSTODIAN";
+    String EXCHANGE_ACCOUNT_NUMBER = "EXG_ACC_NO";
+    String SHARIA_COMPLIANT = "SHARIA_CMPLNT";
+    String DEPOSITOR_ACCOUNT = "DPSTR_ACC";
+    String ACCOUNT_CATEGORY = "ACC_CAT";
+    String DEFAULT_FEED_LEVEL = "DFLT_FD_LVL";
+    String REGION_TYPE = "RGN_TYP";
+    String REALTIME_LEVEL1_FEE = "RT_LVL1_FEE";
+    String REALTIME_LEVEL2_FEE = "RT_LVL2_FEE";
+    String LEVEL_OF_FEED_SUPPORTED = "LVL_OF_FD_SUPPRTED";
+    String MARKET_TYPE = "MAR_TYP";
+
+
+    /**
+     * Properties related to auth person list request response
+     */
+    String CREATED_BY = "CRD_BY";
+    String APPROVED_DATE = "APP_DTE";
+    String TRANSACTION_DATE_TIME = "TRN_DT_TME";
+    String TRANSACTION_TYPE = "TRN_TYP";
+    String STATUS = "STS";
+    String WORKED_QUANTITY = "WRKD_QTY";
+    String TOTAL_CHILD_QTY = "TTL_CHLD_QTY";
+    String CUSTOMER_EXTERNAL_REF = "CUST_EXTRNL_REF";
+    String TIME_TRIGGER_MODE = "IS_TIME_TRIGGERED";
+
+    /**
+     * Single Sign on
+     */
+    String ENCRYPTED_AUTH_REQ = "ENC_AUTH_REQ";
+    String CALL_CENTRE_AGENT_NAME = "CAL_CEN_AGN_NME";
+    String ORDER_ACTION = "ORD_ACT";
+
+}

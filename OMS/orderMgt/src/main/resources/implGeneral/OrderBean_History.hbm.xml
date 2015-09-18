@@ -1,0 +1,324 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="lk.ac.ucsc.oms.orderMgt.implGeneral.bean.OrderBean" table="omm_order_hs">
+        <id name="primaryKeyObject" type="java.lang.String" unsaved-value="0">
+            <column name="KEY_COL"/>
+            <generator class="assigned"/>
+            <!--<generator class="identity"/>-->
+        </id>
+
+        <property name="clOrdID" type="java.lang.String">
+            <column name="clOrd_ID" length="50" not-null="true"/>
+        </property>
+        <property name="ordID" type="java.lang.String">
+            <column name="Ord_ID" length="150"/>
+        </property>
+        <property name="origClOrdID" type="java.lang.String">
+            <column name="OrigClOrd_ID" length="50"/>
+        </property>
+        <property name="institutionCode" type="java.lang.String">
+            <column name="Institution_Code" length="50"/>
+        </property>
+        <property name="institutionId" type="java.lang.Integer">
+            <column name="institution_Id" length="10" default="0"/>
+        </property>
+        <property name="symbol" type="java.lang.String">
+            <column name="Symbol" length="100"/>
+        </property>
+        <property name="quantity" type="java.lang.Double">
+            <column name="Qty" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="price" type="java.lang.Double">
+            <column name="Price" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="orderSide" type="java.lang.String">
+            <column name="OrderSide" length="10"/>
+        </property>
+        <property name="orderType" type="java.lang.String">
+            <column name="OrderType" length="10"/>
+        </property>
+        <property name="exchange" type="java.lang.String">
+            <column name="Exchange" length="50"/>
+        </property>
+        <property name="securityAccount" type="java.lang.String">
+            <column name="SecurityAccount" length="50"/>
+        </property>
+        <property name="orderStatus" type="java.lang.String">
+            <column name="OrderStatus" length="10"/>
+        </property>
+
+        <property name="text" type="java.lang.String">
+            <column name="Text" length="500"/>
+        </property>
+        <property name="minQty" type="java.lang.Double">
+            <column name="MinQty" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="maxFloor" type="java.lang.Double">
+            <column name="MaxFloor" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="userName" type="java.lang.String">
+            <column name="UserName" length="50"/>
+        </property>
+        <property name="channelCode" type="int">
+            <column name="Channel" length="10" default="0"/>
+        </property>
+        <property name="execBrokerId" type="java.lang.String">
+            <column name="ExecBrokerId" length="50"/>
+        </property>
+        <property name="DayOrder" type="boolean">
+            <column name="IsDayOrder" sql-type="CHAR(1)" default="0"/>
+        </property>
+        <property name="expireTime" type="java.util.Date">
+            <column name="ExpireTime"/>
+        </property>
+        <property name="timeInForce" type="int">
+            <column name="TimeInForce" length="10" default="0"/>
+        </property>
+        <property name="securityType" type="java.lang.String">
+            <column name="SecurityType" length="50"/>
+        </property>
+        <property name="marketCode" type="java.lang.String">
+            <column name="MarketCode" length="50"/>
+        </property>
+
+        <property name="customerNumber" type="java.lang.String">
+            <column name="CustomerNumber" length="50"/>
+        </property>
+        <property name="clientIp" type="java.lang.String">
+            <column name="ClientIp" length="50"/>
+        </property>
+
+        <property name="fixConnectionId" type="java.lang.String">
+            <column name="fixConnectionId" length="50"/>
+        </property>
+        <property name="approvedBy" type="java.lang.String">
+            <column name="approvedBy" length="50"/>
+        </property>
+
+        <property name="orderNo" type="java.lang.String">
+            <column name="OrderNo" length="50"/>
+        </property>
+        <property name="transactionTime" type="java.lang.String">
+            <column name="TransactionTime" length="50"/>
+        </property>
+        <property name="currency" type="java.lang.String">
+            <column name="Currency" length="50"/>
+        </property>
+        <property name="commission" type="java.lang.Double">
+            <column name="Commission" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="cumCommission" type="java.lang.Double">
+            <column name="CumCommission" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="cumQty" type="java.lang.Double">
+            <column name="CumQty" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="cumOrderValue" type="java.lang.Double">
+            <column name="cumOrderValue" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="cumBrokerCommission" type="java.lang.Double">
+            <column name="cumBrokerCommission" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="cumExchangeCommission" type="java.lang.Double">
+            <column name="cumExchangeCommission" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="cumParentCommission" type="java.lang.Double">
+            <column name="cumParentCommission" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="cumThirdPartyCommission" type="java.lang.Double">
+            <column name="cumThirdPartyCommission" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="cumNetValue" type="java.lang.Double">
+            <column name="cumNetValue" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="cumNetSettle" type="java.lang.Double">
+            <column name="cumNetSettle" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="transactionFee" type="java.lang.Double">
+            <column name="transactionFee" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+
+        <property name="lastPx" type="java.lang.Double">
+            <column name="LastPx" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="lastShares" type="java.lang.Double">
+            <column name="LastShares" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="avgPrice" type="double">
+            <column name="AvgPrice" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="createDate" type="java.util.Date">
+            <column name="CreateDate"/>
+        </property>
+        <property name="lastUpdateDate" type="java.util.Date">
+            <column name="LastUpdateDate"/>
+        </property>
+
+        <property name="fixVersion" type="java.lang.String">
+            <column name="FixVersion" length="20"/>
+        </property>
+        <property name="leavesQty" type="double">
+            <column name="LeavesQty" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="execID" type="java.lang.String">
+            <column name="ExecutionID" length="100"/>
+        </property>
+
+        <property name="buySideBrokerID" type="java.lang.String">
+            <column name="BuySideBrokerID" length="50"/>
+        </property>
+        <property name="securityIDSource" type="java.lang.String">
+            <column name="SecurityIDSource" length="50"/>
+        </property>
+
+
+        <property name="masterOrderId" type="java.lang.String">
+            <column name="MasterOrderId" length="50"/>
+        </property>
+        <property name="stopPx" type="java.lang.Double">
+            <column name="StopPx" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="conditionType" type="java.lang.Integer">
+            <column name="ConditionType" length="2" default="0"/>
+        </property>
+        <property name="maxPrice" type="java.lang.Double">
+            <column name="MaxPrice" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="stopPxType" type="java.lang.Integer">
+            <column name="StopPxType" length="2" default="0"/>
+        </property>
+        <property name="instrumentType" type="java.lang.String">
+            <column name="InstrumentType" length="50"/>
+        </property>
+
+        <property name="priceBlock" type="java.lang.Double">
+            <column name="priceBlock" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="settleCurrency" type="java.lang.String">
+            <column name="settleCurrency" length="50"/>
+        </property>
+        <property name="orderValue" type="java.lang.Double">
+            <column name="orderValue" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="netValue" type="java.lang.Double">
+            <column name="netValue" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="netSettle" type="java.lang.Double">
+            <column name="netSettle" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="blockAmount" type="java.lang.Double">
+            <column name="blockAmount" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+
+        <property name="orderCategory" type="java.lang.Integer">
+            <column name="orderCategory" length="2" default="0"/>
+        </property>
+        <property name="parentAccountNumber" type="java.lang.String">
+            <column name="parentAccountNumber" length="50"/>
+        </property>
+        <property name="parentBlockAmount" type="java.lang.Double">
+            <column name="parentBlockAmount" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+
+        <!--<property name="settlementType" column="SettlementType" length="2">-->
+        <!--<type name="org.hibernate.type.EnumType">-->
+        <!--<param name="enumClass">lk.ac.ucsc.oms.common_utility.api.enums.SettlementType</param>-->
+        <!--</type>-->
+        <!--</property>-->
+
+        <property name="marginBlock" type="java.lang.Double">
+            <column name="marginBlock" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+
+        <property name="dayMarginQuantity" type="java.lang.Double">
+            <column name="DayMarginQuantity" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="parentNetSettle" type="java.lang.Double">
+            <column name="ParentNetSettle" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="issueSettleRate" type="java.lang.Double">
+            <column name="IssueSettleRate" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="profitLoss" type="java.lang.Double">
+            <column name="ProfitLoss" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="parentProfitLoss" type="java.lang.Double">
+            <column name="ParentProfitLoss" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="moduleCode" type="java.lang.Integer">
+            <column name="Module_Code" length="10" default="0"/>
+        </property>
+        <property name="errorCode" type="java.lang.Integer">
+            <column name="Error_Code" length="10" default="0"/>
+        </property>
+        <property name="errMsgParameters" type="java.lang.String">
+            <column name="Error_Message_Parameters" length="255"/>
+        </property>
+        <property name="marginDue" type="java.lang.Double">
+            <column name="marginDue" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="dayMarginDue" type="java.lang.Double">
+            <column name="dayMarginDue" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="intermediateOrderStatus" type="java.lang.String">
+            <column name="Intermediate_Status" length="10"/>
+        </property>
+        <property name="replacedOrderId" type="java.lang.String">
+            <column name="Replaced_Ord_Id" length="20"/>
+        </property>
+
+        <property name="conditionalOrderRef" type="java.lang.String">
+            <column name="CondOrderRef" length="20" default="NULL"/>
+        </property>
+        <property name="internalRejReason" type="java.lang.String">
+            <column name="INTERNAL_REJECT_REASON" length="255" default="NULL"/>
+        </property>
+        <property name="routingAccount" type="java.lang.String">
+            <column name="ROUTING_ACCOUNT_NUMBER" length="50" default="NULL"/>
+        </property>
+
+        <property name="userId" type="java.lang.String">
+            <column name="USER_ID" length="50" default="NULL"/>
+        </property>
+        <property name="orderOrigin" type="java.lang.Integer">
+            <column name="ORDER_ORIGIN" length="2" default="1"/>
+        </property>
+        <property name="routingAccRef" type="java.lang.String">
+            <column name="ROUTING_ACC_REF" length="50" default="NULL"/>
+        </property>
+
+        <property name="remoteAccountNumber" type="java.lang.String">
+            <column name="REMOTE_ACC_NUMBER" length="50" default="NULL"/>
+        </property>
+        <property name="priceFactor" type="java.lang.Double">
+            <column name="PRICE_FACTOR" sql-type="NUMERIC(21,5)" default="0"/>
+        </property>
+        <property name="brokerFIXID" type="java.lang.String">
+            <column name="BROKER_FIX_ID" default="NULL"/>
+        </property>
+        <property name="targetCompID" type="java.lang.String">
+            <column name="TARGET_COMP_ID" default="NULL"/>
+        </property>
+        <property name="targetSubID" type="java.lang.String">
+            <column name="TARGET_SUB_ID" default="NULL"/>
+        </property>
+        <property name="senderSubID" type="java.lang.String">
+            <column name="SENDER_SUB_ID" default="NULL"/>
+        </property>
+        <property name="onBehalfOfCompID" type="java.lang.String">
+            <column name="ON_BEHALF_COMP_ID" default="NULL"/>
+        </property>
+        <property name="onBehalfOfSubID" type="java.lang.String">
+            <column name="ON_BEHALF_SUB_ID" default="NULL"/>
+        </property>
+
+
+
+        <property name="lastChanged" type="timestamp">
+            <column name="TIMESTAMP" not-null="true"/>
+        </property>
+
+    </class>
+</hibernate-mapping>

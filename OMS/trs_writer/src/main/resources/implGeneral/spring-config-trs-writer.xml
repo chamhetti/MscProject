@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="trsWriter" class="lk.ac.ucsc.oms.trs_writer.implGeneral.TrsWriterFacadeImpl">
+        <property name="tradeResponseHelper" ref="tradeResponseHelper"/>
+        <property name="inquiryResponseHelper" ref="inquiryResponseHelper"/>
+        <property name="messageSender" ref="messageSender"/>
+    </bean>
+
+    <bean id="authPublisher" class="lk.ac.ucsc.oms.trs_writer.implGeneral.JmsMessagePublisher">
+        <constructor-arg index="0" value="LoginResponse"/>
+    </bean>
+
+    <bean id="tradeResponsePublisher" class="lk.ac.ucsc.oms.trs_writer.implGeneral.JmsMessagePublisher">
+        <constructor-arg index="0" value="TradeResponse"/>
+    </bean>
+
+    <bean id="inquiryResponsePublisher" class="lk.ac.ucsc.oms.trs_writer.implGeneral.JmsMessagePublisher">
+        <constructor-arg index="0" value="InquiryResponse"/>
+    </bean>
+
+    <bean id="adminResponsePublisher" class="lk.ac.ucsc.oms.trs_writer.implGeneral.JmsMessagePublisher">
+        <constructor-arg index="0" value="AdminResponse"/>
+    </bean>
+
+    <bean id="combinedResponsePublisher" class="lk.ac.ucsc.oms.trs_writer.implGeneral.JmsMessagePublisher">
+        <constructor-arg index="0" value="CombinedResponse"/>
+    </bean>
+
+    <bean id="tradeResponseHelper"
+          class="lk.ac.ucsc.oms.trs_writer.implGeneral.helpers.TradeResponseHelper">
+        <property name="messageProtocolFacade" ref="messageProtocolFacade"/>
+    </bean>
+
+    <bean id="inquiryResponseHelper"
+          class="lk.ac.ucsc.oms.trs_writer.implGeneral.helpers.InquiryResponseHelper">
+        <property name="messageProtocolFacade" ref="messageProtocolFacade"/>
+    </bean>
+
+    <bean id="messageProtocolFacade" factory-bean="messageProtocolFactory"
+          factory-method="getMessageProtocolFacade"/>
+
+    <bean id="messageProtocolFactory"
+          class="lk.ac.ucsc.oms.messaging_protocol_json.api.MessageProtocolFacadeFactory"
+          factory-method="getInstance"/>
+
+    <bean id="messageSender" factory-bean="middlewareSenderFactory" factory-method="getMessageSender"/>
+
+    <bean id="middlewareSenderFactory" class="lk.ac.ucsc.oms.common_utility.api.MiddlewareSenderFactory"
+          factory-method="getInstance">
+    </bean>
+
+    <bean id="accountManager"
+          factory-bean="customerFactory"
+          factory-method="getAccountManager"/>
+    <bean id="cashManager"
+          factory-bean="customerFactory"
+          factory-method="getCashManager"/>
+    <bean id="customerFactory"
+          class="lk.ac.ucsc.oms.customer.api.CustomerFactory"
+          factory-method="getInstance"/>
+</beans>

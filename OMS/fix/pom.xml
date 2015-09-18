@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>lk.ac.ucsc</groupId>
+        <artifactId>oms</artifactId>
+        <version>1.0.000</version>
+    </parent>
+    <groupId>lk.ac.ucsc.oms</groupId>
+    <artifactId>fix</artifactId>
+    <name>FIX Module</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>scheduler</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>common_utility</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>symbol</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>customer</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>exchange</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>system_configuration</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>lk.ac.ucsc.oms</groupId>
+            <artifactId>orderMgt</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.3.175</version>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="lk.ac.ucsc.oms.symbol.implGeneral.beans.SymbolPriceDataBean"
+           table="esp_todays_snapshots">
+        <composite-id>
+            <key-property name="exchangeCode" type="java.lang.String">
+                <column name="exchangecode" not-null="true"/>
+            </key-property>
+            <key-property name="symbolCode" type="java.lang.String">
+                <column name="symbol" not-null="true"/>
+            </key-property>
+        </composite-id>
+        <property name="previousClosed" type="java.lang.Double">
+            <column name="previousclosed" default="0"/>
+        </property>
+        <property name="min" type="java.lang.Double">
+            <column name="minprice" default="0"/>
+        </property>
+        <property name="max" type="java.lang.Double">
+            <column name="maxprice" default="0"/>
+        </property>
+        <property name="lastTradePrice" type="java.lang.Double">
+            <column name="lasttradeprice" default="0"/>
+        </property>
+        <property name="bestAskPrice" type="java.lang.Double">
+            <column name="bestaskprice" default="0"/>
+        </property>
+        <property name="bestBidVol" type="java.lang.Double">
+            <column name="bestbidquantity" default="0"/>
+        </property>
+        <property name="bestAskVol" type="java.lang.Double">
+            <column name="bestaskquantity" default="0"/>
+        </property>
+        <property name="lastUpdatedTime" type="java.util.Date">
+            <column name="lastupdatedtime" />
+        </property>
+        <property name="strikePrice" type="java.lang.Double">
+            <column name="strikeprice" default="0"/>
+        </property>
+        <property name="loadedToCache" type="java.lang.Integer">
+            <column name="loadedToCache" default="0"/>
+        </property>
+        <property name="lastBidPrice" type="java.lang.Double">
+            <column name="lastBidPrice" default="0"/>
+        </property>
+        <property name="bestBidPrice" type="java.lang.Double">
+            <column name="bestbidprice" default="0"/>
+        </property>
+        <property name="optionType" type="java.lang.Integer">
+            <column name="optiontype" length="10" default="0"/>
+        </property>
+    </class>
+</hibernate-mapping>
