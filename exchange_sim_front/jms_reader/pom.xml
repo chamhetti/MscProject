@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>exchange_sim_front</artifactId>
+        <groupId>com.directfn.exchange_simulator</groupId>
+        <version>${SIMULATOR_VERSION}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>jms_reader</artifactId>
+    <packaging>jar</packaging>
+
+    <name>jms reader</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.as</groupId>
+            <artifactId>jboss-as-jms-client-bom</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.directfn.exchange_simulator</groupId>
+            <artifactId>message_processor</artifactId>
+            <version>${SIMULATOR_VERSION}</version>
+        </dependency>
+    </dependencies>
+
+</project>
