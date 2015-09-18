@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">false</property>
+
+        <property name="hibernate.search.default.directory_provider">filesystem</property>
+        <property name="hibernate.search.default.indexBase">target</property>
+        <property name="hibernate.search.default.exclusive_index_use">false</property>
+        <!-- Names the annotated entity class -->
+        <!-- <mapping class="org.hibernate.tutorial.annotations.Event"/>-->
+        <mapping resource="implGeneral/sessionMgt.hbm.xml"/>
+
+
+    </session-factory>
+
+</hibernate-configuration>

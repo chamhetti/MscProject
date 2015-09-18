@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <RollingFile name="file"
+                     fileName="logs/TRS.log"
+                     filePattern="./logs/TRS.log.%d{yyyy-MM-dd}">
+            <PatternLayout pattern="[%d] %-5p (%F:%L) [%X] [%t]: %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d] %-5p (%F:%L) [%X] [%t]: %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="info" includeLocation="true">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="file"/>
+        </Root>
+        <Logger name="com.directfn" level="info" includeLocation="true"/>
+        <Logger name="org.hornetq" level="warn" includeLocation="true"/>
+        <Logger name="org.springframework" level="WARN" includeLocation="true"/>
+        <Logger name="org.hibernate" level="warn" includeLocation="true"/>
+        <Logger name="org.jgroups" level="error" includeLocation="true"/>
+    </Loggers>
+</Configuration>

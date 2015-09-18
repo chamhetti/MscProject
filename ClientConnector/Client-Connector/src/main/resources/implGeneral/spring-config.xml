@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder
+            location="file:config/settings.ini"/>
+    <!-- =========================== TRS general configuration =========================== -->
+
+    <bean id="settings" class="lk.ac.ucsc.clientConnector.settings.Settings">
+        <property name="messageTimeout" value="${MESSAGE_TIMEOUT:60000}"/>
+        <property name="trsId" value="${TRS_ID:TRS01}"/>
+        <property name="webClientEnabled" value="true"/>
+        <property name="frontOfficeEnabled" value="true"/>
+        <property name="requestConfigFilePath" value="config/request-config.xml"/>
+        <property name="frontDbPw" value="${DB_PASSWORD:password}"/>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${DB_DRIVER:oracle.jdbc.OracleDriver}"/>
+        <property name="url" value="${DB_URL:jdbc:oracle:thin:@127.0.0.1:1521:XE}"/>
+        <property name="username" value="${DB_USERNAME:OMS}"/>
+        <property name="password" value="#{settings.frontDbPw}"/>
+        <property name="initialSize" value="2"/>
+        <property name="maxActive" value="20"/>
+    </bean>
+
+
+    <bean id="trsSender" class="lk.ac.ucsc.clientConnector.client.TrsSenderImpl">
+        <property name="converter" ref="jsonConverter"/>
+        <property name="frontOfficeController" ref="frontOfficeController"/>
+    </bean>
+
+
+    <!-- =========================== Web Client configuration =========================== -->
+
+    <bean id="webController" class="lk.ac.ucsc.clientConnector.controller.WebServerController" lazy-init="true">
+        <property name="host" value="${TRS_IP_ADDRESS:127.0.0.1}"/>
+        <property name="port" value="8800"/>
+        <property name="webContextPath" value="/web"/>
+        <property name="webRequestHandler" ref="webRequestHandler"/>
+        <property name="webSessionHandler" ref="webSessionHandler"/>
+        <property name="servletPath" value="/trs"/>
+        <property name="sessionTimeout" value="#{settings.clientSessionTimeout}"/>
+    </bean>
+
+
+
+    <bean id="webRequestHandler" class="lk.ac.ucsc.clientConnector.handler.WebRequestHandler" lazy-init="true">
+        <constructor-arg value="web"/>
+    </bean>
+
+    <!--<bean id="mobileRequestHandler" class="lk.ac.ucsc.clientConnector.handler.WebRequestHandler" lazy-init="true">-->
+        <!--<constructor-arg value="mobile"/>-->
+    <!--</bean>-->
+
+    <bean id="webSessionHandler" class="lk.ac.ucsc.clientConnector.handler.WebSessionHandler" lazy-init="true">
+        <constructor-arg name="clientManager" ref="webClientManager"/>
+    </bean>
+
+    <!--<bean id="mobileSessionHandler" class="lk.ac.ucsc.clientConnector.handler.WebSessionHandler" lazy-init="true">-->
+        <!--<constructor-arg name="clientManager" ref="mobileClientManager"/>-->
+    <!--</bean>-->
+
+
+
+    <bean id="webClientManager" class="lk.ac.ucsc.clientConnector.client.WebClientManager" lazy-init="true">
+        <constructor-arg name="settings" ref="settings"/>
+        <constructor-arg name="messageRouter" ref="messageRouter"/>
+        <constructor-arg name="converter" ref="jsonConverter"/>
+        <constructor-arg name="clientType" value="WEB"/>
+    </bean>
+
+    <!--<bean id="mobileClientManager" class="lk.ac.ucsc.clientConnector.client.WebClientManager" lazy-init="true">-->
+        <!--<constructor-arg name="settings" ref="settings"/>-->
+        <!--<constructor-arg name="messageRouter" ref="messageRouter"/>-->
+        <!--<constructor-arg name="converter" ref="jsonConverter"/>-->
+        <!--<constructor-arg name="clientType" value="MOBILE"/>-->
+    <!--</bean>-->
+
+
+
+    <!-- =========================== Front office configuration =========================== -->
+
+    <bean id="frontOfficeController" class="lk.ac.ucsc.clientConnector.controller.FrontOfficeController" lazy-init="true">
+        <property name="messageQueuePropertiesMap">
+            <map>
+                <entry key="authQueue">
+                    <bean parent="connectionInfo">
+                        <property name="name" value="TRSLogin"/>
+                    </bean>
+                </entry>
+                <entry key="transQueue">
+                    <bean parent="connectionInfo">
+                        <property name="name" value="TRSTransaction"/>
+                    </bean>
+                </entry>
+                <entry key="inquiryQueue">
+                    <bean  parent="connectionInfo">
+                        <property name="name" value="TRSInquiry"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+        <property name="messageTopicPropertiesMap">
+            <map>
+                <entry key="resAuthTopic">
+                    <bean parent="connectionInfo">
+                        <property name="name" value="LoginResponse"/>
+                    </bean>
+                </entry>
+                <entry key="resTransTopic">
+                    <bean parent="connectionInfo">
+                        <property name="name" value="TradeResponse"/>
+                    </bean>
+                </entry>
+                <entry key="resInquiryTopic">
+                    <bean parent="connectionInfo">
+                        <property name="name" value="InquiryResponse"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+        <property name="converter" ref="jsonConverter"/>
+        <!--<property name="trsSender" ref="trsSender"/>-->
+        <!--<property name="controllerId" value="NODE01"/>-->
+    </bean>
+
+    <bean id="frontOfficeController2" class="lk.ac.ucsc.clientConnector.controller.FrontOfficeController" lazy-init="true">
+        <property name="messageQueuePropertiesMap">
+            <map>
+                <entry key="authQueue">
+                    <bean parent="connectionInfo2">
+                        <property name="name" value="TRSLogin"/>
+                    </bean>
+                </entry>
+                <entry key="transQueue">
+                    <bean parent="connectionInfo2">
+                        <property name="name" value="TRSTransaction"/>
+                    </bean>
+                </entry>
+                <entry key="inquiryQueue">
+                    <bean  parent="connectionInfo2">
+                        <property name="name" value="TRSInquiry"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+        <property name="messageTopicPropertiesMap">
+            <map>
+                <entry key="resAuthTopic">
+                    <bean parent="connectionInfo2">
+                        <property name="name" value="LoginResponse"/>
+                    </bean>
+                </entry>
+                <entry key="resTransTopic">
+                    <bean parent="connectionInfo2">
+                        <property name="name" value="TradeResponse"/>
+                    </bean>
+                </entry>
+                <entry key="resInquiryTopic">
+                    <bean parent="connectionInfo2">
+                        <property name="name" value="InquiryResponse"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+        <property name="converter" ref="jsonConverter"/>
+        <!--<property name="trsSender" ref="trsSender"/>-->
+        <!--<property name="controllerId" value="NODE02"/>-->
+    </bean>
+
+
+
+    <bean id="jsonConverter" class="lk.ac.ucsc.clientConnector.converter.JsonConverter" lazy-init="true">
+        <!--<property name="trsResponseHelper" ref="trsResponseHelper"/>-->
+    </bean>
+
+
+
+    <bean id="messageRouter" class="lk.ac.ucsc.clientConnector.client.ClientMessageRouter" lazy-init="true">
+        <property name="frontOfficeController" ref="frontOfficeController"/>
+        <property name="frontOfficeController2" ref="frontOfficeController2"/>
+        <property name="node2Enabled" value="#{settings.node02Enabled}"/>
+        <property name="routingMap" ref="routingMap"/>
+        <property name="frontOfficeRoutingMap" ref="routingMap"/>
+    </bean>
+    <bean id="routingMap"
+          factory-bean="settings" factory-method="loadMessageRoutes" lazy-init="true">
+    </bean>
+
+
+    <!-- =========================== Queue and Topic configuration =========================== -->
+
+    <bean id="connectionInfo" class="lk.ac.ucsc.clientConnector.common.impl.ConnectionPropertiesBean" abstract="true">
+        <property name="IP" value="${FRONT_OFFICE_IP:127.0.0.1}"/>
+        <property name="port" value="${PORT:1099}"/>
+        <property name="queueType" value="JMS"/>
+        <property name="protocol" value="remote"/>
+    </bean>
+
+    <bean id="connectionInfo2" class="lk.ac.ucsc.clientConnector.common.impl.ConnectionPropertiesBean" abstract="true">
+        <property name="IP" value="${FRONT_OFFICE_IP2:127.0.0.1}"/>
+        <property name="port" value="${PORT2:1099}"/>
+        <property name="queueType" value="JMS"/>
+        <property name="protocol" value="remote"/>
+    </bean>
+
+
+    <!-- =========================== Management of TRS using JMX =========================== -->
+
+    <!--<bean id="mBeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean"/>-->
+
+    <!--
+      this bean needs to be eagerly pre-instantiated in order for the exporting to occur;
+      this means that it must not be marked as lazily initialized
+    -->
+    <bean id="exporter" class="org.springframework.jmx.export.annotation.AnnotationMBeanExporter">
+        <!-- notice how no 'beans' are explicitly configured here -->
+        <property name="autodetect" value="true"/>
+        <property name="assembler" ref="assembler"/>
+    </bean>
+
+    <bean id="assembler" class="org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler">
+        <property name="attributeSource">
+            <bean class="org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource"/>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="responseProcessorFacade"
+          class="lk.ac.ucsc.clientConnector.front_office_listener.impl.facade.ResponseProcessorFacadeImpl">
+        <property name="initialContextFactory" value="org.jboss.naming.remote.client.InitialContextFactory"/>
+        <property name="jmsFactory" value="jms/RemoteConnectionFactory"/>
+    </bean>
+
+</beans>

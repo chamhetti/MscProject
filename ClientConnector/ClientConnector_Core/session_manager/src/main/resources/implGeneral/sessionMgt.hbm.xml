@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="lk.ac.ucsc.clientConnector.session_manager.impl.beans.UserSessionBean" table="trs_session_mgt">
+
+        <id name="sessionID" type="java.lang.String">
+            <column name="SESSION_ID" not-null="false" length="200"/>
+        </id>
+        <property name="loginAlias" type="java.lang.String">
+            <column name="LOGIN_ALIAS" not-null="false" length="20"/>
+        </property>
+        <property name="userID" type="java.lang.String">
+            <column name="USER_ID" not-null="false" length="200"/>
+        </property>
+        <property name="trsID" type="java.lang.String">
+            <column name="TRS_ID" not-null="false" length="20"/>
+        </property>
+        <property name="channelID" type="java.lang.Integer">
+            <column name="CHANNEL_ID" not-null="false" length="2"/>
+        </property>
+        <property name="accountNumbers" type="java.lang.String" length="1000">
+            <column name="ACCOUNT_NUMBERS" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>
+
+
+

@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<trs-mix-msg-config>
+
+    <messages>
+
+        <!--GROUP_TRADING-->
+        <message group="1" sub_group="1" type="transaction" destination="front_office" remark="new order"
+                 blocked="false "/>
+        <message group="1" sub_group="2" type="transaction" destination="front_office" remark="new offline order "/>
+        <message group="1" sub_group="3" type="transaction" destination="front_office" remark="new conditional order "/>
+        <message group="1" sub_group="4" type="transaction" destination="front_office" remark="new slice order "/>
+        <message group="1" sub_group="5" type="transaction" destination="front_office" remark="new Desk order"
+                 userOnly="true "/>
+        <message group="1" sub_group="6" type="transaction" destination="front_office" remark="create FOL"
+                 userOnly="true "/>
+        <message group="1" sub_group="7" type="transaction" destination="front_office" remark="amend normal order "/>
+        <message group="1" sub_group="8" type="transaction" destination="front_office" remark="amend offline order "/>
+        <message group="1" sub_group="9" type="transaction" destination="front_office" remark="new conditional order "/>
+        <message group="1" sub_group="10" type="transaction" destination="front_office" remark="amend slice order "/>
+        <message group="1" sub_group="11" type="transaction" destination="front_office" remark="amend Desk order "/>
+        <message group="1" sub_group="12" type="transaction" destination="front_office" remark="cancel normal order "/>
+        <message group="1" sub_group="13" type="transaction" destination="front_office" remark="cancel offline order "/>
+        <message group="1" sub_group="14" type="transaction" destination="front_office" remark="cancel cond. order "/>
+        <message group="1" sub_group="15" type="transaction" destination="front_office" remark="cancel slice order "/>
+        <message group="1" sub_group="16" type="transaction" destination="front_office" remark="cancel Desk order"
+                 userOnly="true "/>
+        <message group="1" sub_group="17" type="transaction" destination="front_office" remark="cancel FOL order"
+                 userOnly="true "/>
+        <message group="1" sub_group="18" type="transaction" destination="front_office" remark="mark for delivery "/>
+        <message group="1" sub_group="19" type="transaction" destination="front_office" remark="reverse order"
+                 userOnly="true "/>
+        <message group="1" sub_group="20" type="transaction" destination="front_office" remark="expire order "/>
+        <message group="1" sub_group="21" type="transaction" destination="front_office" remark="manual order"
+                 userOnly="true "/>
+        <message group="1" sub_group="22" type="transaction" destination="front_office" remark="approve reject order "/>
+
+        <message group="1" sub_group="23" type="transaction" destination="front_office" remark="accept Desk"
+                 userOnly="true "/>
+        <message group="1" sub_group="24" type="transaction" destination="front_office" remark="reject Desk"
+                 userOnly="true "/>
+        <message group="1" sub_group="25" type="transaction" destination="front_office" remark="amend -accept Desk"
+                 userOnly="true "/>
+        <message group="1" sub_group="26" type="transaction" destination="front_office" remark="amend - reject Desk"
+                 userOnly="true "/>
+        <message group="1" sub_group="28" type="transaction" destination="front_office" remark="cancel -accept Desk"
+                 userOnly="true "/>
+        <message group="1" sub_group="29" type="transaction" destination="front_office" remark="cancel - reject Desk"
+                 userOnly="true "/>
+        <message group="1" sub_group="30" type="transaction" destination="front_office" remark="cancel all Desk"
+                 userOnly="true "/>
+        <message group="1" sub_group="31" type="transaction" destination="front_office" remark="auto release Desk"
+                 userOnly="true "/>
+        <message group="1" sub_group="32" type="transaction" destination="front_office" remark="expire Desk"
+                 userOnly="true "/>
+        <message group="1" sub_group="33" type="transaction" destination="front_office" remark="attach child Desk"
+                 userOnly="true "/>
+        <message group="1" sub_group="34" type="transaction" destination="front_office" remark="attach o/l child Desk"
+                 userOnly="true "/>
+        <message group="1" sub_group="35" type="transaction" destination="front_office" remark="Fill Incomplete desk orders"/>
+
+        <!--internal order matching-->
+        <message group="1" sub_group="40" type="transaction" destination="front_office" remark="internal match"
+                 userOnly="true "/>
+        <message group="1" sub_group="41" type="transaction" destination="front_office" remark="parked order resend"
+                 userOnly="true "/>
+
+        <!--basket-->
+        <message group="1" sub_group="42" type="transaction" destination="front_office" remark="basket order"/>
+
+        <!--multi-nin-->
+        <message group="1" sub_group="43" type="transaction" destination="front_office" remark="multi-nin new" userOnly="true"/>
+        <message group="1" sub_group="44" type="transaction" destination="front_office" remark="multi-nin amend" userOnly="true"/>
+        <message group="1" sub_group="45" type="transaction" destination="front_office" remark="multi-nin cancel" userOnly="true"/>
+        <message group="1" sub_group="46" type="transaction" destination="front_office" remark="multi-nin expire" userOnly="true"/>
+        <message group="1" sub_group="47" type="transaction" destination="front_office" remark="multi-nin cancel all child" userOnly="true"/>
+        <message group="1" sub_group="48" type="transaction" destination="front_office" remark="multi-nin cancel breakdown" userOnly="true"/>
+
+        <message group="1" sub_group="50" type="transaction" destination="front_office" remark="xt order execution" userOnly="true"/>
+
+        <message group="1" sub_group="51" type="transaction" destination="front_office" remark="alter order status" userOnly="true"/>
+        <message group="1" sub_group="52" type="transaction" destination="front_office" remark="approve reject call centre order" userOnly="true"/>
+        <message group="1" sub_group="56" type="transaction" destination="front_office" remark="bonds new order"/>
+		<message group="1" sub_group="57" type="transaction" destination="front_office" remark="cancel bonds new order"/>
+		
+		<!--mutual fund orders-->
+        <message group="1" sub_group="58" type="transaction" destination="front_office" remark="new mutual fund orders"/>
+        <message group="1" sub_group="59" type="transaction" destination="front_office" remark="cancel mutual fund orders"/>
+
+        <!--future order
+        <message group="1" sub_group="61" type="transaction" destination="front_office" remark="new future orders"/>
+        <message group="1" sub_group="62" type="transaction" destination="front_office" remark="offline new future orders"/>
+        <message group="1" sub_group="63" type="transaction" destination="front_office" remark="amend future orders"/>
+        <message group="1" sub_group="64" type="transaction" destination="front_office" remark="offline amend future orders"/>
+        <message group="1" sub_group="65" type="transaction" destination="front_office" remark="cancel future orders"/>-->
+		
+		<!--negotiation deal orders-->
+		<message group="1" sub_group="60" type="transaction" destination="front_office" remark="new negotiation deal orders"/>
+		<message group="1" sub_group="61" type="transaction" destination="front_office" remark="cancel negotiation deal orders"/>
+        <message group="1" sub_group="62" type="transaction" destination="front_office" remark="amend negotiation deal orders"/>
+        <message group="1" sub_group="63" type="transaction" destination="front_office" remark="expire negotiation deal orders"/>
+        <message group="1" sub_group="64" type="transaction" destination="front_office" remark="manual execute negotiation deal orders"/>
+        <message group="1" sub_group="65" type="transaction" destination="front_office" remark="new advertisement orders"/>
+
+        <!--GROUP_TRADING_INQUIRY-->
+        <message group="2" sub_group="1" type="trading inquiry" destination="front_office" remark="order search "/>
+        <message group="2" sub_group="2" type="trading inquiry" destination="front_office" remark="order details "/>
+        <message group="2" sub_group="3" type="trading inquiry" destination="front_office" remark="order list "/>
+        <message group="2" sub_group="4" type="trading inquiry" destination="front_office" remark="execution history "/>
+        <message group="2" sub_group="5" type="trading inquiry" destination="front_office" remark="commission "/>
+        <message group="2" sub_group="7" type="trading inquiry" destination="front_office"
+                 remark="mark for delivery suggest "/>
+        <message group="2" sub_group="8" type="trading inquiry" destination="front_office" remark="desk order depth"
+                 userOnly="true "/>
+        <message group="2" sub_group="9" type="trading inquiry" destination="front_office"
+                 remark="intraday position monitor "/>
+        <message group="2" sub_group="10" type="trading inquiry" destination="front_office" remark="basket"/>
+        <message group="2" sub_group="11" type="trading inquiry" destination="front_office" remark="ord search multi-category"/>
+        <message group="2" sub_group="12" type="trading inquiry" destination="front_office" remark="ord list multi-category"/>
+        <message group="2" sub_group="13" type="trading inquiry" destination="back_office" remark="dst report"/>
+        <message group="2" sub_group="14" type="trading inquiry" destination="front_office" remark="order quantity calculation"/>
+        <message group="2" sub_group="15" type="trading inquiry" destination="front_office" remark="futures initial margin"/>
+		<message group="2" sub_group="17" type="trading inquiry" destination="front_office" remark="bond transaction history"/>
+		<message group="2" sub_group="18" type="trading inquiry" destination="front_office" remark="MF Order Search"/>
+		<message group="2" sub_group="19" type="trading inquiry" destination="front_office" remark="MF Order List"/>
+		<message group="2" sub_group="20" type="trading inquiry" destination="front_office" remark="MF transaction history"/>
+		<message group="2" sub_group="21" type="trading inquiry" destination="front_office" remark="Eqty transaction history"/>
+		<message group="2" sub_group="22" type="trading inquiry" destination="front_office" remark="over due list"/>
+		<message group="2" sub_group="23" type="trading inquiry" destination="front_office" remark="ND order search"/>
+		<message group="2" sub_group="24" type="trading inquiry" destination="front_office" remark="bond order list"/>
+		<message group="2" sub_group="25" type="trading inquiry" destination="front_office" remark="bond order search"/>
+		<message group="2" sub_group="26" type="trading inquiry" destination="front_office" remark="Neg Deal Order list"/>
+        <message group="2" sub_group="27" type="trading inquiry" destination="front_office" remark="Cash Trans History"/>
+
+        <!--GROUP_INQUIRY-->
+        <message group="3" sub_group="1" type="inquiry" destination="front_office" remark="buying power "/>
+        <message group="3" sub_group="2" type="inquiry" destination="front_office" remark="portfolio "/>
+        <message group="3" sub_group="3" type="inquiry" destination="back_office" remark="bank acc details "/>
+        <message group="3" sub_group="4" type="inquiry" destination="back_office" remark="destination back list "/>
+        <message group="3" sub_group="5" type="inquiry" destination="front_office" remark="marginable symbol"/>
+        <message group="3" sub_group="6" type="inquiry" destination="back_office" remark="cash statement "/>
+        <message group="3" sub_group="7" type="inquiry" destination="back_office" remark="holding statement "/>
+        <message group="3" sub_group="8" type="inquiry" destination="back_office" remark="master data "/>
+        <message group="3" sub_group="9" type="inquiry" destination="front_office" remark="exchange config info "/>
+        <message group="3" sub_group="10" type="inquiry" destination="front_office" remark="marginable buying power "/>
+        <!--<message group="3" sub_group="11" type="inquiry" destination="front_office " />-->
+        <message group="3" sub_group="12" type="inquiry" destination="front_office" remark="subscription data "/>
+        <message group="3" sub_group="13" type="inquiry" destination="front_office" remark="rule list "/>
+        <message group="3" sub_group="14" type="inquiry" destination="back_office" remark="auth person list "/>
+        <message group="3" sub_group="15" type="inquiry" destination="front_office" remark="user entitlements"
+                 userOnly="true "/>
+        <message group="3" sub_group="16" type="inquiry" destination="back_office" remark="trading market summary"
+                 userOnly="true "/>
+        <message group="3" sub_group="17" type="inquiry" destination="back_office" remark="rename portfolio name"/>
+        <message group="3" sub_group="18" type="inquiry" destination="front_office" remark="customer alerts"/>
+        <message group="3" sub_group="19" type="inquiry" destination="back_office" remark="multi nin enabled institutions"/>
+
+        <message group="3" sub_group="20" type="inquiry" destination="front_office" remark="future positions"/>
+		<message group="3" sub_group="21" type="inquiry" destination="front_office" remark="ipo request list"/>
+		<message group="3" sub_group="22" type="inquiry" destination="front_office" remark="ipo register search"/>
+		<message group="3" sub_group="23" type="inquiry" destination="front_office" remark="mutual fund portfolio"/>
+		<message group="3" sub_group="24" type="inquiry" destination="front_office" remark="bond portfolio"/>
+		<message group="3" sub_group="25" type="inquiry" destination="front_office" remark="margin ability list"/>
+		<message group="3" sub_group="26" type="inquiry" destination="front_office" remark="MutualFund Product List"/>
+		<message group="3" sub_group="27" type="inquiry" destination="front_office" remark="Bond Product List"/>
+		<message group="3" sub_group="28" type="inquiry" destination="front_office" remark="Withdraw Request List"/>
+
+        <!--GROUP_FINANCE_AND_HOLDING-->
+        <message group="4" sub_group="1" type="transaction" destination="back_office" remark="deposit "/>
+        <message group="4" sub_group="2" type="transaction" destination="front_office" remark="withdrawal "/>
+        <message group="4" sub_group="3" type="transaction" destination="back_office"
+                 remark="deposit/withdrawal cancel "/>
+        <message group="4" sub_group="4" type="transaction" destination="back_office" remark="cash transfer "/>
+        <message group="4" sub_group="5" type="transaction" destination="back_office" remark="exchange rate "/>
+        <message group="4" sub_group="6" type="transaction" destination="back_office"
+                 remark="deposit/withdrawal list "/>
+        <!--<message group="4" sub_group="7" type="transaction" destination="back_office " />-->
+        <!--<message group="4" sub_group="8" type="transaction" destination="back_office " />-->
+        <!--<message group="4" sub_group="9" type="transaction" destination="back_office " />-->
+        <message group="4" sub_group="10" type="transaction" destination="back_office"
+                 remark="pending cash transactions "/>
+
+        <!--GROUP_AUTHENTICATION-->
+        <message group="5" sub_group="1" type="login" destination="front_office" remark="authentication "/>
+        <message group="5" sub_group="2" type="login" destination="front_office" remark="auth level 2 "/>
+        <message group="5" sub_group="3" type="login" destination="front_office" remark="change password "/>
+        <message group="5" sub_group="4" type="login" destination="front_office" remark="logout "/>
+        <message group="5" sub_group="5" type="login" destination="front_office" remark="pin validation "/>
+        <message group="5" sub_group="6" type="login" destination="front_office" remark="price authentication"
+                 blocked="false "/>
+        <message group="5" sub_group="7" type="login" destination="front_office" remark="password complexity config"/>
+
+
+        <!--GROUP_SYSTEM-->
+        <message group="6" sub_group="1" type="system" destination="n/a" remark="pulse "/>
+        <message group="6" sub_group="19" type="system" destination="back_office"
+                 remark="combined request back-office "/>
+        <message group="6" sub_group="20" type="system" destination="front_office" remark="combined request "/>
+        <message group="6" sub_group="21" type="system" destination="front_office" remark="client config request "/>
+
+        <!--GROUP_CORPORATE_SERVICES-->
+        <!--<message group="7" sub_group="1" type="transaction" destination="front_office " />-->
+
+        <!--group customer-->
+        <message group="10" sub_group="1" type="inquiry" destination="back_office" remark="customer detail "/>
+        <message group="10" sub_group="2" type="inquiry" destination="front_office" remark="customer search"
+                 userOnly="true "/>
+        <message group="10" sub_group="3" type="inquiry" destination="front_office" remark="customer account detail "/>
+        <message group="10" sub_group="4" type="inquiry" destination="front_office" remark="customer by institute"
+                 userOnly="true "/>
+        <message group="10" sub_group="5" type="inquiry" destination="front_office" remark="customer list by user"
+                 userOnly="true "/>
+        <message group="10" sub_group="6" type="inquiry" destination="front_office" remark="customer search new"
+                 userOnly="true "/>
+        <message group="10" sub_group="7" type="inquiry" destination="front_office" remark="report url"/>
+        <message group="10" sub_group="8" type="inquiry" destination="back_office" remark="margin notification"/>
+		<message group="10" sub_group="10" type="inquiry" destination="front_office" remark="Customer Profile"/>
+		<message group="10" sub_group="14" type="inquiry" destination="front_office" remark="Customer report list"/>
+
+        <!-- New Entries -->
+
+        <!-- GROUP_SUBSCRIPTION_SERVICES -->
+        <message group="11" sub_group="3" type="transaction" destination="front_office "/>
+        <message group="11" sub_group="9" type="transaction" destination="back_office"
+                 remark="cust-subscription upgrade"/>
+        <message group="11" sub_group="10" type="transaction" destination="back_office"
+                 remark="subscription package list"/>
+        <!--<message group="11" sub_group="11" type="transaction" destination="front_office " />-->
+        <!--<message group="11" sub_group="12" type="transaction" destination="front_office " />-->
+        <message group="11" sub_group="23" type="transaction" destination="back_office"
+                 remark="subscribed all exchanges"/>
+
+        <!--GROUP_EXCHANGE_SERVICES-->
+        <!--<message group="13" sub_group="1" type="transaction" destination="front_office " />-->
+
+        <!-- GROUP_OMS_ADMIN_SERVICES -->
+        <!--<message group="14" sub_group="1" type="transaction" destination="front_office " />-->
+        <message group="14" sub_group="60" type="transaction" destination="back_office "/>
+
+        <!-- GROUP_CUSTOMER_ADMIN_SERVICES -->
+        <message group="15" sub_group="1" type="transaction" destination="back_office "/>
+        <!--<message group="15" sub_group="6" type="transaction" destination="front_office " />-->
+        <message group="15" sub_group="11" type="transaction" destination="back_office "/>
+        <message group="15" sub_group="12" type="transaction" destination="back_office " remark="send notification"/>
+
+    </messages>
+</trs-mix-msg-config>

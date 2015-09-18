@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="sessionManager" class="lk.ac.ucsc.clientConnector.session_manager.impl.SessionManagerFacadeImpl">
+        <!--<constructor-arg ref="sessionManSchedule"/>-->
+        <property name="sessionManagerCacheFacade" ref="sessionCacheFacade"/>
+    </bean>
+
+    <bean id="sessionCacheFacade" class="lk.ac.ucsc.clientConnector.session_manager.impl.SessionManagerCacheFacade">
+        <property name="sessionMgtCacheControler" ref="sessionCacheControl"/>
+    </bean>
+
+    <bean id="sessionCacheControl" class="lk.ac.ucsc.oms.cache.api.CacheControllerFactory"
+          factory-method="getCacheController">
+        <constructor-arg index="0" ref="userSessionCachePersistor"/>
+        <constructor-arg index="1" value="TRS_SESSION"/>
+    </bean>
+
+    <bean id="userSessionCachePersistor"
+          class="lk.ac.ucsc.clientConnector.session_manager.impl.SessionBeanHibernatePersistor">
+        <constructor-arg index="0" ref="realTime"/>
+    </bean>
+
+    <bean id="realTime" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="lk.ac.ucsc.clientConnector.session_manager.impl.beans"/>
+        <property name="configLocations" value="implGeneral/hibernate.cfg.xml"/>
+    </bean>
+
+
+
+    <!--<bean id="sessionManSchedule" class="com.directfn.trs.core.session_manager.impl.SessionManagerSchedule">-->
+    <!--<property name="frequency" value="10"/>-->
+    <!--<property name="schedulerName" value="SessionManager"/>-->
+    <!--<property name="cacheController" ref="sessionCacheControl"/>-->
+    <!--</bean>-->
+
+    <bean id="dataSource"
+          class="lk.ac.ucsc.clientConnector.common.api.DataSourceProvider"
+          factory-method="getDataSource"/>
+
+</beans>
